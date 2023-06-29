@@ -14,6 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
   const dispatch = useDispatch();
+  const [showToast, setShowToast] = useState(false);
   const [name, setName] = useState("");
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
@@ -25,6 +26,12 @@ const Signup = () => {
 
   const sm = useSelector((state) => state.auth);
   console.log(sm);
+
+  // useEffect(() => {
+  //   if (!sm.isLoading) {
+  //     setShowToast(true);
+  //   }
+  // }, [sm]);
 
   const userData = {
     name,
@@ -76,6 +83,7 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setShowToast(true);
 
     if (validMail) {
       dispatch(registerUser(userData))
@@ -101,17 +109,19 @@ const Signup = () => {
         draggable: true,
       });
     } else {
-      toast.error(`${sm.response}`, {
-        position: "top-right",
-        // theme: "dark",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
+      if (showToast) {
+        toast.error(`${sm.response}`, {
+          position: "top-right",
+          // theme: "dark",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+      }
     }
-  }, [sm]);
+  }, [showToast]);
   return (
     <>
       <div className="signup">

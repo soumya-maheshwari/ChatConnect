@@ -6,6 +6,7 @@ const initialState = {
   isError: false,
   isSuccess: false,
   isLoading: false,
+  showToast: false,
   message: "",
   response: "",
   user: {},
@@ -46,11 +47,12 @@ export const authSlice = createSlice({
 
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true;
+        state.message = "";
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.response = action.payload.data.msg;
-
+        state.message = "drkkjtio";
         console.log(action.payload);
         if (action.payload.data.success) {
           state.isSuccess = true;

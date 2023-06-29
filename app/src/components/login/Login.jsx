@@ -15,13 +15,21 @@ import { loginUser } from "../../Redux/authSlice";
 const Login = () => {
   const dispatch = useDispatch();
 
+  const [showToast, setShowToast] = useState(false);
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [validMail, setValidMail] = useState(false);
-
+  const [bool, setBool] = useState(false);
   const sm = useSelector((state) => state.auth);
   console.log(sm);
+
+  useEffect(() => {
+    if (sm.message == "") {
+      setBool(true);
+    }
+  }, [sm]);
+
   const userData = {
     email,
     password,
@@ -54,7 +62,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    setShowToast(true);
     if (validMail) {
       dispatch(loginUser(userData))
         .then((res) => {
@@ -80,15 +88,17 @@ const Login = () => {
         draggable: true,
       });
     } else {
-      toast.error(`${sm.response}`, {
-        position: "top-right",
-        // theme: "DARK",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
+      if (showToast) {
+        toast.error(`${sm.response}`, {
+          position: "top-right",
+          // theme: "DARK",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+      }
     }
   }, [sm]);
   return (
