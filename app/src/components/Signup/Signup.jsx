@@ -2,12 +2,19 @@ import React, { useState, useEffect } from "react";
 import mail from "../../assets/mail.svg";
 import lock from "../../assets/lock.svg";
 import user from "../../assets/user.svg";
+import namee from "../../assets/name.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/fontawesome-free-solid";
 import "./signup.css";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../../Redux/authSlice";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
+  const dispatch = useDispatch();
+  const [name, setName] = useState("");
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,12 +23,28 @@ const Signup = () => {
   const [show2, setShow2] = useState(false);
   const [validMail, setValidMail] = useState(false);
 
+  const sm = useSelector((state) => state.auth);
+  console.log(sm);
+
+  const userData = {
+    name,
+    username,
+    email,
+    password,
+  };
+  console.log(userData);
+
+  const handleName = (e) => {
+    setName(e.target.value);
+  };
   const handleShowHide = () => {
     setShow(!show);
   };
+
   const handleShowHide2 = () => {
     setShow2(!show2);
   };
+
   const handleEmail = (e) => {
     setEmail(e.target.value);
   };
@@ -29,12 +52,15 @@ const Signup = () => {
   const handlePassword = (e) => {
     setPassword(e.target.value);
   };
+
   const handleConfirmPassword = (e) => {
     setConfirmPassword(e.target.value);
   };
+
   const handleUsername = (e) => {
     setUsername(e.target.value);
   };
+
   const regexEmail =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
@@ -48,12 +74,53 @@ const Signup = () => {
     }
   }, [email]);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (validMail) {
+      dispatch(registerUser(userData))
+        .then((res) => {
+          console.log(res);
+          return res;
+        })
+        .catch((err) => {
+          console.log(err);
+          return err.response;
+        });
+    }
+  };
+  useEffect(() => {
+    if (sm.isSuccess) {
+      toast.success(`${sm.response}`, {
+        position: "top-right",
+        theme: "dark",
+      });
+    } else {
+      toast.error(`${sm.response}`, {
+        position: "top-right",
+        // theme: "dark",
+      });
+    }
+  }, [sm]);
   return (
     <>
       <div className="signup">
         <div className="container">
           <h2>SignUp Form</h2>
-          <form>
+          <form action="" onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label for="name">Full Name</label>
+              <img src={namee} alt="name" className="mail" />
+              <input
+                type="text"
+                className="input-field"
+                id="name"
+                name="name"
+                value={name}
+                required
+                onChange={handleName}
+              />
+            </div>
             <div className="form-group">
               <label for="email">Email Address</label>
               <img src={mail} alt="mail" className="mail" />
@@ -148,6 +215,7 @@ const Signup = () => {
           </p>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };
