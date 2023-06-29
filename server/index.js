@@ -6,6 +6,7 @@ const cors = require("cors");
 const DBconnect = require("./DBConnection");
 const app = express();
 const authRoutes = require("./routes/authRoutes");
+const chatRoutes = require("./routes/chatRoutes");
 const { errorMiddleware } = require("./middleware/ErrorHandler");
 
 app.use(express.json());
@@ -30,3 +31,4 @@ app.use(errorMiddleware);
 //Routes
 
 app.use("/api", authRoutes, errorMiddleware);
+app.use("api/chat", chatRoutes);
