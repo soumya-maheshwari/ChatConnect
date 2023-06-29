@@ -5,12 +5,28 @@ import lock from "../../assets/lock.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/fontawesome-free-solid";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
+import * as ReactBootstrap from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../../Redux/authSlice";
 
 const Login = () => {
+  const dispatch = useDispatch();
+
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [validMail, setValidMail] = useState(false);
+
+  const sm = useSelector((state) => state.auth);
+  console.log(sm);
+  const userData = {
+    email,
+    password,
+  };
+  console.log(userData);
 
   const handleShowHide = () => {
     setShow(!show);
@@ -36,11 +52,50 @@ const Login = () => {
     }
   }, [email]);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (validMail) {
+      dispatch(loginUser(userData))
+        .then((res) => {
+          console.log(res);
+          return res;
+        })
+        .catch((err) => {
+          console.log(err);
+          return err.response;
+        });
+    }
+  };
+
+  useEffect(() => {
+    if (sm.isSuccess) {
+      toast.success(`${sm.response}`, {
+        position: "top-right",
+        // theme: "DARK",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    } else {
+      toast.error(`${sm.response}`, {
+        position: "top-right",
+        // theme: "DARK",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    }
+  }, [sm]);
   return (
     <>
       <div className="container">
         <h2>Login Form</h2>
-        <form>
+        <form action="" onSubmit={handleSubmit}>
           <div className="form-group">
             <label for="email">Email Address</label>
             <img src={mail} alt="mail" className="mail" />
@@ -93,6 +148,7 @@ const Login = () => {
           </span>
         </p>
       </div>
+      <ToastContainer />
     </>
   );
 };
