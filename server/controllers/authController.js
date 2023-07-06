@@ -56,9 +56,6 @@ const login = async (req, res, next) => {
       return next(new ErrorHandler(404, "user not found"));
     }
 
-    // if (!user.verify) {
-    //   return next(new ErrorHandler(404, "User Not Found"));
-    // }
     const result = await bcrypt.compare(
       password,
       user.password
@@ -84,6 +81,7 @@ const login = async (req, res, next) => {
     );
 
     return res.status(200).json({
+      id: user._id,
       success: true,
       msg: `WELCOME !! login successful`,
       user,
@@ -157,15 +155,25 @@ const signup = async (req, res, next) => {
       }
     );
     return res.status(200).json({
+      id: user._id,
       success: true,
       msg: `WELCOME ${name}  !! signup successful`,
       user,
       accessToken,
-      refreshToken,
+      // refreshToken,
     });
   } catch (error) {
     next(error);
   }
+};
+
+const getAllUsers = async (req, res, next) => {
+  const { search } = req.query;
+  const user = await User.find({
+    username: { $regex: search, $options: "i" },
+  }).select("id email username");
+
+  res.status(200).json(user);
 };
 
 module.exports = {
@@ -173,5 +181,6 @@ module.exports = {
   login,
   signup,
   // accessToken,
+  getAllUsers,
   refreshToken,
 };

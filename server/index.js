@@ -31,4 +31,12 @@ app.use(errorMiddleware);
 //Routes
 
 app.use("/api", authRoutes, errorMiddleware);
-app.use("api/chat", chatRoutes);
+app.use("/api/chat", chatRoutes, errorMiddleware);
+app.get("/protect", authVerifyToken, (req, res) => {
+  const user = req.user;
+
+  res.json({
+    user,
+    success: true,
+  });
+});

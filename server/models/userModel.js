@@ -18,10 +18,10 @@ const userSchema = mongoose.Schema(
       type: String,
       unique: true,
     },
-    verify: {
-      type: Boolean,
-      default: false,
-    },
+    // verify: {
+    //   type: Boolean,
+    //   default: false,
+    // },
   }
 
   // { timestamps: true }
@@ -31,4 +31,4 @@ const userSchema = mongoose.Schema(
 
 // module.exports = UserModel;
 
-module.exports = mongoose.model("user", userSchema);
+module.exports = mongoose.model("User", userSchema);
