@@ -10,5 +10,6 @@ router.post(
   authVerifyToken,
   chatController.createGroupChat
 );
+router.patch("/rename_group", chatController.renameGroup);
 
 module.exports = router;
