@@ -8,7 +8,7 @@ const app = express();
 const authRoutes = require("./routes/authRoutes");
 const chatRoutes = require("./routes/chatRoutes");
 const { errorMiddleware } = require("./middleware/ErrorHandler");
-
+const { authVerifyToken } = require("./middleware/authVerifyToken");
 app.use(express.json());
 app.use(cors({ origin: true }));
 app.use(express.urlencoded({ extended: false }));

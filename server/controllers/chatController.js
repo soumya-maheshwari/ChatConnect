@@ -59,30 +59,81 @@ const createChat = async (req, res, next) => {
 };
 
 const fetchChats = async (req, res, next) => {
-  const userid = req.user._id;
-  const chat = await Chat.find({
-    users: {
-      $elemMatch: {
-        $eq: userid,
+  try {
+    const userid = req.user._id;
+    const chat = await Chat.find({
+      users: {
+        $elemMatch: {
+          $eq: userid,
+        },
       },
-    },
-  })
-    .populate("users", "-password")
-    .populate("latestMessage")
-    .sort({ updatedAt: -1 });
+    })
+      .populate("users", "-password")
+      .populate("latestMessage")
+      .sort({ updatedAt: -1 });
 
-  const user = await User.populate(chat, {
-    path: "latestMessage.sender",
-    select: "username email name _id",
-  });
+    const user = await User.populate(chat, {
+      path: "latestMessage.sender",
+      select: "username email name _id",
+    });
 
-  res.status(200).json({
-    user,
-    msg: "chat fetched successfully",
-    success: true,
-  });
+    res.status(200).json({
+      user,
+      msg: "chat fetched successfully",
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+const createGroupChat = async (req, res, next) => {
+  try {
+    const { users_name, name } = req.body;
+    console.log(users_name, "users_name");
+    console.log(name, "name");
+    if (!users_name || !name) {
+      next(new ErrorHandler(400, "Please enter all the fields"));
+    }
+
+    var users = JSON.parse(req.body.users_name);
+    console.log(users, "users");
+    const userid = req.user._id;
+    console.log(userid, "userid");
+    if (users < 2) {
+      next(
+        new ErrorHandler(400, "More than 2 users are required to form a group")
+      );
+    }
+    users.push(userid);
+
+    const groupChat = await Chat.create({
+      chatName: name,
+      users,
+      isGroupChat: true,
+      groupChatAdmin: userid,
+    });
+
+    console.log(groupChat);
+    const fullGroupChat = await Chat.findOne({
+      _id: groupChat._id,
+    })
+      .populate("users", "-password")
+      .populate("groupAdmin", "-password");
+
+    res.status(200).json({
+      fullGroupChat,
+      msg: "Group chat created successfully",
+    });
+    console.log(fullGroupChat);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
 };
 module.exports = {
   createChat,
   fetchChats,
+  createGroupChat,
 };
