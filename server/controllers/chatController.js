@@ -161,9 +161,78 @@ const renameGroup = async (req, res, next) => {
     next(error);
   }
 };
+
+const addUserToGroup = async (req, res, next) => {
+  try {
+    const { chatId, userId } = req.body;
+
+    const addUser = await Chat.findByIdAndUpdate(
+      chatId,
+      {
+        $push: {
+          users: userId,
+        },
+      },
+      {
+        new: true,
+      }
+    )
+      .populate("users", "-password")
+      .populate("groupAdmin", "-password");
+
+    if (!addUser) {
+      next(new ErrorHandler(400, "Chat not found"));
+    } else {
+      res.status(200).json({
+        addUser,
+        msg: "user added successfully",
+        success: true,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+const removeUserFromGroup = async (req, res, next) => {
+  try {
+    const { chatId, userId } = req.body;
+
+    const removeUser = await Chat.findByIdAndUpdate(
+      chatId,
+      {
+        $pull: {
+          users: userId,
+        },
+      },
+      {
+        new: true,
+      }
+    )
+      .populate("users", "-password")
+      .populate("groupAdmin", "-password");
+
+    if (!removeUser) {
+      next(new ErrorHandler(400, "Chat not found"));
+    } else {
+      res.status(200).json({
+        removeUser,
+        msg: "User removed from Group successfully",
+        success: true,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
 module.exports = {
   createChat,
   fetchChats,
   createGroupChat,
   renameGroup,
+  addUserToGroup,
+  removeUserFromGroup,
 };
