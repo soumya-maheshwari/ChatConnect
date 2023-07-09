@@ -126,7 +126,7 @@ const Signup = () => {
     <>
       <div className="signup">
         <div className="container">
-          <h2>SignUp Form</h2>
+          {/* <h2>SignUp Form</h2> */}
           <form action="" onSubmit={handleSubmit}>
             <div className="form-group">
               <label for="name">Full Name</label>

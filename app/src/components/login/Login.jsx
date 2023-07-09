@@ -4,10 +4,8 @@ import mail from "../../assets/mail.svg";
 import lock from "../../assets/lock.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/fontawesome-free-solid";
-import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
 import * as ReactBootstrap from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../Redux/authSlice";
@@ -104,7 +102,7 @@ const Login = () => {
   return (
     <>
       <div className="container">
-        <h2>Login Form</h2>
+        {/* <h2>Login Form</h2> */}
         <form action="" onSubmit={handleSubmit}>
           <div className="form-group">
             <label for="email">Email Address</label>
@@ -151,12 +149,12 @@ const Login = () => {
           <button type="submit">Login</button>
         </form>
 
-        <p className="text">
+        {/* <p className="text">
           Don't have an account?
           <span className="link">
             <Link to="/signup">Signup</Link>
           </span>
-        </p>
+        </p> */}
       </div>
       <ToastContainer />
     </>
