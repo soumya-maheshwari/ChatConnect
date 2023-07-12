@@ -8,10 +8,11 @@ import { useSelector } from "react-redux";
 import { IoIosArrowDropdown } from "react-icons/io";
 import { RxAvatar } from "react-icons/rx";
 import ProfileModal from "../profileModal/ProfileModal";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
-  let isUerLoggedIn = localStorage.getItem("access token") ? true : false;
-
+  // let isUerLoggedIn = localStorage.getItem("access token") ? true : false;
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -19,6 +20,14 @@ const Sidebar = () => {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogout = (e) => {
+    localStorage.removeItem("access token");
+    // e.preventDefault();
+
+    console.log("logout succcessful");
+    return navigate("/");
   };
   const sm = useSelector((state) => state.chat);
 
@@ -63,7 +72,7 @@ const Sidebar = () => {
             <ProfileModal>
               <MenuItem onClick={handleClose}>Profile</MenuItem>
             </ProfileModal>
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </div>
       </div>
