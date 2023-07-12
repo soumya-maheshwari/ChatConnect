@@ -10,9 +10,11 @@ import * as ReactBootstrap from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../Redux/authSlice";
 
+import { useNavigate } from "react-router-dom";
+
 const Login = () => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const [showToast, setShowToast] = useState(false);
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
@@ -32,7 +34,7 @@ const Login = () => {
     email,
     password,
   };
-  console.log(userData);
+  // console.log(userData);
 
   const handleShowHide = () => {
     setShow(!show);
@@ -64,11 +66,11 @@ const Login = () => {
     if (validMail) {
       dispatch(loginUser(userData))
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           return res;
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           return err.response;
         });
     }
@@ -85,6 +87,7 @@ const Login = () => {
         pauseOnHover: true,
         draggable: true,
       });
+      navigate("/chat_page");
     } else {
       if (showToast) {
         toast.error(`${sm.response}`, {

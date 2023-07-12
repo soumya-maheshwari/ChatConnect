@@ -9,6 +9,7 @@ const initialState = {
   showToast: false,
   message: "",
   response: "",
+  profile: "",
   user: {},
 };
 
@@ -17,6 +18,7 @@ export const registerUser = createAsyncThunk("auth/signup", async (data) => {
     .post(`${backend}signup`, data)
     .then((res) => {
       console.log(res);
+
       return res;
     })
     .catch((err) => {
@@ -29,11 +31,11 @@ export const loginUser = createAsyncThunk("auth/login", async (data) => {
   return await axios
     .post(`${backend}login`, data)
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       return res;
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       return err.response;
     });
 });
@@ -53,9 +55,12 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.response = action.payload.data.msg;
         state.message = "drkkjtio";
+
         console.log(action.payload);
         if (action.payload.data.success) {
           state.isSuccess = true;
+          state.showToast = true;
+          state.user = action.payload.data.user;
         } else {
           state.isSuccess = false;
           state.isError = true;
@@ -70,12 +75,15 @@ export const authSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
+        localStorage.setItem("access token", action.payload.data.accessToken);
+        state.profile = action.payload.data;
         state.isLoading = false;
         state.response = action.payload.data.msg;
 
         console.log(action.payload);
         if (action.payload.data.success) {
           state.isSuccess = true;
+          state.user = action.payload.data.user;
         } else {
           state.isSuccess = false;
           state.isError = true;

@@ -6,13 +6,15 @@ import namee from "../../assets/name.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/fontawesome-free-solid";
 import "./signup.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../Redux/authSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 const Signup = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showToast, setShowToast] = useState(false);
   const [name, setName] = useState("");
@@ -81,7 +83,7 @@ const Signup = () => {
     }
   }, [email]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setShowToast(true);
 
@@ -96,6 +98,29 @@ const Signup = () => {
           return err.response;
         });
     }
+
+    try {
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
+      const { data } = await axios.post(
+        "http://localhost:5000/api/all_users",
+        {
+          name,
+          email,
+          username,
+          password,
+        },
+        config
+      );
+      console.log(data, "data");
+      localStorage.setItem("userInfo", JSON.stringify(data));
+    } catch (error) {
+      console.log(error);
+      return error.response;
+    }
   };
   useEffect(() => {
     if (sm.isSuccess) {
@@ -108,6 +133,7 @@ const Signup = () => {
         pauseOnHover: true,
         draggable: true,
       });
+      navigate("/chat_page");
     } else {
       if (showToast) {
         toast.error(`${sm.response}`, {
@@ -121,6 +147,7 @@ const Signup = () => {
         });
       }
     }
+    // localStorage.setItem("userInfo", JSON.stringify(data));
   }, [showToast]);
   return (
     <>

@@ -8,7 +8,10 @@ import { useSelector } from "react-redux";
 import { IoIosArrowDropdown } from "react-icons/io";
 import { RxAvatar } from "react-icons/rx";
 import ProfileModal from "../profileModal/ProfileModal";
+
 const Sidebar = () => {
+  let isUerLoggedIn = localStorage.getItem("access token") ? true : false;
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
