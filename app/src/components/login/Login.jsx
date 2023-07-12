@@ -21,6 +21,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [validMail, setValidMail] = useState(false);
   const [bool, setBool] = useState(false);
+
   const sm = useSelector((state) => state.auth);
   console.log(sm);
 
@@ -39,6 +40,7 @@ const Login = () => {
   const handleShowHide = () => {
     setShow(!show);
   };
+
   const handleEmail = (e) => {
     setEmail(e.target.value);
   };
@@ -102,10 +104,12 @@ const Login = () => {
       }
     }
   }, [sm]);
+
   return (
     <>
       <div className="container">
         {/* <h2>Login Form</h2> */}
+
         <form action="" onSubmit={handleSubmit}>
           <div className="form-group">
             <label for="email">Email Address</label>
@@ -119,6 +123,7 @@ const Login = () => {
               required
               onChange={handleEmail}
             />
+
             <p id="wrong-email">Invalid Email Address</p>
           </div>
           <div className="form-group">
