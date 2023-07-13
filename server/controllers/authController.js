@@ -171,7 +171,7 @@ const getAllUsers = async (req, res, next) => {
   const { search } = req.query;
   const user = await User.find({
     username: { $regex: search, $options: "i" },
-  }).select("id email username");
+  }).select("id email username name");
 
   res.status(200).json(user);
 };

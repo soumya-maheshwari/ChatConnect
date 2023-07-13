@@ -12,9 +12,12 @@ const initialState = {
 export const searchUser = createAsyncThunk("user/search", async (data) => {
   return await axios
     .get(`${backend}all_users?search=${data}`)
+    // .get(`${backend}all_users?search=gau`)
+
     .then((res) => {
+      console.log(data);
       console.log(res);
-      console.log(`${backend}/all_users?${data}`);
+      console.log(`${backend}all_users?${data}`);
       return res;
     })
     .catch((err) => {

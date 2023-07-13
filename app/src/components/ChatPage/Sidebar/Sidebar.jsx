@@ -59,14 +59,14 @@ const Sidebar = () => {
   }, [user]);
   const handleSearch = (e) => {
     setSearch(e.target.value);
-    // console.group(search);
+    console.log(search, "hjgdyuH");
   };
 
   const userData = {
-    search,
+    search: search,
   };
   const handleUserSearch = () => {
-    dispatch(searchUser(userData))
+    dispatch(searchUser(search))
       .then((res) => {
         console.log(res);
         return res;
@@ -76,17 +76,21 @@ const Sidebar = () => {
         return err.response;
       });
   };
-  useEffect(() => {
-    if (sm.isSuccess) {
-      if (sm.userList.length > 0) {
-        console.log(sm.userList.length);
-        setSearchResultArray(sm.userList);
-        console.log(searchResultArray);
+  useEffect(
+    () => {
+      if (sm.isSuccess) {
+        if (sm.userList.length > 0) {
+          console.log(sm.userList.length);
+          setSearchResultArray(sm.userList);
+          console.log(searchResultArray);
+        }
+      } else {
+        setSearchResultArray([]);
       }
-    } else {
-      setSearchResultArray([]);
-    }
-  }, [sm]);
+    },
+    [sm.isSuccess],
+    [sm.userList]
+  );
 
   return (
     <>
@@ -155,7 +159,8 @@ const Sidebar = () => {
                 <UserList
                   name={userr.name}
                   username={userr.username}
-                  email={userr.email}
+                  // email={userr.email}
+                  key={userr._id}
                 />
               );
             })
