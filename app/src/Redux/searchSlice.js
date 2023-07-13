@@ -12,16 +12,14 @@ const initialState = {
 export const searchUser = createAsyncThunk("user/search", async (data) => {
   return await axios
     .get(`${backend}all_users?search=${data}`)
-    // .get(`${backend}all_users?search=gau`)
-
     .then((res) => {
-      console.log(data);
-      console.log(res);
-      console.log(`${backend}all_users?${data}`);
+      // console.log(data);
+      // console.log(res);
+      // console.log(`${backend}all_users?${data}`);
       return res;
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       return err.response;
     });
 });
@@ -39,7 +37,7 @@ export const searchSlice = createSlice({
       .addCase(searchUser.fulfilled, (state, action) => {
         state.isLoading = false;
 
-        console.log(action.payload);
+        // console.log(action.payload);
         state.userList = action.payload.data;
         state.isSuccess = true;
       })

@@ -13,6 +13,9 @@ import { loginUser } from "../../Redux/authSlice";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  // const [isLoggedIn, setIsLoggedIn] = useState(initialLoggedInState === "true");
+
+  // const initialLoggedInState = localStorage.getItem("isLoggedIn") ?? false;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showToast, setShowToast] = useState(false);
@@ -25,6 +28,15 @@ const Login = () => {
   const sm = useSelector((state) => state.auth);
   console.log(sm);
 
+  // useEffect(() => {
+  //   localStorage.setItem("isLoggedIn", isLoggedIn);
+  // }, [isLoggedIn]);
+
+  // const isUser = localStorage.getItem("access token") ? true : false;
+
+  // useEffect(() => {
+  //   if (isUser) navigate("/");
+  // }, [isUser]);
   useEffect(() => {
     if (sm.message == "") {
       setBool(true);

@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-const backend = "http://localhost:5000/api/";
+const backend = "http://localhost:5000/api/chat/";
 
 const initialState = {
   isError: false,
@@ -9,21 +9,31 @@ const initialState = {
   showToast: false,
   message: "",
   response: "",
-  user: {},
 };
 
-export const chatThunk = createAsyncThunk("auth/chat", async (data) => {
-  return await axios
-    .post(`${backend}`, data)
-    .then((res) => {
-      console.log(res);
-      return res;
-    })
-    .catch((err) => {
-      console.log(err);
-      return err.response;
-    });
-});
+export const accessChatThunk = createAsyncThunk(
+  "chat/accessChat",
+  async (data) => {
+    const accessToken = localStorage.getItem("access token");
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+
+    return await axios
+      .get(`${backend}fetch_chat`, data, config)
+      .then((res) => {
+        console.log(res);
+        return res;
+      })
+      .catch((err) => {
+        console.log(err);
+        return err.response;
+      });
+  }
+);
 
 export const chatSlice = createSlice({
   name: "chat",
@@ -32,23 +42,15 @@ export const chatSlice = createSlice({
   extraReducers: (builder) => {
     builder
 
-      .addCase(chatThunk.pending, (state) => {
+      .addCase(accessChatThunk.pending, (state) => {
         state.isLoading = true;
-        state.message = "";
+        // state.message = "";
       })
-      .addCase(chatThunk.fulfilled, (state, action) => {
+      .addCase(accessChatThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.response = action.payload.data.msg;
-        state.message = "";
         console.log(action.payload);
-        if (action.payload.data.success) {
-          state.isSuccess = true;
-        } else {
-          state.isSuccess = false;
-          state.isError = true;
-        }
       })
-      .addCase(chatThunk.rejected, (state) => {
+      .addCase(accessChatThunk.rejected, (state) => {
         state.isLoading = true;
         state.isError = true;
       });

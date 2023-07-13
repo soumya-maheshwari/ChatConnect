@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Tooltip } from "react-bootstrap";
 import search_icon from "../../../assets/search.svg";
 import "./sidebar.css";
-import { Input, Menu, MenuItem } from "@mui/material";
+import { Input, Menu, MenuItem, SliderThumb } from "@mui/material";
 import bell from "../../../assets/bell.svg";
 import { IoIosArrowDropdown } from "react-icons/io";
 import { RxAvatar } from "react-icons/rx";
@@ -15,6 +15,8 @@ import "react-toastify/dist/ReactToastify.css";
 import UserList from "../../../components/ChatPage/Sidebar/UserList/UserList";
 import { useDispatch, useSelector } from "react-redux";
 import { searchUser } from "../../../Redux/searchSlice";
+import ChatLoading from "../MyChats/ChatLoading/ChatLoading";
+import { accessChatThunk } from "../../../Redux/chatSlice";
 
 const Sidebar = () => {
   // let isUerLoggedIn = localStorage.getItem("access token") ? true : false;
@@ -22,8 +24,10 @@ const Sidebar = () => {
   // const userInfo = JSON.parse(localStorage.getItem("user token"));
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const sm = useSelector((state) => state.search);
-  console.log(sm);
+  // console.log(sm);
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [search, setSearch] = useState("");
   const [searchResultArray, setSearchResultArray] = useState([]);
@@ -43,7 +47,7 @@ const Sidebar = () => {
     localStorage.removeItem("access token");
     // e.preventDefault();
 
-    console.log("logout succcessful");
+    // console.log("logout succcessful");
     return navigate("/");
   };
 
@@ -57,39 +61,45 @@ const Sidebar = () => {
       // navigate("/");
     }
   }, [user]);
+
   const handleSearch = (e) => {
     setSearch(e.target.value);
-    console.log(search, "hjgdyuH");
   };
 
   const userData = {
     search: search,
   };
+
   const handleUserSearch = () => {
     dispatch(searchUser(search))
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         return res;
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         return err.response;
       });
   };
+  const handleAccessChat = () => {
+    dispatch(accessChatThunk("dfh"));
+  };
+
   useEffect(
     () => {
       if (sm.isSuccess) {
         if (sm.userList.length > 0) {
-          console.log(sm.userList.length);
+          // console.log(sm.userList.length);
           setSearchResultArray(sm.userList);
-          console.log(searchResultArray);
+          // console.log(searchResultArray);
         }
       } else {
         setSearchResultArray([]);
       }
     },
     [sm.isSuccess],
-    [sm.userList]
+    [sm.userList],
+    [sm]
   );
 
   return (
@@ -137,7 +147,13 @@ const Sidebar = () => {
             <ProfileModal>
               <MenuItem onClick={handleClose}>Profile</MenuItem>
             </ProfileModal>
-            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+            <MenuItem
+              onClick={handleLogout}
+
+              // onClick={handleAccessChat}
+            >
+              Logout
+            </MenuItem>
           </Menu>
         </div>
 
@@ -153,18 +169,22 @@ const Sidebar = () => {
           ></Input>
           <Button onClick={handleUserSearch}>GO</Button>
         </Box>
-        {searchResultArray.length > 0
-          ? searchResultArray.map((userr) => {
-              return (
-                <UserList
-                  name={userr.name}
-                  username={userr.username}
-                  // email={userr.email}
-                  key={userr._id}
-                />
-              );
-            })
-          : ""}
+
+        {sm.isLoading ? (
+          <ChatLoading />
+        ) : (
+          searchResultArray.map((userr) => {
+            return (
+              <UserList
+                name={userr.name}
+                username={userr.username}
+                key={userr._id}
+                onClick={handleAccessChat}
+                // handleFunction={() => dispatch(accessChatThunk(userr._id))}
+              />
+            );
+          })
+        )}
       </SwipeableDrawer>
       <ToastContainer />
     </>
