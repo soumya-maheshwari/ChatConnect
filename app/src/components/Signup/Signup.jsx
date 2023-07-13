@@ -134,6 +134,7 @@ const Signup = () => {
         draggable: true,
       });
       navigate("/chat_page");
+      localStorage.setItem("userInfo", JSON.stringify(userData));
     } else {
       if (showToast) {
         toast.error(`${sm.response}`, {

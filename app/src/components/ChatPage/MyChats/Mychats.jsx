@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
+import GroupChatModal from "../GroupChatModal/GroupChatModal";
+import { Button } from "react-bootstrap";
 
 const Mychats = () => {
   const [chats, setChats] = useState();
@@ -7,7 +9,7 @@ const Mychats = () => {
   return (
     <>
       <div className="my-chats">
-        {/* <Box
+        <Box
           flexDirection={"column"}
           alignItems={"center"}
           p={3}
@@ -21,10 +23,13 @@ const Mychats = () => {
             justifyContent={"space-between"}
             alignItems={"center"}
             fontFamily={"sans-serif"}
-          > */}
-        MY CHATS
-        {/* </Box>
-        </Box> */}
+          >
+            MY CHATS
+            <GroupChatModal>
+              <Button display={"flex"}>+</Button>
+            </GroupChatModal>
+          </Box>
+        </Box>
       </div>
     </>
   );

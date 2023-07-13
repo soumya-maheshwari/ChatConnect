@@ -28,15 +28,6 @@ const Login = () => {
   const sm = useSelector((state) => state.auth);
   console.log(sm);
 
-  // useEffect(() => {
-  //   localStorage.setItem("isLoggedIn", isLoggedIn);
-  // }, [isLoggedIn]);
-
-  // const isUser = localStorage.getItem("access token") ? true : false;
-
-  // useEffect(() => {
-  //   if (isUser) navigate("/");
-  // }, [isUser]);
   useEffect(() => {
     if (sm.message == "") {
       setBool(true);
@@ -102,6 +93,7 @@ const Login = () => {
         draggable: true,
       });
       navigate("/chat_page");
+      localStorage.setItem("userInfo", JSON.stringify(sm.profile));
     } else {
       if (showToast) {
         toast.error(`${sm.response}`, {

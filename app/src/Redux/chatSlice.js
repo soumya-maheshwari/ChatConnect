@@ -14,16 +14,19 @@ const initialState = {
 export const accessChatThunk = createAsyncThunk(
   "chat/accessChat",
   async (data) => {
-    const accessToken = localStorage.getItem("access token");
-
+    const user = JSON.parse(localStorage.getItem("userInfo"));
+    console.log(user);
+    console.log(user.accessToken);
     const config = {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${user.accessToken}`,
       },
     };
 
+    // console.log(config, "config");
+
     return await axios
-      .get(`${backend}fetch_chat`, data, config)
+      .get(`${backend}fetch_chat`, config)
       .then((res) => {
         console.log(res);
         return res;

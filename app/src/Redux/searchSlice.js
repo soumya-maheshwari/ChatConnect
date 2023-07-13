@@ -10,8 +10,16 @@ const initialState = {
 };
 
 export const searchUser = createAsyncThunk("user/search", async (data) => {
+  const user = localStorage.getItem("userInfo");
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user.token}`,
+    },
+  };
+
   return await axios
-    .get(`${backend}all_users?search=${data}`)
+    .get(`${backend}all_users?search=${data}`, config)
     .then((res) => {
       // console.log(data);
       // console.log(res);

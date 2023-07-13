@@ -14,8 +14,14 @@ const initialState = {
 };
 
 export const registerUser = createAsyncThunk("auth/signup", async (data) => {
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+    },
+  };
+
   return await axios
-    .post(`${backend}signup`, data)
+    .post(`${backend}signup`, data, config)
     .then((res) => {
       console.log(res);
 
@@ -28,8 +34,14 @@ export const registerUser = createAsyncThunk("auth/signup", async (data) => {
 });
 
 export const loginUser = createAsyncThunk("auth/login", async (data) => {
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+    },
+  };
+
   return await axios
-    .post(`${backend}login`, data)
+    .post(`${backend}login`, data, config)
     .then((res) => {
       // console.log(res);
       return res;
@@ -75,7 +87,7 @@ export const authSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        localStorage.setItem("access token", action.payload.data.accessToken);
+        // localStorage.setItem("access token", action.payload.data.accessToken);
         state.profile = action.payload.data;
         state.isLoading = false;
         state.response = action.payload.data.msg;

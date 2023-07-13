@@ -16,7 +16,6 @@ import UserList from "../../../components/ChatPage/Sidebar/UserList/UserList";
 import { useDispatch, useSelector } from "react-redux";
 import { searchUser } from "../../../Redux/searchSlice";
 import ChatLoading from "../MyChats/ChatLoading/ChatLoading";
-import { accessChatThunk } from "../../../Redux/chatSlice";
 
 const Sidebar = () => {
   // let isUerLoggedIn = localStorage.getItem("access token") ? true : false;
@@ -44,7 +43,7 @@ const Sidebar = () => {
   };
 
   const handleLogout = (e) => {
-    localStorage.removeItem("access token");
+    localStorage.removeItem("userInfo");
     // e.preventDefault();
 
     // console.log("logout succcessful");
@@ -52,15 +51,15 @@ const Sidebar = () => {
   };
 
   useEffect(() => {
-    const userInfo = localStorage.getItem("access token");
+    const userInfo = localStorage.getItem("userInfo");
 
     setUser(userInfo);
     // console.log(user);
 
     if (!userInfo) {
-      // navigate("/");
+      navigate("/");
     }
-  }, [user]);
+  }, [navigate]);
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
@@ -81,26 +80,18 @@ const Sidebar = () => {
         return err.response;
       });
   };
-  const handleAccessChat = () => {
-    dispatch(accessChatThunk("dfh"));
-  };
 
-  useEffect(
-    () => {
-      if (sm.isSuccess) {
-        if (sm.userList.length > 0) {
-          // console.log(sm.userList.length);
-          setSearchResultArray(sm.userList);
-          // console.log(searchResultArray);
-        }
-      } else {
-        setSearchResultArray([]);
+  useEffect(() => {
+    if (sm.isSuccess) {
+      if (sm.userList.length > 0) {
+        // console.log(sm.userList.length);
+        setSearchResultArray(sm.userList);
+        // console.log(searchResultArray);
       }
-    },
-    [sm.isSuccess],
-    [sm.userList],
-    [sm]
-  );
+    } else {
+      setSearchResultArray([]);
+    }
+  }, [sm.isSuccess, sm.userList]);
 
   return (
     <>
@@ -145,24 +136,18 @@ const Sidebar = () => {
             }}
           >
             <ProfileModal>
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
+              <MenuItem onClick={handleClose}>PROFILE</MenuItem>
             </ProfileModal>
-            <MenuItem
-              onClick={handleLogout}
-
-              // onClick={handleAccessChat}
-            >
-              Logout
-            </MenuItem>
+            <MenuItem onClick={handleLogout}>LOGOUT</MenuItem>
           </Menu>
         </div>
 
         {/* <div className="side-drawer"></div> */}
       </div>
-      <SwipeableDrawer placement="left" anchor="left" open="false">
+      {/* <SwipeableDrawer placement="left" anchor="left" open="false">
         <Box display={"flex"} pb={2}>
           <Input
-            placeholder="search y name or email"
+            placeholder="search a name or email"
             maxRows={2}
             value={search}
             onChange={handleSearch}
@@ -179,13 +164,12 @@ const Sidebar = () => {
                 name={userr.name}
                 username={userr.username}
                 key={userr._id}
-                onClick={handleAccessChat}
-                // handleFunction={() => dispatch(accessChatThunk(userr._id))}
+                profile_id={userr._id}
               />
             );
           })
         )}
-      </SwipeableDrawer>
+      </SwipeableDrawer> */}
       <ToastContainer />
     </>
   );
