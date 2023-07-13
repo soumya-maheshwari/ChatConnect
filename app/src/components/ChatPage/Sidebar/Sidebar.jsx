@@ -12,18 +12,21 @@ import { SwipeableDrawer } from "@mui/material";
 import { Box } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
 import UserList from "../../../components/ChatPage/Sidebar/UserList/UserList";
+import { useDispatch, useSelector } from "react-redux";
+import { searchUser } from "../../../Redux/searchSlice";
 
 const Sidebar = () => {
   // let isUerLoggedIn = localStorage.getItem("access token") ? true : false;
 
   // const userInfo = JSON.parse(localStorage.getItem("user token"));
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
+  const sm = useSelector((state) => state.search);
+  console.log(sm);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [search, setSearch] = useState("");
-  const [searchResult, setSearchResult] = useState([]);
+  const [searchResultArray, setSearchResultArray] = useState([]);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState();
   const open = Boolean(anchorEl);
@@ -48,7 +51,7 @@ const Sidebar = () => {
     const userInfo = localStorage.getItem("access token");
 
     setUser(userInfo);
-    console.log(user);
+    // console.log(user);
 
     if (!userInfo) {
       // navigate("/");
@@ -56,52 +59,34 @@ const Sidebar = () => {
   }, [user]);
   const handleSearch = (e) => {
     setSearch(e.target.value);
-    console.group(search);
+    // console.group(search);
   };
 
-  const handleUserSearch = async () => {
-    if (!search) {
-      toast.error("Please Enter something to search", {
-        position: "top-right",
-        theme: "DARK",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
-      return;
-    }
-    try {
-      setLoading(true);
-
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user}`,
-        },
-      };
-      console.log(config);
-
-      const { data } = await axios.get(
-        `http://localhost:5000/api/all_users?search=${search}}`
-      );
-      console.log(data);
-      setLoading(false);
-      setSearchResult(data);
-    } catch (error) {
-      console.log(error);
-      toast.error("Failed to Load the Search Results", {
-        position: "top-right",
-        theme: "DARK",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
-    }
+  const userData = {
+    search,
   };
-  // const sm = useSelector((state) => state.chat);
+  const handleUserSearch = () => {
+    dispatch(searchUser(userData))
+      .then((res) => {
+        console.log(res);
+        return res;
+      })
+      .catch((err) => {
+        console.log(err);
+        return err.response;
+      });
+  };
+  useEffect(() => {
+    if (sm.isSuccess) {
+      if (sm.userList.length > 0) {
+        console.log(sm.userList.length);
+        setSearchResultArray(sm.userList);
+        console.log(searchResultArray);
+      }
+    } else {
+      setSearchResultArray([]);
+    }
+  }, [sm]);
 
   return (
     <>
@@ -164,11 +149,17 @@ const Sidebar = () => {
           ></Input>
           <Button onClick={handleUserSearch}>GO</Button>
         </Box>
-        {loading
-          ? "errrorr"
-          : searchResult.map((user) => {
-              <UserList key={user._id} user={user} />;
-            })}
+        {searchResultArray.length > 0
+          ? searchResultArray.map((userr) => {
+              return (
+                <UserList
+                  name={userr.name}
+                  username={userr.username}
+                  email={userr.email}
+                />
+              );
+            })
+          : ""}
       </SwipeableDrawer>
       <ToastContainer />
     </>
