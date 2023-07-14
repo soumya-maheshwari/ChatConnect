@@ -4,6 +4,7 @@ import GroupChatModal from "../GroupChatModal/GroupChatModal";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { accesAllTheChatsThunk } from "../../../Redux/chatSlice";
+import { getSenderUser } from "../../../Redux/config/Helper";
 
 const Mychats = () => {
   const dispatch = useDispatch();
@@ -12,6 +13,9 @@ const Mychats = () => {
 
   const sm = useSelector((state) => state.chat);
 
+  const user = JSON.parse(localStorage.getItem("userInfo"));
+  const loggedUser = user.name;
+  // console.log(loggedUser);
   useEffect(() => {
     dispatch(accesAllTheChatsThunk());
   }, []);
@@ -19,8 +23,11 @@ const Mychats = () => {
   useEffect(() => {
     setChats(sm.chatArray);
   }, [sm.chatArray]);
+
   // console.log(sm);
+
   console.log(chats);
+
   return (
     <>
       <div className="my-chats">
@@ -58,15 +65,18 @@ const Mychats = () => {
             {chats ? (
               <Stack overflowY="scroll">
                 {chats.map((chat) => {
-                  <Box px={3} py={2} key={chat._id}>
-                    <p className="text" color="red"></p>;
-                  </Box>;
+                  return (
+                    <Box px={3} py={2} key={chat._id} bgcolor={"pink"}>
+                      <p>
+                        {!chat.isGroupChat
+                          ? getSenderUser(loggedUser, chat.users)
+                          : chat.chatName}
+                      </p>
+                    </Box>
+                  );
                 })}
               </Stack>
-            ) : (
-              "dkk"
-            )}
-            sm
+            ) : null}
           </Box>
         </Box>
       </div>
