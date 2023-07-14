@@ -30,9 +30,12 @@ const Sidebar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [search, setSearch] = useState("");
   const [searchResultArray, setSearchResultArray] = useState([]);
+  const [loadingChat, setLoadingChat] = useState(false);
   const [loading, setLoading] = useState(false);
+
   const [user, setUser] = useState();
   const open = Boolean(anchorEl);
+  const [selectedChat, setSelectedChat] = useState();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -44,9 +47,7 @@ const Sidebar = () => {
 
   const handleLogout = (e) => {
     localStorage.removeItem("userInfo");
-    // e.preventDefault();
 
-    // console.log("logout succcessful");
     return navigate("/");
   };
 
@@ -65,11 +66,23 @@ const Sidebar = () => {
     setSearch(e.target.value);
   };
 
-  const userData = {
-    search: search,
-  };
+  // const userData = {
+  //   search: search,
+  // };
 
   const handleUserSearch = () => {
+    if (!search) {
+      toast.error("Please enter something to search", {
+        position: "top-right",
+        // theme: "DARK",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      return;
+    }
     dispatch(searchUser(search))
       .then((res) => {
         // console.log(res);
@@ -90,6 +103,15 @@ const Sidebar = () => {
       }
     } else {
       setSearchResultArray([]);
+      // toast.error("Failed to load the chats", {
+      //   position: "top-right",
+      //   // theme: "DARK",
+      //   autoClose: 5000,
+      //   hideProgressBar: false,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      // });
     }
   }, [sm.isSuccess, sm.userList]);
 
@@ -144,7 +166,7 @@ const Sidebar = () => {
 
         {/* <div className="side-drawer"></div> */}
       </div>
-      {/* <SwipeableDrawer placement="left" anchor="left" open="false">
+      <SwipeableDrawer placement="left" anchor="left" open="false">
         <Box display={"flex"} pb={2}>
           <Input
             placeholder="search a name or email"
@@ -169,7 +191,7 @@ const Sidebar = () => {
             );
           })
         )}
-      </SwipeableDrawer> */}
+      </SwipeableDrawer>
       <ToastContainer />
     </>
   );

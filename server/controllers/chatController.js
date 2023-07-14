@@ -69,6 +69,7 @@ const fetchChats = async (req, res, next) => {
       },
     })
       .populate("users", "-password")
+      // .populate("groupAdmin", "-password")
       .populate("latestMessage")
       .sort({ updatedAt: -1 });
 

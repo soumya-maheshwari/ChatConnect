@@ -15,19 +15,39 @@ export const accessChatThunk = createAsyncThunk(
   "chat/accessChat",
   async (data) => {
     const user = JSON.parse(localStorage.getItem("userInfo"));
-    console.log(user);
-    console.log(user.accessToken);
+    // console.log(user.accessToken);
     const config = {
       headers: {
+        "Content-type": "application/json",
         Authorization: `Bearer ${user.accessToken}`,
       },
     };
 
-    // console.log(config, "config");
-
     return await axios
-      .get(`${backend}fetch_chat`, config)
+      .post(`${backend}create_chat`, data, config)
+
       .then((res) => {
+        console.log(res);
+        console.log(data);
+
+        return res;
+      })
+      .catch((err) => {
+        console.log(data);
+
+        console.log(err);
+        return err.response;
+      });
+  }
+);
+
+export const createGroupChat = createAsyncThunk(
+  "chat/create_GroupChat",
+  async (data) => {
+    return await axios
+      .get(`${backend}fetch_chat`, data)
+      .then((res) => {
+        console.log(data);
         console.log(res);
         return res;
       })
@@ -56,6 +76,18 @@ export const chatSlice = createSlice({
       .addCase(accessChatThunk.rejected, (state) => {
         state.isLoading = true;
         state.isError = true;
+      })
+      .addCase(createGroupChat.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createGroupChat.fulfilled, (state, action) => {
+        state.isLoading = false;
+        console.log(action.payload);
+      })
+      .addCase(createGroupChat.rejected, (state, action) => {
+        state.isLoading = true;
+        state.isError = true;
+        console.log(action.payload);
       });
   },
 });

@@ -4,7 +4,9 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { FormControl, Input } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 import { ModalFooter } from "react-bootstrap";
+import { createGroupChat } from "../../../Redux/chatSlice";
 
 const style = {
   position: "absolute",
@@ -19,16 +21,24 @@ const style = {
 };
 
 const GroupChatModal = () => {
+  const dispatch = useDispatch();
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [chatName, setChatName] = useState("");
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [searchResult, setSearchResult] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleChatName = (e) => {
     setChatName(e.target.value);
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    dispatch(createGroupChat());
+  };
+
   return (
     <>
       <div className="grp-chat-modal">
@@ -44,20 +54,7 @@ const GroupChatModal = () => {
               {/* Name : {sm.user.name} */}
               CREATE GROUP CHAT
             </Typography>
-            <Typography
-              id="modal-modal-description"
-              sx={{ mt: 2 }}
-              padding={"12px"}
-            >
-              {/* Username :{sm.user.username} */}
-            </Typography>
-            <Typography
-              id="modal-modal-description"
-              sx={{ mt: 2 }}
-              padding={"12px"}
-            >
-              {/* Email :{sm.user.email} */}
-            </Typography>
+
             <div>
               <FormControl>
                 <Input

@@ -10,11 +10,12 @@ const initialState = {
 };
 
 export const searchUser = createAsyncThunk("user/search", async (data) => {
-  const user = localStorage.getItem("userInfo");
-
+  const user = JSON.parse(localStorage.getItem("userInfo"));
+  // console.log(user);
+  // console.log(user.accessToken);
   const config = {
     headers: {
-      Authorization: `Bearer ${user.token}`,
+      Authorization: `Bearer ${user.accessToken}`,
     },
   };
 
@@ -46,8 +47,13 @@ export const searchSlice = createSlice({
         state.isLoading = false;
 
         // console.log(action.payload);
-        state.userList = action.payload.data;
-        state.isSuccess = true;
+        state.userList = action.payload.data.user;
+
+        if (action.payload.data.success) {
+          state.isSuccess = true;
+        } else {
+          state.isSuccess = false;
+        }
       })
       .addCase(searchUser.rejected, (state) => {
         state.isLoading = true;

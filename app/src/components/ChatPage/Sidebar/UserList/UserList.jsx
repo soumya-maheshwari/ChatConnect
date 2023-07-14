@@ -1,4 +1,4 @@
-import React, { useDebugValue } from "react";
+import React from "react";
 import { Box } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import "./userList.css";
@@ -7,10 +7,20 @@ import { accessChatThunk } from "../../../../Redux/chatSlice";
 const UserList = (props) => {
   const dispatch = useDispatch();
 
-  const sm = useSelector((state) => state.auth);
+  const sm = useSelector((state) => state.CHAT);
 
   const handleAccessChat = () => {
-    dispatch(accessChatThunk(props.profile_id));
+    const userId = props.profile_id;
+    dispatch(accessChatThunk({ userId }))
+      .then((res) => {
+        // console.log(userId);
+        console.log(res);
+        return res;
+      })
+      .catch((err) => {
+        console.log(err);
+        return err.response;
+      });
   };
 
   return (

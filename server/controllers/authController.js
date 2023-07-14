@@ -18,7 +18,7 @@ const home = (req, res, next) => {
 };
 
 const createAccessToken = (user) => {
-  return jwt.sign(user, process.env.JWT_ACCESS_KEY, { expiresIn: "1d" });
+  return jwt.sign(user, process.env.JWT_ACCESS_KEY, { expiresIn: "7d" });
 };
 
 const refreshToken = (req, res, next) => {
@@ -49,6 +49,7 @@ const login = async (req, res, next) => {
     if (!(email && password)) {
       return next(new ErrorHandler(400, "email and password is required"));
     }
+
     // check for user in database
     const user = await User.findOne({ email });
     console.log(user);
@@ -56,19 +57,10 @@ const login = async (req, res, next) => {
       return next(new ErrorHandler(404, "user not found"));
     }
 
-    const result = await bcrypt.compare(
-      password,
-      user.password
-      // function (err, res) {
-      //   if (err) {
-      //     console.log(err);
-      //   }
-      //   console.log(result);
-      // }
-    );
-    // console.log("result", result);
-    console.log(password);
-    console.log(user.password);
+    const result = await bcrypt.compare(password, user.password);
+
+    // console.log(password);
+    // console.log(user.password);
     if (!result) return next(new ErrorHandler(400, "Invalid Credentials"));
 
     const accessToken = createAccessToken({ id: user._id });
@@ -77,7 +69,7 @@ const login = async (req, res, next) => {
         id: user._id,
       },
       process.env.JWT_REFRESH_KEY,
-      { expiresIn: "1d" }
+      { expiresIn: "7d" }
     );
 
     return res.status(200).json({
@@ -86,7 +78,7 @@ const login = async (req, res, next) => {
       msg: `WELCOME !! login successful`,
       user,
       accessToken,
-      refreshToken,
+      // refreshToken,
     });
   } catch (error) {
     console.log(error);
@@ -138,7 +130,7 @@ const signup = async (req, res, next) => {
     });
 
     const savedUser = await user.save();
-    console.log(savedUser);
+    // console.log(savedUser);
     if (user.verify == true) {
       return next(new ErrorHandler(400, "user by this email already exists"));
     }
@@ -173,7 +165,10 @@ const getAllUsers = async (req, res, next) => {
     username: { $regex: search, $options: "i" },
   }).select("id email username name");
 
-  res.status(200).json(user);
+  res.status(200).json({
+    user,
+    success: true,
+  });
 };
 
 module.exports = {
