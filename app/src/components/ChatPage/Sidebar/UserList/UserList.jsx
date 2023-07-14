@@ -7,7 +7,7 @@ import { accessChatThunk } from "../../../../Redux/chatSlice";
 const UserList = (props) => {
   const dispatch = useDispatch();
 
-  const sm = useSelector((state) => state.CHAT);
+  const sm = useSelector((state) => state.chat);
 
   const handleAccessChat = () => {
     const userId = props.profile_id;

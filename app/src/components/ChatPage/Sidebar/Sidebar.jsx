@@ -166,7 +166,7 @@ const Sidebar = () => {
 
         {/* <div className="side-drawer"></div> */}
       </div>
-      <SwipeableDrawer placement="left" anchor="left" open="false">
+      {/* <SwipeableDrawer placement="left" anchor="left" open="false">
         <Box display={"flex"} pb={2}>
           <Input
             placeholder="search a name or email"
@@ -191,7 +191,7 @@ const Sidebar = () => {
             );
           })
         )}
-      </SwipeableDrawer>
+      </SwipeableDrawer> */}
       <ToastContainer />
     </>
   );

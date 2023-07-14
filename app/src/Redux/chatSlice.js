@@ -9,6 +9,7 @@ const initialState = {
   showToast: false,
   message: "",
   response: "",
+  chatArray: [],
 };
 
 export const accessChatThunk = createAsyncThunk(
@@ -27,20 +28,45 @@ export const accessChatThunk = createAsyncThunk(
       .post(`${backend}create_chat`, data, config)
 
       .then((res) => {
-        console.log(res);
-        console.log(data);
+        // console.log(res);
+        // console.log(data);
 
         return res;
       })
       .catch((err) => {
-        console.log(data);
+        // console.log(data);
 
-        console.log(err);
+        // console.log(err);
         return err.response;
       });
   }
 );
 
+export const accesAllTheChatsThunk = createAsyncThunk(
+  "chat/all_chats",
+  async (data) => {
+    const user = JSON.parse(localStorage.getItem("userInfo"));
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${user.accessToken}`,
+      },
+    };
+
+    return await axios
+      .get(`${backend}fetch_chat`, config)
+      .then((res) => {
+        console.log(res);
+
+        return res;
+      })
+      .catch((err) => {
+        console.log(err);
+        return err.response;
+      });
+  }
+);
 export const createGroupChat = createAsyncThunk(
   "chat/create_GroupChat",
   async (data) => {
@@ -77,18 +103,39 @@ export const chatSlice = createSlice({
         state.isLoading = true;
         state.isError = true;
       })
-      .addCase(createGroupChat.pending, (state) => {
+
+      .addCase(accesAllTheChatsThunk.pending, (state) => {
         state.isLoading = true;
+        // state.message = "";
       })
-      .addCase(createGroupChat.fulfilled, (state, action) => {
+      .addCase(accesAllTheChatsThunk.fulfilled, (state, action) => {
         state.isLoading = false;
+
+        if (action.payload.data.success) {
+          state.isSuccess = true;
+          state.chatArray = action.payload.data.user;
+        } else {
+          state.isSuccess = false;
+        }
         console.log(action.payload);
       })
-      .addCase(createGroupChat.rejected, (state, action) => {
+      .addCase(accesAllTheChatsThunk.rejected, (state) => {
         state.isLoading = true;
         state.isError = true;
-        console.log(action.payload);
       });
+
+    // .addCase(createGroupChat.pending, (state) => {
+    //   state.isLoading = true;
+    // })
+    // .addCase(createGroupChat.fulfilled, (state, action) => {
+    //   state.isLoading = false;
+    //   console.log(action.payload);
+    // })
+    // .addCase(createGroupChat.rejected, (state, action) => {
+    //   state.isLoading = true;
+    //   state.isError = true;
+    //   console.log(action.payload);
+    // });
   },
 });
 
