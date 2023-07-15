@@ -26,7 +26,7 @@ const Login = () => {
   const [bool, setBool] = useState(false);
 
   const sm = useSelector((state) => state.auth);
-  console.log(sm);
+  // console.log(sm);
 
   useEffect(() => {
     if (sm.message == "") {

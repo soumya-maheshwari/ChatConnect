@@ -26,7 +26,7 @@ const Mychats = () => {
 
   // console.log(sm);
 
-  console.log(chats);
+  // console.log(chats);
 
   return (
     <>
@@ -59,7 +59,7 @@ const Mychats = () => {
             flexDirection={"column"}
             width={"100%"}
             height={"100%"}
-            overflowY={"hidden"}
+            // overflowY={"hidden"}
             bgcolor={"#F8F8F8"}
           >
             {chats ? (

@@ -12,6 +12,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserList from "../Sidebar/UserList/UserList";
 import UserListItem from "./UserListItem/UserListItem";
+import UserBadge from "./UserBadge/UserBadge";
+// import { ModalFooter } from "react-bootstrap";
 
 const style = {
   position: "absolute",
@@ -28,6 +30,10 @@ const style = {
 const GroupChatModal = () => {
   const dispatch = useDispatch();
 
+  const n = useSelector((state) => state.chat);
+
+  console.log(n);
+
   const sm = useSelector((state) => state.search);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -37,17 +43,23 @@ const GroupChatModal = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [a, setA] = useState("");
 
   const handleChatName = (e) => {
     setGroupChatName(e.target.value);
   };
 
+  // const handleA = (e) => {
+  //   setA(e.target.value);
+  // };
+
   const userData = {
     name: groupChatName,
-    // users:JSON.stringify()
+    users_name: JSON.stringify(selectedUsers.map((u) => u._id)),
   };
+
   const handleSubmit = () => {
-    // dispatch(createGroupChat());
     if (!groupChatName) {
       toast.error("Please select all the fields", {
         position: "top-right",
@@ -71,15 +83,31 @@ const GroupChatModal = () => {
       });
   };
 
+  useEffect(() => {
+    if (n.isSuccess) {
+      toast.success(`${n.response}`, {
+        position: "top-right",
+        // theme: "DARK",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    }
+  }, [n]);
+
+  console.log(selectedUsers);
+
   const handleSearchUser = async (query) => {
     setSearch(query);
-
+    console.log(search);
     if (!query) {
       return;
     } else {
       try {
         setLoading(true);
-        dispatch(searchUser({ search }))
+        dispatch(searchUser(search))
           .then((res) => {
             // console.log(res);
             return res;
@@ -89,18 +117,35 @@ const GroupChatModal = () => {
             return err.response;
           });
       } catch (error) {
-        toast.error("Please enter something to search", {
-          position: "top-right",
-          // theme: "DARK",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
+        // toast.error("Please enter something to search", {
+        //   position: "top-right",
+        //   // theme: "DARK",
+        //   autoClose: 5000,
+        //   hideProgressBar: false,
+        //   closeOnClick: true,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        // });
         console.log(error);
         return error.response;
       }
+    }
+  };
+
+  const handleGroup = (userToAdd) => {
+    if (selectedUsers.includes(userToAdd)) {
+      toast.error("User already added in the group", {
+        position: "top-right",
+        // theme: "DARK",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      return;
+    } else {
+      setSelectedUsers([...selectedUsers, userToAdd]);
     }
   };
 
@@ -129,7 +174,6 @@ const GroupChatModal = () => {
         >
           <Box sx={style}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              {/* Name : {sm.user.name} */}
               CREATE GROUP CHAT
             </Typography>
 
@@ -150,28 +194,32 @@ const GroupChatModal = () => {
                 }}
               />
             </FormControl>
+            {selectedUsers.map((a) => {
+              return <UserBadge key={a._id} user={a} />;
+            })}
             {/* CHATS */}
             {loading
               ? null
-              : searchResult.map((userr) => {
+              : searchResult?.slice(0, 4).map((userr) => {
                   return (
                     <UserListItem
                       name={userr.name}
                       username={userr.username}
                       key={userr._id}
                       profile_id={userr._id}
+                      handleFunction={() => handleGroup(userr)}
                     />
                   );
                 })}
-            <ModalFooter>
-              <Button
-                variant="contained"
-                onClick={handleSubmit}
-                style={{ padding: "10px", marginTop: "10px" }}
-              >
-                CREATE
-              </Button>
-            </ModalFooter>
+            {/* <ModalFooter> */}
+            <Button
+              variant="contained"
+              onClick={handleSubmit}
+              style={{ padding: "10px", marginTop: "10px" }}
+            >
+              CREATE
+            </Button>
+            {/* </ModalFooter> */}
           </Box>
         </Modal>
       </div>

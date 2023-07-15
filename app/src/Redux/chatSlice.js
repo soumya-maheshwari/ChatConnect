@@ -138,6 +138,7 @@ export const chatSlice = createSlice({
       })
       .addCase(createGroupChat.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.response = action.payload.data.msg;
         console.log(action.payload);
         if (action.payload.data.success) {
           state.isSuccess = true;
