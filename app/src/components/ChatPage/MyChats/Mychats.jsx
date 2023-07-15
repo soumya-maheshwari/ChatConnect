@@ -4,7 +4,7 @@ import GroupChatModal from "../GroupChatModal/GroupChatModal";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { accesAllTheChatsThunk } from "../../../Redux/chatSlice";
-import { getSenderUser } from "../../../Redux/config/Helper";
+import { getSenderUser } from "../../../config/Helper";
 
 const Mychats = () => {
   const dispatch = useDispatch();

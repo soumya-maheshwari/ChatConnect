@@ -92,8 +92,9 @@ const Login = () => {
         pauseOnHover: true,
         draggable: true,
       });
-      navigate("/chat_page");
+      // navigate("/chat_page");
       localStorage.setItem("userInfo", JSON.stringify(sm.profile));
+      navigate("/chat_page");
     } else {
       if (showToast) {
         toast.error(`${sm.response}`, {

@@ -70,10 +70,19 @@ export const accesAllTheChatsThunk = createAsyncThunk(
 export const createGroupChat = createAsyncThunk(
   "chat/create_GroupChat",
   async (data) => {
+    const user = JSON.parse(localStorage.getItem("userInfo"));
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${user.accessToken}`,
+      },
+    };
+
     return await axios
-      .get(`${backend}fetch_chat`, data)
+
+      .post(`${backend}create_GroupChat`, data, config)
       .then((res) => {
-        console.log(data);
         console.log(res);
         return res;
       })
@@ -97,7 +106,7 @@ export const chatSlice = createSlice({
       })
       .addCase(accessChatThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log(action.payload);
+        // console.log(action.payload);
       })
       .addCase(accessChatThunk.rejected, (state) => {
         state.isLoading = true;
@@ -117,25 +126,30 @@ export const chatSlice = createSlice({
         } else {
           state.isSuccess = false;
         }
-        console.log(action.payload);
+        // console.log(action.payload);
       })
       .addCase(accesAllTheChatsThunk.rejected, (state) => {
         state.isLoading = true;
         state.isError = true;
-      });
+      })
 
-    // .addCase(createGroupChat.pending, (state) => {
-    //   state.isLoading = true;
-    // })
-    // .addCase(createGroupChat.fulfilled, (state, action) => {
-    //   state.isLoading = false;
-    //   console.log(action.payload);
-    // })
-    // .addCase(createGroupChat.rejected, (state, action) => {
-    //   state.isLoading = true;
-    //   state.isError = true;
-    //   console.log(action.payload);
-    // });
+      .addCase(createGroupChat.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createGroupChat.fulfilled, (state, action) => {
+        state.isLoading = false;
+        console.log(action.payload);
+        if (action.payload.data.success) {
+          state.isSuccess = true;
+        } else {
+          state.isSuccess = false;
+        }
+      })
+      .addCase(createGroupChat.rejected, (state, action) => {
+        state.isLoading = true;
+        state.isError = true;
+        console.log(action.payload);
+      });
   },
 });
 

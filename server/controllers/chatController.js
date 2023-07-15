@@ -125,6 +125,7 @@ const createGroupChat = async (req, res, next) => {
 
     res.status(200).json({
       fullGroupChat,
+      success: true,
       msg: "Group chat created successfully",
     });
     console.log(fullGroupChat);

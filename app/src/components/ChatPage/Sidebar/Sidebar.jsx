@@ -48,7 +48,7 @@ const Sidebar = () => {
   const handleLogout = (e) => {
     localStorage.removeItem("userInfo");
 
-    return navigate("/");
+    return navigate("/signup");
   };
 
   useEffect(() => {
