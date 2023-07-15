@@ -85,15 +85,15 @@ const GroupChatModal = () => {
 
   useEffect(() => {
     if (n.isSuccess) {
-      toast.success(`${n.response}`, {
-        position: "top-right",
-        // theme: "DARK",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
+      // toast.success(`${n.response}`, {
+      //   position: "top-right",
+      //   // theme: "DARK",
+      //   autoClose: 5000,
+      //   hideProgressBar: false,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      // });
     }
   }, [n]);
 
@@ -185,6 +185,13 @@ const GroupChatModal = () => {
                   value={groupChatName}
                 />
               </FormControl>
+              <Button
+                variant="contained"
+                // onClick={handleSubmit}
+                style={{ padding: "10px", marginTop: "10px" }}
+              >
+                UPDATE
+              </Button>
             </div>
             <FormControl>
               <Input

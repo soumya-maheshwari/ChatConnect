@@ -1,6 +1,7 @@
 import React from "react";
 import { Box } from "@mui/material";
-const ChatBox = () => {
+import SingleChat from "./SingleChat/SingleChat";
+const ChatBox = ({ fetchAgain, setFetchAgain }) => {
   return (
     <div>
       <Box
@@ -9,9 +10,13 @@ const ChatBox = () => {
         display={"flex"}
         p={3}
         color={"red"}
-        bgcolor={"green"}
+        // bgcolor={"green"}
       >
-        single chat
+        <SingleChat
+          fetchAgain={fetchAgain}
+          setFetchAgain={setFetchAgain}
+          display={"flex"}
+        />
       </Box>
     </div>
   );
