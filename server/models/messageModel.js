@@ -4,7 +4,7 @@ const messageSchema = mongoose.Schema(
   {
     sender: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "user",
+      ref: "User",
     },
     content: {
       type: String,
@@ -15,10 +15,10 @@ const messageSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Chat",
     },
-    readBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "user",
-    },
+    // readBy: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "user",
+    // },
   },
 
   { timestamps: true }

@@ -7,6 +7,8 @@ const DBconnect = require("./DBConnection");
 const app = express();
 const authRoutes = require("./routes/authRoutes");
 const chatRoutes = require("./routes/chatRoutes");
+const MessageRoutes = require("./routes/messageRoutes");
+
 const { errorMiddleware } = require("./middleware/ErrorHandler");
 const { authVerifyToken } = require("./middleware/authVerifyToken");
 app.use(express.json());
@@ -32,6 +34,8 @@ app.use(errorMiddleware);
 
 app.use("/api", authRoutes, errorMiddleware);
 app.use("/api/chat", chatRoutes, errorMiddleware);
+
+app.use("/api/messages", MessageRoutes, errorMiddleware);
 app.get("/protect", authVerifyToken, (req, res) => {
   const user = req.user;
 
