@@ -162,6 +162,9 @@ const GroupChatModal = () => {
     }
   }, [sm.isSuccess, sm.userList]);
 
+  const handleDelete = (deleteUser) => {
+    setSelectedUsers(selectedUsers.filter((sel) => sel._id !== deleteUser._id));
+  };
   return (
     <>
       <div className="grp-chat-modal">
@@ -185,13 +188,13 @@ const GroupChatModal = () => {
                   value={groupChatName}
                 />
               </FormControl>
-              <Button
+              {/* <Button
                 variant="contained"
                 // onClick={handleSubmit}
                 style={{ padding: "10px", marginTop: "10px" }}
               >
                 UPDATE
-              </Button>
+              </Button> */}
             </div>
             <FormControl>
               <Input
@@ -202,7 +205,15 @@ const GroupChatModal = () => {
               />
             </FormControl>
             {selectedUsers.map((a) => {
-              return <UserBadge key={a._id} user={a} />;
+              console.log(a);
+              return (
+                <UserBadge
+                  key={a._id}
+                  user={a}
+                  name={a.name}
+                  handleFunction={() => handleDelete(a)}
+                />
+              );
             })}
             {/* CHATS */}
             {loading

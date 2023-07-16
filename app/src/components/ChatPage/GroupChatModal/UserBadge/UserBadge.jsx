@@ -1,12 +1,15 @@
 import { Chip } from "@mui/material";
 import React from "react";
+import { RxCross2 } from "react-icons/rx";
 
-const UserBadge = (props, { handleFunction }) => {
+const UserBadge = (a, { handleFunction }) => {
   return (
     <div>
-      <Chip label={props.user.name} color="primary">
-        <div className="badge" onClick={handleFunction}>
+      {/* {console.log(a)} */}
+      <Chip label={a.name} color="primary">
+        <div className="badge">
           {/* {props.user.name} */}
+          <RxCross2 fontSize={"100px"} />
         </div>
       </Chip>
     </div>
