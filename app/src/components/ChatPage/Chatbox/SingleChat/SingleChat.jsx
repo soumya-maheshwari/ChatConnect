@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Input, TextField } from "@mui/material";
 import arrow from "../../../../assets/backArrow.svg";
 import { FormControl, Spinner } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { sendMessageThunk } from "../../../../Redux/messageSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchAllMessagesForAChatThunk,
+  sendMessageThunk,
+} from "../../../../Redux/messageSlice";
+import EmojiPicker from "emoji-picker-react";
+
 const SingleChat = ({
   fetchAgain,
   setFetchAgain,
@@ -47,6 +52,10 @@ const SingleChat = ({
     setMessageToSend(e.target.value);
   };
 
+  useEffect(() => {
+    dispatch(fetchAllMessagesForAChatThunk());
+  }, [dispatch]);
+
   return (
     <div>
       <Box
@@ -60,7 +69,7 @@ const SingleChat = ({
         height={"100vh"}
       >
         {/* <TextField> */}
-        <img src={arrow} alt="" onClick={() => setSelectedChat("")} />
+        {/* <img src={arrow} alt="" onClick={() => setSelectedChat("")} /> */}
         {/* </TextField> */}
         {selectedChat ? "chat name " : ""}
       </Box>
@@ -77,14 +86,25 @@ const SingleChat = ({
         ) : (
           <div className="messages">{/* messages */}</div>
         )}
-        <FormControl onKeyDown={sendMessage} required>
-          <Input
+        {/* <FormControl required> */}
+        {/* <input
             placeholder="enter a message to send"
-            bgcolor={"E0E0E0"}
+            // bgcolor={"E0E0E0"}
             value={messageToSend}
             onChange={handleMessageSend}
-          />
-        </FormControl>
+          /> */}
+
+        <input
+          // type={show ? "text" : "password"}
+          id="password"
+          name="password"
+          bgcolor={"red"}
+          // value={password}
+          // onChange={handlePassword}
+          required
+          className="input-field"
+        />
+        {/* </FormControl> */}
       </Box>
     </div>
   );
