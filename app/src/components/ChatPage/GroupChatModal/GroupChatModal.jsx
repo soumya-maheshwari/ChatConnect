@@ -67,6 +67,17 @@ const GroupChatModal = ({ children }) => {
       });
       return;
     }
+    if (selectedUsers.length < 2) {
+      toast.error("Please select atleast two users", {
+        position: "top-right",
+        // theme: "DARK",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    }
     dispatch(createGroupChat(userData))
       .then((res) => {
         // console.log(res);

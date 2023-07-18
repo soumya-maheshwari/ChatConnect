@@ -7,6 +7,7 @@ import { accesAllTheChatsThunk } from "../../../Redux/chatSlice";
 import { getSenderUser } from "../../../config/Helper";
 import SingleChat from "../Chatbox/SingleChat/SingleChat";
 import ChatLoading from "./ChatLoading/ChatLoading";
+import UpdatedGroupChatModal from "../UpdatedGroupChatModal/UpdatedGroupChatModal";
 
 const Mychats = ({ fetchAgain }) => {
   const dispatch = useDispatch();
@@ -45,6 +46,7 @@ const Mychats = ({ fetchAgain }) => {
   useEffect(() => {
     if (selectedChat) {
       setText("");
+      localStorage.setItem("chatInfo", JSON.stringify(selectedChat));
     }
   }, [selectedChat]);
 
@@ -81,9 +83,11 @@ const Mychats = ({ fetchAgain }) => {
             width={"100%"}
           >
             MY CHATS
-            <GroupChatModal>
+            <UpdatedGroupChatModal>
+              {/* <GroupChatModal> */}
               <Button display={"flex"}>+</Button>
-            </GroupChatModal>
+              {/* </GroupChatModal> */}
+            </UpdatedGroupChatModal>
           </Box>
           <Box
             display={"flex"}

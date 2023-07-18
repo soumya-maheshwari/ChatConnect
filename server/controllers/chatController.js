@@ -155,6 +155,7 @@ const renameGroup = async (req, res, next) => {
     } else {
       res.status(200).json({
         updatedChat,
+        success: true,
         msg: "Group renamed successfully",
       });
     }

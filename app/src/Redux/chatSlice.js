@@ -93,10 +93,34 @@ export const createGroupChat = createAsyncThunk(
   }
 );
 
+export const renameGroupThunk = createAsyncThunk(
+  "chat/renameGroup",
+  async (data) => {
+    const user = JSON.parse(localStorage.getItem("userInfo"));
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${user.accessToken}`,
+      },
+    };
+    return await axios
+
+      .patch(`${backend}rename_group`, data, config)
+      .then((res) => {
+        console.log(res);
+        return res;
+      })
+      .catch((err) => {
+        console.log(err);
+        return err.response;
+      });
+  }
+);
 export const chatSlice = createSlice({
   name: "chat",
   initialState: initialState,
-
+  reducers: {},
   extraReducers: (builder) => {
     builder
 
@@ -107,6 +131,7 @@ export const chatSlice = createSlice({
       })
       .addCase(accessChatThunk.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.message = "sdhkjnkj";
         // console.log(action.payload);
       })
       .addCase(accessChatThunk.rejected, (state) => {
@@ -153,6 +178,27 @@ export const chatSlice = createSlice({
         state.isLoading = true;
         state.isError = true;
         console.log(action.payload);
+      })
+
+      // RENAME GROUP
+      .addCase(renameGroupThunk.pending, (state) => {
+        state.isLoading = true;
+        // state.message = "";
+        state.isSuccess = false;
+      })
+      .addCase(renameGroupThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.response = action.payload.data.msg;
+        console.log(action.payload);
+        if (action.payload.data.success) {
+          // state.isSuccess = true;
+        } else {
+          state.isSuccess = false;
+        }
+      })
+      .addCase(renameGroupThunk.rejected, (state) => {
+        state.isLoading = true;
+        state.isError = true;
       });
   },
 });

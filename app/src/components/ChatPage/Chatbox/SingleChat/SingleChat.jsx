@@ -15,10 +15,10 @@ const SingleChat = ({
   // setSelectedChat,
   // bool,
 }) => {
-  const chatss = localStorage.getItem("chatInfo");
-  console.log(chatss);
+  const chatss = JSON.parse(localStorage.getItem("chatInfo"));
+  console.log(chatss._id);
   // console.log(selectedChat);
-
+  const chatid = chatss._id;
   const dispatch = useDispatch();
 
   const sm = useSelector((state) => state.message);
