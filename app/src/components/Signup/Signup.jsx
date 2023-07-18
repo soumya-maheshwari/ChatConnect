@@ -46,6 +46,7 @@ const Signup = () => {
   const handleName = (e) => {
     setName(e.target.value);
   };
+
   const handleShowHide = () => {
     setShow(!show);
   };
@@ -99,29 +100,30 @@ const Signup = () => {
         });
     }
 
-    try {
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-        },
-      };
-      const { data } = await axios.post(
-        "http://localhost:5000/api/all_users",
-        {
-          name,
-          email,
-          username,
-          password,
-        },
-        config
-      );
-      console.log(data, "data");
-      localStorage.setItem("userInfo", JSON.stringify(data));
-    } catch (error) {
-      console.log(error);
-      return error.response;
-    }
+    // try {
+    //   const config = {
+    //     headers: {
+    //       "Content-type": "application/json",
+    //     },
+    //   };
+    //   const { data } = await axios.post(
+    //     "http://localhost:5000/api/all_users",
+    //     {
+    //       name,
+    //       email,
+    //       username,
+    //       password,
+    //     },
+    //     config
+    //   );
+    //   console.log(data, "data");
+    //   localStorage.setItem("userInfo", JSON.stringify(data));
+    // } catch (error) {
+    //   console.log(error);
+    //   return error.response;
+    // }
   };
+
   useEffect(() => {
     if (sm.isSuccess) {
       toast.success(`${sm.response}`, {
@@ -150,6 +152,7 @@ const Signup = () => {
     }
     // localStorage.setItem("userInfo", JSON.stringify(data));
   }, [showToast]);
+
   return (
     <>
       <div className="signup">

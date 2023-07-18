@@ -35,7 +35,7 @@ app.use(errorMiddleware);
 app.use("/api", authRoutes, errorMiddleware);
 app.use("/api/chat", chatRoutes, errorMiddleware);
 
-app.use("/api/messages", MessageRoutes, errorMiddleware);
+app.use("/api/message", MessageRoutes, errorMiddleware);
 app.get("/protect", authVerifyToken, (req, res) => {
   const user = req.user;
 

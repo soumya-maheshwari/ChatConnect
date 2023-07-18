@@ -27,6 +27,7 @@ const Sidebar = () => {
   const sm = useSelector((state) => state.search);
   // console.log(sm);
 
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [search, setSearch] = useState("");
   const [searchResultArray, setSearchResultArray] = useState([]);
@@ -64,6 +65,9 @@ const Sidebar = () => {
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
+  };
+  const handleDrawerToggle = () => {
+    setIsDrawerOpen(!isDrawerOpen);
   };
 
   // const userData = {
@@ -125,7 +129,12 @@ const Sidebar = () => {
           // onClose={handleClose}
         >
           <Button className="btn">
-            <img src={search_icon} alt="search" className="search" />
+            <img
+              src={search_icon}
+              alt="search"
+              className="search"
+              onClick={handleDrawerToggle}
+            />
             Search user
           </Button>
         </Tooltip>
@@ -166,7 +175,7 @@ const Sidebar = () => {
 
         {/* <div className="side-drawer"></div> */}
       </div>
-      {/* <SwipeableDrawer placement="left" anchor="left" open="false">
+      <SwipeableDrawer placement="left" anchor="left" open={isDrawerOpen}>
         <Box display={"flex"} pb={2}>
           <Input
             placeholder="search a name or email"
@@ -191,7 +200,7 @@ const Sidebar = () => {
             );
           })
         )}
-      </SwipeableDrawer> */}
+      </SwipeableDrawer>
       <ToastContainer />
     </>
   );

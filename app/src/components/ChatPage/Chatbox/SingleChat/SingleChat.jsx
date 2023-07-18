@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Input, TextField } from "@mui/material";
+import { Box, FormControlLabel, Input, TextField } from "@mui/material";
 import arrow from "../../../../assets/backArrow.svg";
 import { FormControl, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,35 +7,46 @@ import {
   fetchAllMessagesForAChatThunk,
   sendMessageThunk,
 } from "../../../../Redux/messageSlice";
-import EmojiPicker from "emoji-picker-react";
 
 const SingleChat = ({
   fetchAgain,
   setFetchAgain,
   selectedChat,
-  setSelectedChat,
-  bool,
+  // setSelectedChat,
+  // bool,
 }) => {
+  const chatss = localStorage.getItem("chatInfo");
+  console.log(chatss);
+  // console.log(selectedChat);
+
   const dispatch = useDispatch();
+
   const sm = useSelector((state) => state.message);
 
   const [loading, setLoading] = useState();
 
   const [messageToSend, setMessageToSend] = useState("");
   const [allMessages, setAllMessages] = useState();
+  const [typing, setTyping] = useState(false);
+  const [istyping, setIsTyping] = useState(false);
+
   console.log(sm);
 
   const userData = {
     content: messageToSend,
-    // chatId:
+    chatId: chatss,
   };
+
+  console.log(userData, "user data");
   useEffect(() => {
     setLoading(sm.isLoading);
   }, [sm]);
 
   const sendMessage = (e) => {
     if (e.key === "Enter" && messageToSend) {
-      dispatch(sendMessageThunk())
+      // localStorage.setItem("messageInfo", JSON.stringify(userData));
+
+      dispatch(sendMessageThunk(userData))
         .then((res) => {
           console.log(res);
           return res;
@@ -52,9 +63,17 @@ const SingleChat = ({
     setMessageToSend(e.target.value);
   };
 
-  useEffect(() => {
-    dispatch(fetchAllMessagesForAChatThunk());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchAllMessagesForAChatThunk(selectedChat))
+  //     .then((res) => {
+  //       console.log(res);
+  //       return res;
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       return err.response;
+  //     });
+  // }, [dispatch]);
 
   return (
     <div>
@@ -68,44 +87,19 @@ const SingleChat = ({
         // height={"100%"}
         height={"100vh"}
       >
-        {/* <TextField> */}
-        {/* <img src={arrow} alt="" onClick={() => setSelectedChat("")} /> */}
-        {/* </TextField> */}
-        {selectedChat ? "chat name " : ""}
+        {/* {selectedChat ? "chat name " : ""} */}
       </Box>
-      <Box
-        alignItems={"center"}
-        flexDirection={"column"}
-        display={"flex"}
-        p={3}
-        color={"red"}
-        bgcolor={"#E8E8E8"}
-      >
-        {loading ? (
-          <Spinner />
-        ) : (
-          <div className="messages">{/* messages */}</div>
-        )}
-        {/* <FormControl required> */}
-        {/* <input
-            placeholder="enter a message to send"
-            // bgcolor={"E0E0E0"}
-            value={messageToSend}
-            onChange={handleMessageSend}
-          /> */}
 
-        <input
-          // type={show ? "text" : "password"}
-          id="password"
-          name="password"
-          bgcolor={"red"}
-          // value={password}
-          // onChange={handlePassword}
-          required
-          className="input-field"
-        />
-        {/* </FormControl> */}
-      </Box>
+      {/* <FormControl> */}
+      <Input
+        isRequired
+        type="text"
+        placeholder="enter message"
+        onKeyDown={sendMessage}
+        value={messageToSend}
+        onChange={handleMessageSend}
+      />
+      {/* </FormControl> */}
     </div>
   );
 };

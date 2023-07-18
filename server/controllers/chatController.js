@@ -69,7 +69,7 @@ const fetchChats = async (req, res, next) => {
       },
     })
       .populate("users", "-password")
-      // .populate("groupAdmin", "-password")
+      .populate("groupAdmin", "-password")
       .populate("latestMessage")
       .sort({ updatedAt: -1 });
 
@@ -102,7 +102,7 @@ const createGroupChat = async (req, res, next) => {
     console.log(users, "users");
     const userid = req.user._id;
     console.log(userid, "userid");
-    if (users < 2) {
+    if (users.length < 2) {
       next(
         new ErrorHandler(400, "More than 2 users are required to form a group")
       );

@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
-// const { User } = require("../models");
 const User = require("../models/userModel");
 const { ErrorHandler } = require("../middleware/ErrorHandler");
 const { validatepassword, validatemail } = require("../utils/validations");
@@ -40,6 +39,7 @@ const refreshToken = (req, res, next) => {
     console.log(err);
   }
 };
+
 const login = async (req, res, next) => {
   try {
     //    Destructuring email and password from body
@@ -82,7 +82,6 @@ const login = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-    // "$2b$12$Km3GYx3QaWkPNsvUWobDDe7xvqANJALDvLycBiNARrgkGpVfOUmGy"
     next(error);
   }
 };

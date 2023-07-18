@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { accesAllTheChatsThunk } from "../../../Redux/chatSlice";
 import { getSenderUser } from "../../../config/Helper";
 import SingleChat from "../Chatbox/SingleChat/SingleChat";
+import ChatLoading from "./ChatLoading/ChatLoading";
 
 const Mychats = ({ fetchAgain }) => {
   const dispatch = useDispatch();
@@ -15,14 +16,27 @@ const Mychats = ({ fetchAgain }) => {
   const [name, setName] = useState("");
   const [text, setText] = useState("click on a user to start chatting");
   const sm = useSelector((state) => state.chat);
-
+  const [logggedUser, setLogggedUser] = useState();
   const user = JSON.parse(localStorage.getItem("userInfo"));
   const loggedUser = user.name;
   // console.log(loggedUser);
   useEffect(() => {
-    dispatch(accesAllTheChatsThunk());
-    setBool(true);
+    setLogggedUser(JSON.parse(localStorage.getItem("userInfo")));
+
+    dispatch(accesAllTheChatsThunk())
+      .then((res) => {
+        console.log(res);
+        return res;
+      })
+      .catch((err) => {
+        console.log(err);
+        return err.reponse;
+      });
+    // setBool(true);
   }, [fetchAgain]);
+  useEffect(() => {
+    console.log(selectedChat);
+  }, [selectedChat]);
 
   useEffect(() => {
     setChats(sm.chatArray);
@@ -33,6 +47,12 @@ const Mychats = ({ fetchAgain }) => {
       setText("");
     }
   }, [selectedChat]);
+
+  console.log(selectedChat);
+  // localStorage.setItem("chatInfo", selectedChat._id);
+  // useEffect(() => {
+  //   setLogggedUser(JSON.parse(localStorage.getItem("userInfo")));
+  // }, [fetchAgain]);
 
   // console.log(sm);
 
@@ -48,6 +68,7 @@ const Mychats = ({ fetchAgain }) => {
           bgcolor={"gold"}
           borderRadius={"2px"}
           width={"100%"}
+          display={"flex"}
         >
           <Box
             pb={3}
@@ -71,6 +92,8 @@ const Mychats = ({ fetchAgain }) => {
             height={"100%"}
             // overflowY={"hidden"}
             bgcolor={"#F8F8F8"}
+            padding={3}
+            overflow={"hidden"}
           >
             {chats ? (
               <Stack overflowY="scroll">
@@ -81,7 +104,6 @@ const Mychats = ({ fetchAgain }) => {
                         px={3}
                         py={2}
                         key={chat._id}
-                        // bgcolor={"pink"}
                         onClick={() => setSelectedChat(chat)}
                         cursor={"pointer"}
                         bgcolor={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
@@ -89,7 +111,7 @@ const Mychats = ({ fetchAgain }) => {
                       >
                         <p>
                           {!chat.isGroupChat
-                            ? getSenderUser(loggedUser, chat.users)
+                            ? getSenderUser(logggedUser, chat.users)
                             : chat.chatName}
                         </p>
                       </Box>
@@ -97,18 +119,13 @@ const Mychats = ({ fetchAgain }) => {
                   );
                 })}
               </Stack>
-            ) : null}
+            ) : (
+              <ChatLoading />
+            )}
           </Box>
         </Box>
       </div>
       {text}
-      {selectedChat && (
-        <SingleChat
-          selectedChat={selectedChat}
-          bool={bool}
-          setSelectedChat={setSelectedChat}
-        />
-      )}
     </>
   );
 };

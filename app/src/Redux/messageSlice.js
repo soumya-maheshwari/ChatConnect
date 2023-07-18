@@ -8,6 +8,7 @@ const initialState = {
   isSuccess: false,
   isLoading: false,
   showToast: false,
+  currentChat: "",
   message: "",
   response: "",
 };
@@ -38,7 +39,7 @@ export const sendMessageThunk = createAsyncThunk(
 );
 
 export const fetchAllMessagesForAChatThunk = createAsyncThunk(
-  "message/fetch_AllChats",
+  "message/fetch_AllMessages",
   async (data) => {
     const user = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -70,6 +71,7 @@ export const messageSlice = createSlice({
   extraReducers: (builder) => {
     builder
 
+      // SEND MESSAGE
       .addCase(sendMessageThunk.pending, (state) => {
         state.isLoading = true;
       })
@@ -77,6 +79,13 @@ export const messageSlice = createSlice({
       .addCase(sendMessageThunk.fulfilled, (state, action) => {
         state.isLoading = false;
         console.log(action.payload);
+        if (action.payload.data.success) {
+          state.isSuccess = true;
+          state.currentChat = action.payload;
+        } else {
+          state.isSuccess = false;
+          state.isError = true;
+        }
       })
 
       .addCase(sendMessageThunk.rejected, (state) => {
@@ -84,6 +93,7 @@ export const messageSlice = createSlice({
         state.isError = true;
       })
 
+      // FETCH ALL MESSAGES IN A CHAT
       .addCase(fetchAllMessagesForAChatThunk.pending, (state) => {
         state.isLoading = true;
       })

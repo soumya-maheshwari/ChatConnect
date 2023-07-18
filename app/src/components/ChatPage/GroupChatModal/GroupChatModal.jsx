@@ -27,7 +27,7 @@ const style = {
   p: 6,
 };
 
-const GroupChatModal = () => {
+const GroupChatModal = ({ children }) => {
   const dispatch = useDispatch();
 
   const n = useSelector((state) => state.chat);
@@ -44,15 +44,10 @@ const GroupChatModal = () => {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [selectedUsers, setSelectedUsers] = useState([]);
-  const [a, setA] = useState("");
 
   const handleChatName = (e) => {
     setGroupChatName(e.target.value);
   };
-
-  // const handleA = (e) => {
-  //   setA(e.target.value);
-  // };
 
   const userData = {
     name: groupChatName,
@@ -60,7 +55,7 @@ const GroupChatModal = () => {
   };
 
   const handleSubmit = () => {
-    if (!groupChatName) {
+    if (!groupChatName || !selectedUsers) {
       toast.error("Please select all the fields", {
         position: "top-right",
         // theme: "DARK",
@@ -83,19 +78,19 @@ const GroupChatModal = () => {
       });
   };
 
-  useEffect(() => {
-    if (n.isSuccess) {
-      // toast.success(`${n.response}`, {
-      //   position: "top-right",
-      //   // theme: "DARK",
-      //   autoClose: 5000,
-      //   hideProgressBar: false,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      // });
-    }
-  }, [n]);
+  // useEffect(() => {
+  //   if (n.isSuccess) {
+  //     // toast.success(`${n.response}`, {
+  //     //   position: "top-right",
+  //     //   // theme: "DARK",
+  //     //   autoClose: 5000,
+  //     //   hideProgressBar: false,
+  //     //   closeOnClick: true,
+  //     //   pauseOnHover: true,
+  //     //   draggable: true,
+  //     // });
+  //   }
+  // }, [n]);
 
   console.log(selectedUsers);
 
@@ -188,13 +183,6 @@ const GroupChatModal = () => {
                   value={groupChatName}
                 />
               </FormControl>
-              {/* <Button
-                variant="contained"
-                // onClick={handleSubmit}
-                style={{ padding: "10px", marginTop: "10px" }}
-              >
-                UPDATE
-              </Button> */}
             </div>
             <FormControl>
               <Input

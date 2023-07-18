@@ -1,21 +1,24 @@
 import React from "react";
 import { Box } from "@mui/material";
+
 import SingleChat from "./SingleChat/SingleChat";
+
 const ChatBox = ({ fetchAgain, setFetchAgain }) => {
   return (
-    <div>
+    <div bgcolor="pink" color="red">
       <Box
         alignItems={"center"}
         flexDirection={"column"}
         display={"flex"}
-        p={3}
+        // p={3}
+        width={"100%"}
         color={"red"}
-        // bgcolor={"green"}
+        bgcolor={"pink"}
       >
         <SingleChat
           fetchAgain={fetchAgain}
           setFetchAgain={setFetchAgain}
-          display={"flex"}
+          // display={"flex"}
         />
       </Box>
     </div>

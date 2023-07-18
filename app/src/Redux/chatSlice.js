@@ -57,12 +57,12 @@ export const accesAllTheChatsThunk = createAsyncThunk(
     return await axios
       .get(`${backend}fetch_chat`, config)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
 
         return res;
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         return err.response;
       });
   }
@@ -96,10 +96,11 @@ export const createGroupChat = createAsyncThunk(
 export const chatSlice = createSlice({
   name: "chat",
   initialState: initialState,
-  reducers: {},
+
   extraReducers: (builder) => {
     builder
 
+      // CREATE CHAT
       .addCase(accessChatThunk.pending, (state) => {
         state.isLoading = true;
         // state.message = "";
@@ -113,6 +114,7 @@ export const chatSlice = createSlice({
         state.isError = true;
       })
 
+      // ACCESS ALL THE CHATS FOR A USER
       .addCase(accesAllTheChatsThunk.pending, (state) => {
         state.isLoading = true;
         // state.message = "";
@@ -133,6 +135,7 @@ export const chatSlice = createSlice({
         state.isError = true;
       })
 
+      // CREATE GROUPCHAT
       .addCase(createGroupChat.pending, (state) => {
         state.isLoading = true;
       })
