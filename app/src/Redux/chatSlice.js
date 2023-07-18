@@ -117,6 +117,31 @@ export const renameGroupThunk = createAsyncThunk(
       });
   }
 );
+
+export const addUserToGroupThunk = createAsyncThunk(
+  "chat/addUser",
+  async (data) => {
+    const user = JSON.parse(localStorage.getItem("userInfo"));
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${user.accessToken}`,
+      },
+    };
+    return await axios
+
+      .patch(`${backend}add_user`, data, config)
+      .then((res) => {
+        console.log(res);
+        return res;
+      })
+      .catch((err) => {
+        console.log(err);
+        return err.response;
+      });
+  }
+);
 export const chatSlice = createSlice({
   name: "chat",
   initialState: initialState,
@@ -197,6 +222,27 @@ export const chatSlice = createSlice({
         }
       })
       .addCase(renameGroupThunk.rejected, (state) => {
+        state.isLoading = true;
+        state.isError = true;
+      })
+
+      // ADD USER TO THE GROUP
+      .addCase(addUserToGroupThunk.pending, (state) => {
+        state.isLoading = true;
+        // state.message = "";
+        state.isSuccess = false;
+      })
+      .addCase(addUserToGroupThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.response = action.payload.data.msg;
+        console.log(action.payload);
+        if (action.payload.data.success) {
+          // state.isSuccess = true;
+        } else {
+          state.isSuccess = false;
+        }
+      })
+      .addCase(addUserToGroupThunk.rejected, (state) => {
         state.isLoading = true;
         state.isError = true;
       });

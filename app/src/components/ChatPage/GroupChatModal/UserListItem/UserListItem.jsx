@@ -5,24 +5,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 const UserListItem = (props) => {
   const { handleFunction } = props;
-  // const [selectedUsers, setSelectedUsers] = useState([]);
-
-  // const handleGroup = (userToAdd) => {
-  //   if (selectedUsers.includes(userToAdd)) {
-  //     toast.error("User already added in the group", {
-  //       position: "top-right",
-  //       // theme: "DARK",
-  //       autoClose: 5000,
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //     });
-  //     return;
-  //   } else {
-  //     setSelectedUsers([...selectedUsers, userToAdd]);
-  // }
-  // };
 
   return (
     <div>

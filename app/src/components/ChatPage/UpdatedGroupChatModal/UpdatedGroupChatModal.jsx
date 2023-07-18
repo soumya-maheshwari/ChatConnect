@@ -7,8 +7,13 @@ import { FormControl, Input } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
-import { renameGroupThunk } from "../../../Redux/chatSlice";
-
+import {
+  addUserToGroupThunk,
+  renameGroupThunk,
+} from "../../../Redux/chatSlice";
+import { searchUser } from "../../../Redux/searchSlice";
+import UserBadge from "../GroupChatModal/UserBadge/UserBadge";
+import UserListItem from "../GroupChatModal/UserListItem/UserListItem";
 const style = {
   position: "absolute",
   top: "50%",
@@ -26,6 +31,12 @@ const UpdatedGroupChatModal = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [groupChatName, setGroupChatName] = useState();
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+  const sm = useSelector((state) => state.search);
+  const [chats, setChats] = useState();
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [searchResult, setSearchResult] = useState([]);
 
   const chatss = JSON.parse(localStorage.getItem("chatInfo"));
   // console.log(chatss._id);
@@ -34,6 +45,12 @@ const UpdatedGroupChatModal = () => {
     chatName: groupChatName,
     chatId: chatid,
   };
+
+  const userData2 = {
+    chatid: chatid,
+    userId: selectedUsers._id,
+  };
+  console.log(userData2);
   const handleGroupChatName = (e) => {
     setGroupChatName(e.target.value);
   };
@@ -63,19 +80,67 @@ const UpdatedGroupChatModal = () => {
       });
   };
 
-  // useEffect(() => {
-  // if (sm.isSuccess) {
-  //   toast.success("Group renamed successfully", {
-  //     position: "top-right",
-  //     // theme: "DARK",
-  //     autoClose: 5000,
-  //     hideProgressBar: false,
-  //     closeOnClick: true,
-  //     pauseOnHover: true,
-  //     draggable: true,
-  //   });
-  // }
-  // }, [sm]);
+  const handleSearchUser = async (query) => {
+    setSearch(query);
+    console.log(search);
+    if (!query) {
+      return;
+    } else {
+      try {
+        setLoading(true);
+        dispatch(searchUser(search))
+          .then((res) => {
+            // console.log(res);
+            return res;
+          })
+          .catch((err) => {
+            // console.log(err);
+            return err.response;
+          });
+      } catch (error) {
+        console.log(error);
+        return error.response;
+      }
+    }
+  };
+  useEffect(() => {
+    setChats(sm.chatArray);
+  }, [sm.chatArray]);
+
+  useEffect(() => {
+    if (sm.isSuccess) {
+      // if (sm.userList.length > 0) {
+      setLoading(false);
+      // console.log(sm.userList.length);
+      setSearchResult(sm.userList);
+      // console.log(searchResultArray);
+      // }
+    } else {
+      setSearchResult([]);
+    }
+  }, [sm.isSuccess, sm.userList]);
+
+  const handleGroup = (userToAdd) => {
+    if (selectedUsers.includes(userToAdd)) {
+      toast.error("User already added in the group", {
+        position: "top-right",
+        // theme: "DARK",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      return;
+    } else {
+      setSelectedUsers([...selectedUsers, userToAdd]);
+    }
+  };
+
+  const handleAddUser = () => {
+    // alert("j");
+    dispatch(addUserToGroupThunk(userData2));
+  };
   return (
     <div>
       <>
@@ -107,10 +172,42 @@ const UpdatedGroupChatModal = () => {
                   UPDATE
                 </Button>
               </div>
+              <FormControl>
+                <Input
+                  placeholder="Add Users"
+                  onChange={(e) => {
+                    handleSearchUser(e.target.value);
+                  }}
+                />
+              </FormControl>
+              {selectedUsers.map((a) => {
+                console.log(a);
+                return (
+                  <div className="badge" onClick={handleAddUser}>
+                    <UserBadge
+                      key={a._id}
+                      user={a}
+                      name={a.name}
+                      // onClick={handleAddUser}
+                    />
+                  </div>
+                );
+              })}
 
-              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                {/* Duis mollis, est non commodo luctus, nisi erat porttitor ligula. */}
-              </Typography>
+              {/* /// */}
+              {loading
+                ? null
+                : searchResult?.slice(0, 4).map((userr) => {
+                    return (
+                      <UserListItem
+                        name={userr.name}
+                        username={userr.username}
+                        key={userr._id}
+                        profile_id={userr._id}
+                        handleFunction={() => handleGroup(userr)}
+                      />
+                    );
+                  })}
             </Box>
           </Modal>
         </div>

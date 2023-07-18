@@ -83,11 +83,9 @@ const Mychats = ({ fetchAgain }) => {
             width={"100%"}
           >
             MY CHATS
-            <UpdatedGroupChatModal>
-              {/* <GroupChatModal> */}
+            <GroupChatModal>
               <Button display={"flex"}>+</Button>
-              {/* </GroupChatModal> */}
-            </UpdatedGroupChatModal>
+            </GroupChatModal>
           </Box>
           <Box
             display={"flex"}

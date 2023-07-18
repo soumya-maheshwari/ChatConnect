@@ -89,20 +89,6 @@ const GroupChatModal = ({ children }) => {
       });
   };
 
-  // useEffect(() => {
-  //   if (n.isSuccess) {
-  //     // toast.success(`${n.response}`, {
-  //     //   position: "top-right",
-  //     //   // theme: "DARK",
-  //     //   autoClose: 5000,
-  //     //   hideProgressBar: false,
-  //     //   closeOnClick: true,
-  //     //   pauseOnHover: true,
-  //     //   draggable: true,
-  //     // });
-  //   }
-  // }, [n]);
-
   console.log(selectedUsers);
 
   const handleSearchUser = async (query) => {
@@ -123,15 +109,6 @@ const GroupChatModal = ({ children }) => {
             return err.response;
           });
       } catch (error) {
-        // toast.error("Please enter something to search", {
-        //   position: "top-right",
-        //   // theme: "DARK",
-        //   autoClose: 5000,
-        //   hideProgressBar: false,
-        //   closeOnClick: true,
-        //   pauseOnHover: true,
-        //   draggable: true,
-        // });
         console.log(error);
         return error.response;
       }

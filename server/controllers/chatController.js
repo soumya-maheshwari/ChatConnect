@@ -171,11 +171,11 @@ const addUserToGroup = async (req, res, next) => {
 
     const addUser = await Chat.findByIdAndUpdate(
       chatId,
-      {
-        $push: {
-          users: userId,
-        },
-      },
+      // {
+      //   $push: {
+      //     users: userId,
+      //   },
+      // },
       {
         new: true,
       }
