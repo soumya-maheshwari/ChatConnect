@@ -32,7 +32,7 @@ const GroupChatModal = ({ children }) => {
 
   const n = useSelector((state) => state.chat);
 
-  console.log(n);
+  // console.log(n);
 
   const sm = useSelector((state) => state.search);
   const [open, setOpen] = React.useState(false);
@@ -89,7 +89,7 @@ const GroupChatModal = ({ children }) => {
       });
   };
 
-  console.log(selectedUsers);
+  // console.log(selectedUsers);
 
   const handleSearchUser = async (query) => {
     setSearch(query);

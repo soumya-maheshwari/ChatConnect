@@ -8,6 +8,7 @@ const initialState = {
   isSuccess: false,
   isLoading: false,
   showToast: false,
+  messagesArray: "",
   currentChat: "",
   message: "",
   response: "",
@@ -51,8 +52,10 @@ export const fetchAllMessagesForAChatThunk = createAsyncThunk(
     };
 
     return await axios
-      .get(`${backend}${data}`, config)
+      .get(`${backend}${data}`, data)
       .then((res) => {
+        console.log(`${backend}${data}`);
+        console.log(data);
         console.log(res);
         return res;
       })
@@ -101,6 +104,13 @@ export const messageSlice = createSlice({
       .addCase(fetchAllMessagesForAChatThunk.fulfilled, (state, action) => {
         state.isLoading = false;
         console.log(action.payload);
+        if (action.payload.data.success) {
+          state.isSuccess = true;
+          state.messagesArray = action.payload.data.messages;
+        } else {
+          state.isSuccess = false;
+          state.isError = true;
+        }
       })
 
       .addCase(fetchAllMessagesForAChatThunk.rejected, (state) => {

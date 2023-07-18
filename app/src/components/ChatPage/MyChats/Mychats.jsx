@@ -50,7 +50,7 @@ const Mychats = ({ fetchAgain }) => {
     }
   }, [selectedChat]);
 
-  console.log(selectedChat);
+  // console.log(selectedChat);
   // localStorage.setItem("chatInfo", selectedChat._id);
   // useEffect(() => {
   //   setLogggedUser(JSON.parse(localStorage.getItem("userInfo")));

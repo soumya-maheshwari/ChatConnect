@@ -6,9 +6,8 @@ const { ErrorHandler } = require("../middleware/ErrorHandler");
 
 const fetchAllMessages = async (req, res, next) => {
   try {
-    const { chatId } = req.params.chatId;
-    console.log(chatId);
-    const messages = await Message.find({ chat: chatId })
+    console.log(req.params.chatId);
+    const messages = await Message.find({ chat: req.params.chatId })
       .populate("sender", "name email username")
       .populate("chat");
 

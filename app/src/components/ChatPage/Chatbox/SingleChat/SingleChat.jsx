@@ -16,28 +16,27 @@ const SingleChat = ({
   // bool,
 }) => {
   const chatss = JSON.parse(localStorage.getItem("chatInfo"));
-  console.log(chatss._id);
-  // console.log(selectedChat);
-  const chatid = chatss._id;
+  // console.log(chatss._id);
+  const chatid = chatss ? chatss._id : null;
   const dispatch = useDispatch();
 
   const sm = useSelector((state) => state.message);
-
+  console.log(sm.messagesArray);
   const [loading, setLoading] = useState();
 
   const [messageToSend, setMessageToSend] = useState("");
-  const [allMessages, setAllMessages] = useState();
+  const [allMessages, setAllMessages] = useState([]);
   const [typing, setTyping] = useState(false);
   const [istyping, setIsTyping] = useState(false);
 
-  console.log(sm);
+  // console.log(sm);
 
   const userData = {
     content: messageToSend,
     chatId: chatss,
   };
 
-  console.log(userData, "user data");
+  // console.log(userData, "user data");
   useEffect(() => {
     setLoading(sm.isLoading);
   }, [sm]);
@@ -48,12 +47,12 @@ const SingleChat = ({
 
       dispatch(sendMessageThunk(userData))
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           return res;
         })
         .catch((err) => {
-          console.log(err);
-          alert("failed to send the message");
+          // console.log(err);
+          // alert("failed to send the message");
           return err.response;
         });
     }
@@ -63,6 +62,26 @@ const SingleChat = ({
     setMessageToSend(e.target.value);
   };
 
+  // const userData3 = {
+  //   chatid,
+  // };
+  const handleFetchMessages = () => {
+    dispatch(fetchAllMessagesForAChatThunk(chatid))
+      .then((res) => {
+        console.log(res);
+        // setAllMessages(sm.messageArray);
+        return res;
+      })
+      .catch((err) => {
+        console.log(err);
+        return err.response;
+      });
+    console.log(allMessages, "all msssgs");
+  };
+
+  useEffect(() => {
+    setAllMessages(sm.messagesArray);
+  }, [sm]);
   // useEffect(() => {
   //   dispatch(fetchAllMessagesForAChatThunk(selectedChat))
   //     .then((res) => {
@@ -100,6 +119,7 @@ const SingleChat = ({
         onChange={handleMessageSend}
       />
       {/* </FormControl> */}
+      <button onClick={handleFetchMessages}>FETCH</button>
     </div>
   );
 };
