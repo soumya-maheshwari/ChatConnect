@@ -9,9 +9,9 @@ const createChat = async (req, res, next) => {
 
     const user = req.user;
     const userid = user._id;
-    console.log(userId, "userId");
-    console.log(req.user, "req.user-2");
-    console.log(req.user.id);
+    // console.log(userId, "userId");
+    // console.log(req.user, "req.user-2");
+    // console.log(req.user.id);
     // console.log(req.user._id, "j");
     if (!userId) {
       console.log("UserId param not sent with request");
@@ -32,7 +32,7 @@ const createChat = async (req, res, next) => {
       path: "latestMessage.sender",
       select: "name email",
     });
-    console.log(isChat, "is-chat");
+    // console.log(isChat, "is-chat");
 
     if (isChat.length > 0) {
       res.send(isChat[0]);
@@ -92,16 +92,16 @@ const fetchChats = async (req, res, next) => {
 const createGroupChat = async (req, res, next) => {
   try {
     const { users_name, name } = req.body;
-    console.log(users_name, "users_name");
-    console.log(name, "name");
+    // console.log(users_name, "users_name");
+    // console.log(name, "name");
     if (!users_name || !name) {
       next(new ErrorHandler(400, "Please enter all the fields"));
     }
 
     var users = JSON.parse(req.body.users_name);
-    console.log(users, "users");
+    // console.log(users, "users");
     const userid = req.user._id;
-    console.log(userid, "userid");
+    // console.log(userid, "userid");
     if (users.length < 2) {
       next(
         new ErrorHandler(400, "More than 2 users are required to form a group")
@@ -116,7 +116,7 @@ const createGroupChat = async (req, res, next) => {
       groupChatAdmin: userid,
     });
 
-    console.log(groupChat);
+    // console.log(groupChat);
     const fullGroupChat = await Chat.findOne({
       _id: groupChat._id,
     })
@@ -128,7 +128,7 @@ const createGroupChat = async (req, res, next) => {
       success: true,
       msg: "Group chat created successfully",
     });
-    console.log(fullGroupChat);
+    // console.log(fullGroupChat);
   } catch (error) {
     console.log(error);
     next(error);

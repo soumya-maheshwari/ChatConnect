@@ -7,10 +7,11 @@ import { sendMessageThunk } from "../../../../Redux/messageSlice";
 import ScrollableChatFeed from "../../../ScrollableChatFeed";
 import { fetchAllMessagesForAChatThunk } from "../../../../Redux/mesaageFetchSlice";
 import Lottie from "lottie-react";
+import "./singleChat.css";
 import typingAnimation from "../../../../Animations/typing.json";
-import io from "socket.io-client";
+// import io from "socket.io-client";
 
-const END_POINT = "http://localhost:5000";
+// const END_POINT = "http://localhost:5000";
 
 var socket, selectedChatCompare;
 
@@ -21,22 +22,27 @@ const SingleChat = ({
   // setSelectedChat,
   // bool,
 }) => {
+  const user = JSON.parse(localStorage.getItem("userInfo"));
+
+  console.log(user);
+  console.log(user.id);
   const chatss = JSON.parse(localStorage.getItem("chatInfo"));
   // console.log(chatss._id);
   const chatid = chatss ? chatss._id : null;
+
   const dispatch = useDispatch();
 
   const sm = useSelector((state) => state.message);
   const msg = useSelector((state) => state.messageFetch);
-  // console.log(msg);
+  console.log(msg);
   // console.log(msg.messagesArray);
-  const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState(true);
 
   const [messageToSend, setMessageToSend] = useState("");
   const [allMessages, setAllMessages] = useState([]);
   const [typing, setTyping] = useState(true);
   const [istyping, setIsTyping] = useState(false);
-
+  const [socketConnection, setSocketConnection] = useState(false);
   // console.log(sm);
 
   const userData = {
@@ -44,9 +50,16 @@ const SingleChat = ({
     chatId: chatss,
   };
 
+  useEffect(() => {
+    if (msg.isSuccess) {
+      setAllMessages(msg.messagesArray);
+      // setLoading(false);
+    }
+  }, [msg]);
+
   // console.log(userData, "user data");
   useEffect(() => {
-    setLoading(sm.isLoading);
+    // setLoading(sm.isLoading);
   }, [sm]);
 
   const sendMessage = (e) => {
@@ -71,7 +84,7 @@ const SingleChat = ({
     // if (!typing) {
     setIsTyping(true);
     // }
-
+    setLoading(false);
     let lastTypingTime = new Date().getTime();
     // console.log(lastTypingTime);
     var timerLength = 3000;
@@ -84,15 +97,18 @@ const SingleChat = ({
     }, timerLength);
   };
 
-  useEffect(() => {
-    setAllMessages(msg.messagesArray);
-    setLoading(false);
-  }, [sm]);
-  useEffect(() => {
-    socket = io(END_POINT);
-  }, []);
+  // useEffect(() => {
+  //   setAllMessages(msg.messagesArray);
+  //   setLoading(false);
+  // }, [sm]);
+  // useEffect(() => {
+  //   socket = io(END_POINT);
+  //   socket.emit("setup", user);
+  //   // console.log(user);
+  //   socket.on("connection", () => setSocketConnection(true));
+  // }, []);
 
-  useEffect(() => {});
+  // useEffect(() => {});
   console.log(allMessages, "all messages");
   useEffect(() => {
     dispatch(fetchAllMessagesForAChatThunk(chatid))
@@ -104,8 +120,9 @@ const SingleChat = ({
         console.log(err);
         return err.response;
       });
-  }, [dispatch]);
 
+    // socket.emit("join a chat", chatid);
+  }, [dispatch]);
   return (
     <div>
       <Box
@@ -117,25 +134,26 @@ const SingleChat = ({
         // bgcolor={"green"}
         height={"100vh"}
       >
-        {selectedChat ? "chat name " : ""}
+        {selectedChat ? "chat name" : "chat name"}
         {loading ? (
           "loading...."
         ) : (
           <div className="messages">
-            <ScrollableChatFeed messgaes={allMessages} />
+            <ScrollableChatFeed allMessages={allMessages} />
           </div>
         )}
       </Box>
       <FormControl onKeyDown={sendMessage}>
         <Input
           isRequired
+          fullWidth
           type="text"
           placeholder="enter message"
           // onKeyDown={sendMessage}
           value={messageToSend}
           onChange={handleMessageSend}
         />
-        {istyping ? (
+        {/* {istyping ? (
           <Lottie
             width={70}
             height={50}
@@ -158,11 +176,9 @@ const SingleChat = ({
           //   }}
           //   animationData={typingAnimation}
           //   loop={true}
-          // />
-        )}
+          // /> */}
+        {/* )} */}
       </FormControl>
-
-      {/* <button onClick={handleFetchMessages}>FETCH</button> */}
     </div>
   );
 };

@@ -26,7 +26,7 @@ const Mychats = ({ fetchAgain }) => {
 
     dispatch(accesAllTheChatsThunk())
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         return res;
       })
       .catch((err) => {
@@ -114,7 +114,7 @@ const Mychats = ({ fetchAgain }) => {
                         <p>
                           {!chat.isGroupChat
                             ? getSenderUser(logggedUser, chat.users)
-                            : chat.chatName}
+                            : "chat.chatName"}
                         </p>
                       </Box>
                     </div>

@@ -11,6 +11,7 @@ const ChatBox = ({ fetchAgain, setFetchAgain }) => {
         flexDirection={"column"}
         display={"flex"}
         // p={3}
+        // width={"1000px"}
         width={"100%"}
         color={"red"}
         bgcolor={"pink"}

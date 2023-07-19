@@ -52,7 +52,7 @@ const login = async (req, res, next) => {
 
     // check for user in database
     const user = await User.findOne({ email });
-    console.log(user);
+    // console.log(user);
     if (!user) {
       return next(new ErrorHandler(404, "user not found"));
     }

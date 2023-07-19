@@ -175,7 +175,12 @@ const Sidebar = () => {
 
         {/* <div className="side-drawer"></div> */}
       </div>
-      <SwipeableDrawer placement="left" anchor="left" open={isDrawerOpen}>
+      <SwipeableDrawer
+        placement="left"
+        anchor="left"
+        // open="true"
+        // open={isDrawerOpen}
+      >
         <Box display={"flex"} pb={2}>
           <Input
             placeholder="search a name or email"

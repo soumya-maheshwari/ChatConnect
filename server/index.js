@@ -45,13 +45,26 @@ app.get("/protect", authVerifyToken, (req, res) => {
   });
 });
 
-const io = require("socket.io")(server, {
-  pingTimeOut: 60000,
-  cors: {
-    origin: "http://localhost:3000",
-  },
-});
+// const io = require("socket.io")(server, {
+//   pingTimeOut: 60000,
+//   cors: {
+//     origin: "http://localhost:3000",
+//   },
+// });
 
-io.on("connection", (socket) => {
-  console.log("connected to socket.io");
-});
+// io.on("connection", (socket) => {
+//   console.log("connected to socket.io");
+
+//   // setup
+//   socket.on("setup", (userData) => {
+//     socket.join(userData.id);
+//     console.log(userData.id);
+//     socket.emit("connected");
+//   });
+
+//   // joins a chat
+//   socket.on("join a chat", (room) => {
+//     socket.join(room);
+//     console.log("user joined room " + room);
+//   });
+// });
