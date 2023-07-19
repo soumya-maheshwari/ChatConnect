@@ -93,7 +93,7 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.response = action.payload.data.msg;
 
-        console.log(action.payload);
+        // console.log(action.payload);
         if (action.payload.data.success) {
           state.isSuccess = true;
           state.user = action.payload.data.user;

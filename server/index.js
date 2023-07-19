@@ -14,7 +14,7 @@ const { authVerifyToken } = require("./middleware/authVerifyToken");
 app.use(express.json());
 app.use(cors({ origin: true }));
 app.use(express.urlencoded({ extended: false }));
-app.listen(process.env.PORT);
+const server = app.listen(process.env.PORT);
 // const connectDB = async () => {
 //   try {
 //     await mongoose.connect(process.env.MONGODB_URL);
@@ -43,4 +43,15 @@ app.get("/protect", authVerifyToken, (req, res) => {
     user,
     success: true,
   });
+});
+
+const io = require("socket.io")(server, {
+  pingTimeOut: 60000,
+  cors: {
+    origin: "http://localhost:3000",
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log("connected to socket.io");
 });

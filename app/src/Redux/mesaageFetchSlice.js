@@ -9,13 +9,13 @@ const initialState = {
   isLoading: false,
   showToast: false,
   messagesArray: "",
-  currentChat: "",
+  //   currentChat: "",
   message: "",
   response: "",
 };
 
-export const sendMessageThunk = createAsyncThunk(
-  "messgae/send",
+export const fetchAllMessagesForAChatThunk = createAsyncThunk(
+  "message/fetch_AllMessages",
   async (data) => {
     const user = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -27,48 +27,50 @@ export const sendMessageThunk = createAsyncThunk(
     };
 
     return await axios
-      .post(`${backend}`, data, config)
+      .get(`${backend}${data}`, data)
       .then((res) => {
-        // console.log(res);
+        console.log(`${backend}${data}`);
+        console.log(data);
+        console.log(res);
         return res;
       })
       .catch((err) => {
-        // console.log(err);
+        console.log(err);
         return err.response;
       });
   }
 );
 
-export const messageSlice = createSlice({
-  name: "message",
+export const messageFetchSlice = createSlice({
+  name: "messageFetch",
   initialState: initialState,
   reducers: {},
-
   extraReducers: (builder) => {
     builder
 
-      // SEND MESSAGE
-      .addCase(sendMessageThunk.pending, (state) => {
+      // FETCH ALL MESSAGES IN A CHAT
+      .addCase(fetchAllMessagesForAChatThunk.pending, (state) => {
         state.isLoading = true;
       })
 
-      .addCase(sendMessageThunk.fulfilled, (state, action) => {
+      .addCase(fetchAllMessagesForAChatThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        // console.log(action.payload);
+        console.log(action.payload);
+        console.log(action.payload.data.messages);
         if (action.payload.data.success) {
           state.isSuccess = true;
-          state.currentChat = action.payload;
+          state.messagesArray = action.payload.data.messages;
         } else {
           state.isSuccess = false;
           state.isError = true;
         }
       })
 
-      .addCase(sendMessageThunk.rejected, (state) => {
+      .addCase(fetchAllMessagesForAChatThunk.rejected, (state) => {
         state.isLoading = true;
         state.isError = true;
       });
   },
 });
 
-export default messageSlice.reducer;
+export default messageFetchSlice.reducer;

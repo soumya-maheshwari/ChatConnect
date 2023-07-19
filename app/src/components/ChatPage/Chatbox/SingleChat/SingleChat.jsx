@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Box, FormControlLabel, Input, TextField } from "@mui/material";
+import { Box, FormControl, Input, TextField } from "@mui/material";
 import arrow from "../../../../assets/backArrow.svg";
-import { FormControl, Spinner } from "react-bootstrap";
+import { Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchAllMessagesForAChatThunk,
-  sendMessageThunk,
-} from "../../../../Redux/messageSlice";
+import { sendMessageThunk } from "../../../../Redux/messageSlice";
+import ScrollableChatFeed from "../../../ScrollableChatFeed";
+import { fetchAllMessagesForAChatThunk } from "../../../../Redux/mesaageFetchSlice";
+import Lottie from "lottie-react";
+import typingAnimation from "../../../../Animations/typing.json";
+import io from "socket.io-client";
+
+const END_POINT = "http://localhost:5000";
+
+var socket, selectedChatCompare;
 
 const SingleChat = ({
   fetchAgain,
@@ -21,12 +27,14 @@ const SingleChat = ({
   const dispatch = useDispatch();
 
   const sm = useSelector((state) => state.message);
-  console.log(sm.messagesArray);
+  const msg = useSelector((state) => state.messageFetch);
+  // console.log(msg);
+  // console.log(msg.messagesArray);
   const [loading, setLoading] = useState();
 
   const [messageToSend, setMessageToSend] = useState("");
   const [allMessages, setAllMessages] = useState([]);
-  const [typing, setTyping] = useState(false);
+  const [typing, setTyping] = useState(true);
   const [istyping, setIsTyping] = useState(false);
 
   // console.log(sm);
@@ -60,39 +68,43 @@ const SingleChat = ({
 
   const handleMessageSend = (e) => {
     setMessageToSend(e.target.value);
+    // if (!typing) {
+    setIsTyping(true);
+    // }
+
+    let lastTypingTime = new Date().getTime();
+    // console.log(lastTypingTime);
+    var timerLength = 3000;
+    setTimeout(() => {
+      var timeNow = new Date().getTime();
+      var timeDiff = timeNow - lastTypingTime;
+      if (timeDiff >= timerLength && typing) {
+        setTyping(false);
+      }
+    }, timerLength);
   };
 
-  // const userData3 = {
-  //   chatid,
-  // };
-  const handleFetchMessages = () => {
+  useEffect(() => {
+    setAllMessages(msg.messagesArray);
+    setLoading(false);
+  }, [sm]);
+  useEffect(() => {
+    socket = io(END_POINT);
+  }, []);
+
+  useEffect(() => {});
+  console.log(allMessages, "all messages");
+  useEffect(() => {
     dispatch(fetchAllMessagesForAChatThunk(chatid))
       .then((res) => {
         console.log(res);
-        // setAllMessages(sm.messageArray);
         return res;
       })
       .catch((err) => {
         console.log(err);
         return err.response;
       });
-    console.log(allMessages, "all msssgs");
-  };
-
-  useEffect(() => {
-    setAllMessages(sm.messagesArray);
-  }, [sm]);
-  // useEffect(() => {
-  //   dispatch(fetchAllMessagesForAChatThunk(selectedChat))
-  //     .then((res) => {
-  //       console.log(res);
-  //       return res;
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       return err.response;
-  //     });
-  // }, [dispatch]);
+  }, [dispatch]);
 
   return (
     <div>
@@ -103,23 +115,54 @@ const SingleChat = ({
         p={3}
         color={"red"}
         // bgcolor={"green"}
-        // height={"100%"}
         height={"100vh"}
       >
-        {/* {selectedChat ? "chat name " : ""} */}
+        {selectedChat ? "chat name " : ""}
+        {loading ? (
+          "loading...."
+        ) : (
+          <div className="messages">
+            <ScrollableChatFeed messgaes={allMessages} />
+          </div>
+        )}
       </Box>
+      <FormControl onKeyDown={sendMessage}>
+        <Input
+          isRequired
+          type="text"
+          placeholder="enter message"
+          // onKeyDown={sendMessage}
+          value={messageToSend}
+          onChange={handleMessageSend}
+        />
+        {istyping ? (
+          <Lottie
+            width={70}
+            height={50}
+            style={{
+              marginBottom: 15,
+              marginLeft: 0,
+            }}
+            animationData={typingAnimation}
+            loop={true}
+          />
+        ) : (
+          ""
 
-      {/* <FormControl> */}
-      <Input
-        isRequired
-        type="text"
-        placeholder="enter message"
-        onKeyDown={sendMessage}
-        value={messageToSend}
-        onChange={handleMessageSend}
-      />
-      {/* </FormControl> */}
-      <button onClick={handleFetchMessages}>FETCH</button>
+          // <Lottie
+          //   width={70}
+          //   height={50}
+          //   style={{
+          //     marginBottom: 15,
+          //     marginLeft: 0,
+          //   }}
+          //   animationData={typingAnimation}
+          //   loop={true}
+          // />
+        )}
+      </FormControl>
+
+      {/* <button onClick={handleFetchMessages}>FETCH</button> */}
     </div>
   );
 };
