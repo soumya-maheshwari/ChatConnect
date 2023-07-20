@@ -10,17 +10,15 @@ const ChatBox = ({ fetchAgain, setFetchAgain }) => {
         alignItems={"center"}
         flexDirection={"column"}
         display={"flex"}
-        // p={3}
+        p={10}
+        marginLeft={"30px"}
         // width={"1000px"}
-        width={"100%"}
-        color={"red"}
+        width={"200%"}
+        height={"80%"}
+        color={"black"}
         bgcolor={"pink"}
       >
-        <SingleChat
-          fetchAgain={fetchAgain}
-          setFetchAgain={setFetchAgain}
-          // display={"flex"}
-        />
+        <SingleChat fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
       </Box>
     </div>
   );

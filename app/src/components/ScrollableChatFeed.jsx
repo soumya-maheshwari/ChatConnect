@@ -44,7 +44,6 @@ const ScrollableChatFeed = ({ allMessages }) => {
   return (
     <div>
       <ScrollableFeed>
-        {/* <div style={{ display: "flex" }}> */}
         {allMessages &&
           allMessages.map((m, i) => {
             return (
@@ -53,7 +52,12 @@ const ScrollableChatFeed = ({ allMessages }) => {
                 {(isSameSender(allMessages, m, i, user._id) ||
                   isLastMessage(allMessages, i, user._id)) && (
                   <Tooltip title={m.sender.name} placement="bottom-start">
-                    <Avatar sx={{ bgcolor: deepOrange[500] }}>
+                    <Avatar
+                      sx={{ bgcolor: deepOrange[500] }}
+                      style={{
+                        marginRight: "1px",
+                      }}
+                    >
                       {m.sender.name}
                     </Avatar>
                   </Tooltip>
@@ -78,7 +82,6 @@ const ScrollableChatFeed = ({ allMessages }) => {
               </div>
             );
           })}
-        {/* </div> */}
       </ScrollableFeed>
     </div>
   );

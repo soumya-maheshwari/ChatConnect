@@ -9,7 +9,10 @@ import { fetchAllMessagesForAChatThunk } from "../../../../Redux/mesaageFetchSli
 import Lottie from "lottie-react";
 import "./singleChat.css";
 import typingAnimation from "../../../../Animations/typing.json";
+import { getSenderUser } from "../../../../config/Helper";
 // import io from "socket.io-client";
+import ProfileModal from "../../.././../components/ProfileModal";
+import UpdatedGroupChatModal from "../../UpdatedGroupChatModal/UpdatedGroupChatModal";
 
 // const END_POINT = "http://localhost:5000";
 
@@ -27,9 +30,9 @@ const SingleChat = ({
   console.log(user);
   console.log(user.id);
   const chatss = JSON.parse(localStorage.getItem("chatInfo"));
-  // console.log(chatss._id);
+  console.log(chatss);
   const chatid = chatss ? chatss._id : null;
-
+  var chatName;
   const dispatch = useDispatch();
 
   const sm = useSelector((state) => state.message);
@@ -97,16 +100,16 @@ const SingleChat = ({
     }, timerLength);
   };
 
-  // useEffect(() => {
-  //   setAllMessages(msg.messagesArray);
-  //   setLoading(false);
-  // }, [sm]);
-  // useEffect(() => {
-  //   socket = io(END_POINT);
-  //   socket.emit("setup", user);
-  //   // console.log(user);
-  //   socket.on("connection", () => setSocketConnection(true));
-  // }, []);
+  useEffect(() => {
+    setAllMessages(msg.messagesArray);
+    setLoading(false);
+  }, [sm]);
+  useEffect(() => {
+    // socket = io(END_POINT);
+    // socket.emit("setup", user);
+    // console.log(user);
+    // socket.on("connection", () => setSocketConnection(true));
+  }, []);
 
   // useEffect(() => {});
   console.log(allMessages, "all messages");
@@ -125,6 +128,50 @@ const SingleChat = ({
   }, [dispatch]);
   return (
     <div>
+      {/* {chatss ? (
+        <div className="chat-name-head">{`${chatss.chatName}`}</div>
+      ) : (
+        <div className="user-text">Click on a user to start a text</div>
+      )} */}
+      {chatss ? (
+        <Box
+          alignItems={"center"}
+          flexDirection={"column"}
+          display={"flex"}
+          p={3}
+          color={"red"}
+          // bgcolor={"green"}
+          height={"100vh"}
+        >
+          {allMessages && !chatss.isGroupChat ? (
+            <>
+              <div className="chat-name-head">
+                {getSenderUser(user, chatss.users)}
+              </div>
+
+              <ProfileModal />
+            </>
+          ) : (
+            <>
+              <div className="chat-name-head">
+                {`${chatss.chatName}`}
+                <UpdatedGroupChatModal
+                  // fetcMessages={fetchMessages}
+                  fetchAgain={fetchAgain}
+                  setFetchAgain={setFetchAgain}
+                />
+              </div>
+            </>
+          )}
+          {/* {loading ? (
+            "loading...."
+          ) : (
+            <div className="messages">
+              <ScrollableChatFeed allMessages={allMessages} />
+            </div>
+          )} */}
+        </Box>
+      ) : null}
       <Box
         alignItems={"center"}
         flexDirection={"column"}
@@ -134,9 +181,9 @@ const SingleChat = ({
         // bgcolor={"green"}
         height={"100vh"}
       >
-        {selectedChat ? "chat name" : "chat name"}
+        {chatss ? `${chatss.chatName}` : null}
         {loading ? (
-          "loading...."
+          <Spinner /> || "loading.."
         ) : (
           <div className="messages">
             <ScrollableChatFeed allMessages={allMessages} />
@@ -151,6 +198,9 @@ const SingleChat = ({
           placeholder="enter message"
           // onKeyDown={sendMessage}
           value={messageToSend}
+          style={{
+            backgroundColor: "#E0E0E0",
+          }}
           onChange={handleMessageSend}
         />
         {/* {istyping ? (
@@ -179,6 +229,11 @@ const SingleChat = ({
           // /> */}
         {/* )} */}
       </FormControl>
+      <Box d="flex" alignItems="center" justifyContent="center" h="100%">
+        {/* <text fontSize="3xl" pb={3} fontFamily="Work sans"> */}
+        Click on a user to start chatting
+        {/* </text> */}
+      </Box>
     </div>
   );
 };

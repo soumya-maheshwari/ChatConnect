@@ -125,11 +125,12 @@ const Mychats = ({ fetchAgain }) => {
             ) : (
               <ChatLoading />
             )}
+            {/* <p className="click-text">{text}</p> */}
           </Box>
         </Box>
       </div>
 
-      <p className="click-text">{text}</p>
+      {/* <p className="click-text">{text}</p> */}
     </>
   );
 };

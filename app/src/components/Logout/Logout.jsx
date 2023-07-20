@@ -8,8 +8,7 @@ const Logout = () => {
   const navigate = useNavigate();
 
   const handleLogout = (e) => {
-    localStorage.removeItem("userInfo");
-
+    localStorage.clear();
     return navigate("/");
   };
 

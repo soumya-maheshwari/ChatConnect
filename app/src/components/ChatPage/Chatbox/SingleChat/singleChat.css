@@ -1,6 +1,22 @@
 .messages {
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
-  scrollbar-width: none;
+  /* overflow-y: scroll; */
+  /* scrollbar-width: none; */
+  position: relative;
+  top: -100%;
+}
+
+.user-text {
+  font-size: 40px;
+  align-items: center;
+  text-align: center;
+  margin: auto;
+  justify-content: center;
+  margin-top: 150px;
+  font-family: sans-serif;
+}
+.chat-name-head {
+  font-size: 50px;
+  color: black;
 }
