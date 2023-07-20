@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Button, Tooltip } from "react-bootstrap";
+import { Tooltip } from "react-bootstrap";
 import search_icon from "../../../assets/search.svg";
 import "./sidebar.css";
-import { Input, Menu, MenuItem, SliderThumb } from "@mui/material";
+import { Input, Menu, MenuItem, Button } from "@mui/material";
 import bell from "../../../assets/bell.svg";
-import { IoIosArrowDropdown } from "react-icons/io";
-import { RxAvatar } from "react-icons/rx";
-import ProfileModal from "../profileModal/ProfileModal";
-import { useNavigate } from "react-router-dom";
+import ProfileModal from "../../ProfileModal";
+import { Link, useNavigate } from "react-router-dom";
 import { SwipeableDrawer } from "@mui/material";
 import { Box } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
@@ -16,10 +14,9 @@ import UserList from "../../../components/ChatPage/Sidebar/UserList/UserList";
 import { useDispatch, useSelector } from "react-redux";
 import { searchUser } from "../../../Redux/searchSlice";
 import ChatLoading from "../MyChats/ChatLoading/ChatLoading";
+import avatarImg from "../../../assets/avatar.svg";
 
 const Sidebar = () => {
-  // let isUerLoggedIn = localStorage.getItem("access token") ? true : false;
-
   // const userInfo = JSON.parse(localStorage.getItem("user token"));
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -27,7 +24,7 @@ const Sidebar = () => {
   const sm = useSelector((state) => state.search);
   // console.log(sm);
 
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [search, setSearch] = useState("");
   const [searchResultArray, setSearchResultArray] = useState([]);
@@ -47,9 +44,7 @@ const Sidebar = () => {
   };
 
   const handleLogout = (e) => {
-    localStorage.removeItem("userInfo");
-
-    return navigate("/signup");
+    <Link to="/ok" />;
   };
 
   useEffect(() => {
@@ -123,19 +118,21 @@ const Sidebar = () => {
     <>
       <div className="sidebar">
         <Tooltip
+          arrow={true}
           title="search users to chat"
           placement="bottom-end"
+
           // onOpen={handleClick}
           // onClose={handleClose}
         >
-          <Button className="btn">
-            <img
-              src={search_icon}
-              alt="search"
-              className="search"
-              onClick={handleDrawerToggle}
-            />
-            Search user
+          <Button
+            className="btun"
+            color="secondary"
+            // variant="contained"
+            onClick={handleDrawerToggle}
+          >
+            <img src={search_icon} alt="search" className="search" />
+            <p className="searchText"> Search user</p>
           </Button>
         </Tooltip>
         <div className="title">Chat App</div>
@@ -148,8 +145,7 @@ const Sidebar = () => {
             aria-expanded={open ? "true" : undefined}
             onClick={handleClick}
           >
-            <RxAvatar />
-            <IoIosArrowDropdown />
+            <img src={avatarImg} alt="avatar" className="avatar-class" />
           </Button>
           <Menu
             id="demo-positioned-menu"
@@ -169,7 +165,11 @@ const Sidebar = () => {
             <ProfileModal>
               <MenuItem onClick={handleClose}>PROFILE</MenuItem>
             </ProfileModal>
-            <MenuItem onClick={handleLogout}>LOGOUT</MenuItem>
+            <MenuItem>
+              <span className="logout-link">
+                <Link to="/logout">LOGOUT</Link>
+              </span>
+            </MenuItem>
           </Menu>
         </div>
 
@@ -179,16 +179,20 @@ const Sidebar = () => {
         placement="left"
         anchor="left"
         // open="true"
-        // open={isDrawerOpen}
+        open={isDrawerOpen}
+        onClose={handleDrawerToggle}
       >
         <Box display={"flex"} pb={2}>
           <Input
-            placeholder="search a name or email"
+            placeholder="search a name"
             maxRows={2}
+            className="input-field"
             value={search}
             onChange={handleSearch}
           ></Input>
-          <Button onClick={handleUserSearch}>GO</Button>
+          <Button variant="outlined" onClick={handleUserSearch}>
+            GO
+          </Button>
         </Box>
 
         {sm.isLoading ? (

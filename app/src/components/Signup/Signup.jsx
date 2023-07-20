@@ -12,6 +12,7 @@ import { registerUser } from "../../Redux/authSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import signUp from "../../assets/signUp.svg";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -91,37 +92,14 @@ const Signup = () => {
     if (validMail) {
       dispatch(registerUser(userData))
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           return res;
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           return err.response;
         });
     }
-
-    // try {
-    //   const config = {
-    //     headers: {
-    //       "Content-type": "application/json",
-    //     },
-    //   };
-    //   const { data } = await axios.post(
-    //     "http://localhost:5000/api/all_users",
-    //     {
-    //       name,
-    //       email,
-    //       username,
-    //       password,
-    //     },
-    //     config
-    //   );
-    //   console.log(data, "data");
-    //   localStorage.setItem("userInfo", JSON.stringify(data));
-    // } catch (error) {
-    //   console.log(error);
-    //   return error.response;
-    // }
   };
 
   useEffect(() => {
@@ -135,8 +113,11 @@ const Signup = () => {
         pauseOnHover: true,
         draggable: true,
       });
-      navigate("/chat_page");
       localStorage.setItem("userInfo", JSON.stringify(userData));
+
+      setTimeout(() => {
+        navigate("/chat_page");
+      }, 6000);
     } else {
       if (showToast) {
         toast.error(`${sm.response}`, {
@@ -150,17 +131,25 @@ const Signup = () => {
         });
       }
     }
-    // localStorage.setItem("userInfo", JSON.stringify(data));
-  }, [showToast]);
+  }, [showToast, sm]);
 
   return (
     <>
-      <div className="signup">
-        <div className="container">
-          {/* <h2>SignUp Form</h2> */}
-          <form action="" onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label for="name">Full Name</label>
+      <div className="container">
+        <div className="left">
+          <img src={signUp} alt="login" className="login-img" />
+        </div>
+        <div className="forms2">
+          <h1 className="heading2">SIGNUP</h1>
+
+          <form action="" onSubmit={handleSubmit} className="form-class2">
+            <div
+              className="form-group2
+            "
+            >
+              <label for="name" className="form-label">
+                Full Name
+              </label>
               <img src={namee} alt="name" className="mail" />
               <input
                 type="text"
@@ -172,8 +161,13 @@ const Signup = () => {
                 onChange={handleName}
               />
             </div>
-            <div className="form-group">
-              <label for="email">Email Address</label>
+            <div
+              className="form-group2
+            "
+            >
+              <label for="email" className="form-label">
+                Email Address
+              </label>
               <img src={mail} alt="mail" className="mail" />
               <input
                 type="text"
@@ -187,8 +181,13 @@ const Signup = () => {
             </div>
             <p id="wrong-email2">Invalid Email Address</p>
 
-            <div className="form-group">
-              <label for="username">User Name</label>
+            <div
+              className="form-group2
+            "
+            >
+              <label for="username" className="form-label">
+                User Name
+              </label>
               <img src={user} alt="user" className="user" />
               <input
                 type="text"
@@ -200,8 +199,13 @@ const Signup = () => {
                 onChange={handleUsername}
               />
             </div>
-            <div className="form-group">
-              <label for="password">Password</label>
+            <div
+              className="form-group2
+            "
+            >
+              <label for="password" className="form-label">
+                Password
+              </label>
 
               <img src={lock} alt="lock" className="lock" />
 
@@ -228,8 +232,13 @@ const Signup = () => {
                 />
               )}
             </div>
-            <div className="form-group">
-              <label for="password">Confirm Password</label>
+            <div
+              className="form-group2
+            "
+            >
+              <label for="password" className="form-label">
+                Confirm Password
+              </label>
 
               <img src={lock} alt="lock" className="lock" />
 
@@ -256,14 +265,16 @@ const Signup = () => {
                 />
               )}
             </div>
-            <button type="submit">SignUp</button>
+            <button type="submit" className="login-btn">
+              SignUp
+            </button>
+            <p className="textt">
+              Already have an account?
+              <span className="link">
+                <Link to="/">Login</Link>
+              </span>
+            </p>
           </form>
-          <p className="text">
-            Already have an account?
-            <span className="link">
-              <Link to="/">Login</Link>
-            </span>
-          </p>
         </div>
       </div>
       <ToastContainer />

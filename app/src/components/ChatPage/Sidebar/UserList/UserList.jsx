@@ -4,6 +4,23 @@ import { useDispatch, useSelector } from "react-redux";
 import "./userList.css";
 import { accessChatThunk } from "../../../../Redux/chatSlice";
 
+// function random_rgba() {
+//   var o = Math.round,
+//     r = Math.random,
+//     s = 255;
+//   return (
+//     "rgba(" +
+//     o(r() * s) +
+//     "," +
+//     o(r() * s) +
+//     "," +
+//     o(r() * s) +
+//     "," +
+//     r().toFixed(1) +
+//     ")"
+//   );
+// }
+
 const UserList = (props) => {
   const dispatch = useDispatch();
 
@@ -25,7 +42,7 @@ const UserList = (props) => {
 
   return (
     <div>
-      <Box display={"flex"} bgcolor={"grey"}>
+      <Box display={"flex"} bgcolor={"#f7f5f0"}>
         <div className="boxs">
           <p className="name">{props.name}</p>
           <p className="user-name" onClick={handleAccessChat}>

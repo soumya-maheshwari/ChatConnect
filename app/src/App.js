@@ -5,6 +5,7 @@ import ErrorPage from "./components/ErrorPage/ErrorPage";
 import Signup from "./components/Signup/Signup";
 import Login from "./components/login/Login";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import Logout from "./components/Logout/Logout";
 
 function App() {
   // const navigate = useNavigate();
@@ -23,6 +24,7 @@ function App() {
             <Route path="/" exact element={<Login />} />
             <Route path="/signup" exact element={<Signup />} />
             <Route path="/chat_page" exact element={<ChatPage />} />
+            <Route path="/logout" exact element={<Logout />} />
           </Routes>
         </BrowserRouter>
       </div>

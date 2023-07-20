@@ -9,8 +9,8 @@ import "react-toastify/dist/ReactToastify.css";
 import * as ReactBootstrap from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../Redux/authSlice";
-
-import { useNavigate } from "react-router-dom";
+import loginImg from "../../assets/login.svg";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   // const [isLoggedIn, setIsLoggedIn] = useState(initialLoggedInState === "true");
@@ -24,6 +24,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [validMail, setValidMail] = useState(false);
   const [bool, setBool] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const sm = useSelector((state) => state.auth);
   // console.log(sm);
@@ -67,7 +68,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setShowToast(true);
+    // setShowToast(true);
     if (validMail) {
       dispatch(loginUser(userData))
         .then((res) => {
@@ -92,9 +93,11 @@ const Login = () => {
         pauseOnHover: true,
         draggable: true,
       });
-      // navigate("/chat_page");
+      setTimeout(() => {
+        navigate("/chat_page");
+      }, 6000);
+
       localStorage.setItem("userInfo", JSON.stringify(sm.profile));
-      navigate("/chat_page");
     } else {
       if (showToast) {
         toast.error(`${sm.response}`, {
@@ -113,61 +116,70 @@ const Login = () => {
   return (
     <>
       <div className="container">
-        {/* <h2>Login Form</h2> */}
-
-        <form action="" onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label for="email">Email Address</label>
-            <img src={mail} alt="mail" className="mail" />
-            <input
-              type="text"
-              value={email}
-              className="input-field"
-              id="email"
-              name="email"
-              required
-              onChange={handleEmail}
-            />
-
-            <p id="wrong-email">Invalid Email Address</p>
-          </div>
-          <div className="form-group">
-            <label for="password">Password</label>
-
-            <img src={lock} alt="lock" className="lock" />
-
-            <input
-              type={show ? "text" : "password"}
-              id="password"
-              name="password"
-              value={password}
-              onChange={handlePassword}
-              required
-              className="input-field"
-            />
-            {show ? (
-              <FontAwesomeIcon
-                icon={faEye}
-                className="eyeimg"
-                onClick={handleShowHide}
+        <div className="left">
+          <img src={loginImg} alt="login" className="login-img" />
+        </div>
+        <div className="forms">
+          <h1 className="heading">LOGIN</h1>
+          <form action="" onSubmit={handleSubmit} className="form-class">
+            <div className="form-group">
+              <label for="email" className="form-label">
+                Email Address
+              </label>
+              <img src={mail} alt="mail" className="mail" />
+              <input
+                type="text"
+                value={email}
+                className="input-field"
+                id="email"
+                name="email"
+                required
+                onChange={handleEmail}
               />
-            ) : (
-              <FontAwesomeIcon
-                icon={faEyeSlash}
-                onClick={handleShowHide}
-                className="eyeimg"
-              />
-            )}
-          </div>
-          <button type="submit">Login</button>
-        </form>
 
-        {/* <p className="text">
-          Don't have an account?
-          <span className="link">
-            <Link to="/signup">Signup</Link>
-          </span>
-        </p> */}
+              <p id="wrong-email">Invalid Email Address</p>
+            </div>
+            <div className="form-group">
+              <label for="password" className="form-label">
+                Password
+              </label>
+
+              <img src={lock} alt="lock" className="lock" />
+
+              <input
+                type={show ? "text" : "password"}
+                id="password"
+                name="password"
+                value={password}
+                onChange={handlePassword}
+                required
+                className="input-field"
+              />
+              {show ? (
+                <FontAwesomeIcon
+                  icon={faEye}
+                  className="eyeimg"
+                  onClick={handleShowHide}
+                />
+              ) : (
+                <FontAwesomeIcon
+                  icon={faEyeSlash}
+                  onClick={handleShowHide}
+                  className="eyeimg"
+                />
+              )}
+            </div>
+            <button type="submit" className="login-btn">
+              Login
+            </button>{" "}
+            <p className="textt">
+              Don't have an account?
+              <span className="link">
+                <Link to="/signup">SIGNUP</Link>
+              </span>
+            </p>
+          </form>
+        </div>
       </div>
       <ToastContainer />
     </>

@@ -1,0 +1,160 @@
+.container {
+  max-width: 1150px;
+  margin: 0 auto;
+  /* padding: 20px; */
+  background-color: #fff;
+  border-radius: 5px;
+  margin-top: 2%;
+  display: flex;
+  height: 90vh;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.left {
+  /* height: 100vh; */
+  width: 50%;
+  background-color: #8b91ec;
+  box-sizing: border-box;
+  overflow-y: hidden;
+}
+.logout-img {
+  width: 30vw;
+  height: 50vh;
+  margin: 100px 20px 20px 20px;
+}
+.forms {
+  width: 50%;
+  padding-left: 100px;
+}
+.logout-head {
+  font-size: 30px;
+  margin-top: 200px;
+  margin-left: -10px;
+}
+
+.yes {
+  margin-right: 25px;
+  background-color: rgb(169, 180, 240);
+}
+.yes:hover {
+  background-color: rgb(119, 119, 168);
+}
+
+.no {
+  background-color: rgb(230, 224, 224);
+}
+
+.no:hover {
+  background-color: aliceblue;
+}
+
+@media (max-width: 970px) {
+  .container {
+    max-width: 880px;
+    margin-top: 8%;
+    height: 90vh;
+  }
+}
+
+@media (max-width: 900px) {
+  .container {
+    max-width: 700px;
+    margin-top: 8%;
+    height: 90vh;
+  }
+}
+
+@media (max-width: 760px) {
+  .container {
+    max-width: 640px;
+    margin-top: 7%;
+    height: 90vh;
+  }
+}
+
+@media (max-width: 670px) {
+  .container {
+    max-width: 500px;
+    margin-top: 7%;
+    height: 90vh;
+  }
+
+  .heading {
+    margin-left: 20vw;
+  }
+}
+
+@media (max-width: 552px) {
+  .container {
+    max-width: 480px;
+    margin-top: 7%;
+    height: 90vh;
+  }
+  .heading {
+    margin-left: 10vw;
+  }
+}
+
+@media (max-width: 530px) {
+  .container {
+    max-width: 450px;
+    margin-top: 7%;
+    height: 90vh;
+  }
+  .heading {
+    margin-left: 10vw;
+  }
+}
+
+@media (max-width: 460px) {
+  .container {
+    max-width: 420px;
+  }
+  .heading {
+    margin-left: 14vw;
+  }
+}
+
+@media (max-width: 410px) {
+  .container {
+    max-width: 380px;
+  }
+  .heading {
+    margin-left: 10vw;
+  }
+}
+
+@media (max-width: 372px) {
+  .container {
+    max-width: 340px;
+    margin-top: 7%;
+    height: 90vh;
+  }
+}
+
+@media (max-width: 357px) {
+  .container {
+    max-width: 330px;
+    margin-top: 7%;
+    height: 90vh;
+  }
+}
+
+@media (max-width: 302px) {
+  .container {
+    max-width: 270px;
+    margin-top: 7%;
+    height: 90vh;
+  }
+
+  .heading {
+    margin-left: 5vw;
+  }
+}
+@media (max-width: 280px) {
+  .heading {
+    margin-left: 3vw;
+  }
+  .container {
+    max-width: 250px;
+  }
+}
