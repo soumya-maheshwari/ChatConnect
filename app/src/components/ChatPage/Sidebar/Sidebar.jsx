@@ -43,10 +43,6 @@ const Sidebar = () => {
     setAnchorEl(null);
   };
 
-  const handleLogout = (e) => {
-    <Link to="/ok" />;
-  };
-
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
 

@@ -8,7 +8,7 @@ const UserListItem = (props) => {
 
   return (
     <div>
-      <Box display={"flex"} bgcolor={"grey"}>
+      <Box display={"flex"} bgcolor={"#f7d5f0"}>
         <div className="boxs">
           <p className="name">{props.name}</p>
           <p className="user-name" onClick={handleFunction}>
@@ -17,7 +17,6 @@ const UserListItem = (props) => {
           <hr className="line" />
         </div>
       </Box>
-      <ToastContainer />
     </div>
   );
 };

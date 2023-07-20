@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { useSelector } from "react-redux";
+import { Avatar } from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -11,19 +11,16 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: "background.paper",
+  bgcolor: "#ccc3eb",
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };
 
 export default function BasicModal() {
-  let isUerLoggedIn = localStorage.getItem("access token");
-  // console.log(isUerLoggedIn);
-
-  const sm = useSelector((state) => state.auth);
   // console.log(sm);
-
+  const user = JSON.parse(localStorage.getItem("userInfo"));
+  // console.log(user.user.name);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -39,22 +36,44 @@ export default function BasicModal() {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              Name : {sm.user.name}
+            <Avatar
+              style={{
+                backgroundColor: "black",
+                textAlign: "center",
+                width: "50px",
+                height: "50px",
+                margin: "auto",
+                marginBottom: "14px",
+              }}
+            />
+            <Typography
+              id="modal-modal-title"
+              variant="h5"
+              color={"black"}
+              fontWeight={"bolder"}
+              textAlign={"center"}
+            >
+              {user.user.name}
             </Typography>
             <Typography
               id="modal-modal-description"
               sx={{ mt: 2 }}
-              padding={"12px"}
+              padding={"10px"}
+              color={"black"}
+              textAlign={"center"}
+              fontStyle={"italic"}
             >
-              Username :{sm.user.username}
+              UserName :{user.user.username}
             </Typography>
             <Typography
               id="modal-modal-description"
               sx={{ mt: 2 }}
-              padding={"12px"}
+              // padding={"12px"}
+              fontStyle={"italic"}
+              color={"black"}
+              textAlign={"center"}
             >
-              Email :{sm.user.email}
+              Email :{user.user.email}
             </Typography>
           </Box>
         </Modal>

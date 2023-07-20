@@ -8,6 +8,7 @@ import { getSenderUser } from "../../../config/Helper";
 import SingleChat from "../Chatbox/SingleChat/SingleChat";
 import ChatLoading from "./ChatLoading/ChatLoading";
 import UpdatedGroupChatModal from "../UpdatedGroupChatModal/UpdatedGroupChatModal";
+import "./myChats.css";
 
 const Mychats = ({ fetchAgain }) => {
   const dispatch = useDispatch();
@@ -82,7 +83,7 @@ const Mychats = ({ fetchAgain }) => {
             fontSize={"30px"}
             width={"100%"}
           >
-            MY CHATS
+            <h1 className="mychat-head"> MY CHATS</h1>
             <GroupChatModal>
               <Button display={"flex"}>+</Button>
             </GroupChatModal>
@@ -127,7 +128,8 @@ const Mychats = ({ fetchAgain }) => {
           </Box>
         </Box>
       </div>
-      {text}
+
+      <p className="click-text">{text}</p>
     </>
   );
 };

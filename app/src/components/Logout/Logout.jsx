@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./logout.css";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -24,7 +24,7 @@ const Logout = () => {
         </div>
         <div className="forms">
           <h1 className="logout-head">Are you sure you want to Logout?</h1>
-          <Button variant="contained" className="yes" onClick={handleLogout}>
+          <Button className="yes" onClick={handleLogout}>
             YES
           </Button>
           <Button variant="outlined" className="no" onClick={cancelLogout}>

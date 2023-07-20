@@ -33,6 +33,7 @@
 
 .yes {
   margin-right: 25px;
+  color: black;
   background-color: rgb(169, 180, 240);
 }
 .yes:hover {
@@ -40,6 +41,8 @@
 }
 
 .no {
+  color: black;
+
   background-color: rgb(230, 224, 224);
 }
 

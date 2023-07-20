@@ -12,8 +12,8 @@ import {
   renameGroupThunk,
 } from "../../../Redux/chatSlice";
 import { searchUser } from "../../../Redux/searchSlice";
-import UserBadge from "../GroupChatModal/UserBadge/UserBadge";
-import UserListItem from "../GroupChatModal/UserListItem/UserListItem";
+import UserBadge from "../GroupChatModal/UserBadge";
+import UserListItem from "../GroupChatModal/UserListItem";
 const style = {
   position: "absolute",
   top: "50%",

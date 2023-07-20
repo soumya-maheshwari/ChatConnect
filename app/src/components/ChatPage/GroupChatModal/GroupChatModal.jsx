@@ -11,9 +11,8 @@ import { searchUser } from "../../../Redux/searchSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserList from "../Sidebar/UserList/UserList";
-import UserListItem from "./UserListItem/UserListItem";
-import UserBadge from "./UserBadge/UserBadge";
-// import { ModalFooter } from "react-bootstrap";
+import UserListItem from "./UserListItem";
+import UserBadge from "./UserBadge";
 
 const style = {
   position: "absolute",
@@ -21,7 +20,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: "background.paper",
+  bgcolor: "#ebe3ce",
   border: "2px solid #000",
   boxShadow: 24,
   p: 6,
@@ -127,7 +126,21 @@ const GroupChatModal = ({ children }) => {
         draggable: true,
       });
       return;
-    } else {
+    }
+
+    // if (selectedUsers.length < 2) {
+    //   toast.error("Please select at least two users to make a group", {
+    //     position: "top-right",
+    //     // theme: "DARK",
+    //     autoClose: 5000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //   });
+    //   return;
+    // }
+    else {
       setSelectedUsers([...selectedUsers, userToAdd]);
     }
   };
@@ -217,7 +230,6 @@ const GroupChatModal = ({ children }) => {
           </Box>
         </Modal>
       </div>
-      <ToastContainer />
     </>
   );
 };

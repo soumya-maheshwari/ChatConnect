@@ -8,11 +8,8 @@ const UserBadge = (props) => {
     <div>
       {/* {console.log(a)} */}
 
-      <Chip label={props.name} color="primary">
-        <div className="badge" fontSize={"12px"} onClick={handleFunction}>
-          {/* {props.user.name} */}
-          {/* <RxCross2 fontSize={"100px"} /> */}
-        </div>
+      <Chip label={props.name} color="success">
+        <div className="badge" fontSize={"12px"} onClick={handleFunction}></div>
       </Chip>
     </div>
   );
