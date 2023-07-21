@@ -121,9 +121,9 @@ const Login = () => {
         </div>
         <div className="forms">
           <h1 className="heading">LOGIN</h1>
-          <form action="" onSubmit={handleSubmit} className="form-class">
+          <form onSubmit={handleSubmit} className="form-class">
             <div className="form-group">
-              <label for="email" className="form-label">
+              <label htmlFor="email" className="form-label">
                 Email Address
               </label>
               <img src={mail} alt="mail" className="mail" />
@@ -140,7 +140,7 @@ const Login = () => {
               <p id="wrong-email">Invalid Email Address</p>
             </div>
             <div className="form-group">
-              <label for="password" className="form-label">
+              <label htmlFor="password" className="form-label">
                 Password
               </label>
 

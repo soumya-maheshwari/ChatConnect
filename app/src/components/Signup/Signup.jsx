@@ -142,12 +142,12 @@ const Signup = () => {
         <div className="forms2">
           <h1 className="heading2">SIGNUP</h1>
 
-          <form action="" onSubmit={handleSubmit} className="form-class2">
+          <form onSubmit={handleSubmit} className="form-class2">
             <div
               className="form-group2
             "
             >
-              <label for="name" className="form-label">
+              <label htmlFor="name" className="form-label">
                 Full Name
               </label>
               <img src={namee} alt="name" className="mail" />
@@ -165,7 +165,7 @@ const Signup = () => {
               className="form-group2
             "
             >
-              <label for="email" className="form-label">
+              <label htmlFor="email" className="form-label">
                 Email Address
               </label>
               <img src={mail} alt="mail" className="mail" />
@@ -185,7 +185,7 @@ const Signup = () => {
               className="form-group2
             "
             >
-              <label for="username" className="form-label">
+              <label htmlFor="username" className="form-label">
                 User Name
               </label>
               <img src={user} alt="user" className="user" />
@@ -203,7 +203,7 @@ const Signup = () => {
               className="form-group2
             "
             >
-              <label for="password" className="form-label">
+              <label htmlFor="password" className="form-label">
                 Password
               </label>
 
@@ -236,7 +236,7 @@ const Signup = () => {
               className="form-group2
             "
             >
-              <label for="password" className="form-label">
+              <label htmlFor="password" className="form-label">
                 Confirm Password
               </label>
 
