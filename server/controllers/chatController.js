@@ -49,6 +49,7 @@ const createChat = async (req, res, next) => {
 
       res.status(200).json({
         fullChat,
+        success: true,
         msg: "chat created successfully",
       });
     }

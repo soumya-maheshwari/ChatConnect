@@ -20,18 +20,17 @@ const Mychats = ({ fetchAgain }) => {
   const sm = useSelector((state) => state.chat);
   const [logggedUser, setLogggedUser] = useState();
   const user = JSON.parse(localStorage.getItem("userInfo"));
-  const loggedUser = user.name;
-  // console.log(loggedUser);
+  // console.log(user);
+  // console.log(logggedUser);
   useEffect(() => {
-    setLogggedUser(JSON.parse(localStorage.getItem("userInfo")));
-
+    setLogggedUser(user);
     dispatch(accesAllTheChatsThunk())
       .then((res) => {
         // console.log(res);
         return res;
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         return err.reponse;
       });
     // setBool(true);
@@ -60,7 +59,7 @@ const Mychats = ({ fetchAgain }) => {
   // console.log(sm);
 
   // console.log(chats);
-
+  // console.log(logggedUser, "logged user");
   return (
     <>
       <div className="my-chats">
@@ -113,6 +112,7 @@ const Mychats = ({ fetchAgain }) => {
                         color={selectedChat === chat ? "white" : "black"}
                       >
                         <p>
+                          {/* {console.log(chat.users)} */}
                           {!chat.isGroupChat
                             ? getSenderUser(logggedUser, chat.users)
                             : "chat.chatName"}
@@ -125,12 +125,9 @@ const Mychats = ({ fetchAgain }) => {
             ) : (
               <ChatLoading />
             )}
-            {/* <p className="click-text">{text}</p> */}
           </Box>
         </Box>
       </div>
-
-      {/* <p className="click-text">{text}</p> */}
     </>
   );
 };

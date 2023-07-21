@@ -9,10 +9,10 @@ import { fetchAllMessagesForAChatThunk } from "../../../../Redux/mesaageFetchSli
 import Lottie from "lottie-react";
 import "./singleChat.css";
 import typingAnimation from "../../../../Animations/typing.json";
-import { getSenderUser } from "../../../../config/Helper";
+import { getFullSenderDetails, getSenderUser } from "../../../../config/Helper";
 // import io from "socket.io-client";
-import ProfileModal from "../../.././../components/ProfileModal";
 import UpdatedGroupChatModal from "../../UpdatedGroupChatModal/UpdatedGroupChatModal";
+import OthersProfile from "../../../OthersProfile";
 
 // const END_POINT = "http://localhost:5000";
 
@@ -148,8 +148,7 @@ const SingleChat = ({
               <div className="chat-name-head">
                 {getSenderUser(user, chatss.users)}
               </div>
-
-              <ProfileModal />
+              <OthersProfile user={getFullSenderDetails(user, chatss.users)} />
             </>
           ) : (
             <>

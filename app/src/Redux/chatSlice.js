@@ -7,6 +7,7 @@ const initialState = {
   isSuccess: false,
   isLoading: false,
   showToast: false,
+  isChatCreated: false,
   message: "",
   response: "",
   chatArray: [],
@@ -28,7 +29,7 @@ export const accessChatThunk = createAsyncThunk(
       .post(`${backend}create_chat`, data, config)
 
       .then((res) => {
-        // console.log(res);
+        console.log(res);
         // console.log(data);
 
         return res;
@@ -36,7 +37,7 @@ export const accessChatThunk = createAsyncThunk(
       .catch((err) => {
         // console.log(data);
 
-        // console.log(err);
+        console.log(err);
         return err.response;
       });
   }
@@ -156,8 +157,13 @@ export const chatSlice = createSlice({
       })
       .addCase(accessChatThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.message = "sdhkjnkj";
         // console.log(action.payload);
+        if (action.payload.data.success) {
+          state.isSuccess = true;
+          state.isChatCreated = true;
+        } else {
+          state.isSuccess = false;
+        }
       })
       .addCase(accessChatThunk.rejected, (state) => {
         state.isLoading = true;
