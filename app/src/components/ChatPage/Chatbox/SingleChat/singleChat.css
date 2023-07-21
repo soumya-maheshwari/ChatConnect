@@ -1,10 +1,10 @@
 .messages {
   display: flex;
   flex-direction: column;
-  /* overflow-y: scroll; */
-  /* scrollbar-width: none; */
+  overflow-y: scroll;
+  scrollbar-width: none;
   position: relative;
-  top: -100%;
+  /* top: -100%; */
 }
 
 .user-text {

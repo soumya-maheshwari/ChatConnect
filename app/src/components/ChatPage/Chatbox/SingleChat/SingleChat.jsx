@@ -14,6 +14,8 @@ import { getFullSenderDetails, getSenderUser } from "../../../../config/Helper";
 import UpdatedGroupChatModal from "../../UpdatedGroupChatModal/UpdatedGroupChatModal";
 import OthersProfile from "../../../OthersProfile";
 import sendImg from "../../../../assets/send.svg";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // const END_POINT = "http://localhost:5000";
 
@@ -28,10 +30,10 @@ const SingleChat = ({
 }) => {
   const user = JSON.parse(localStorage.getItem("userInfo"));
 
-  console.log(user);
-  console.log(user.id);
+  // console.log(user);
+  // console.log(user.id);
   const chatss = JSON.parse(localStorage.getItem("chatInfo"));
-  console.log(chatss);
+  // console.log(chatss);
   const chatid = chatss ? chatss._id : null;
   var chatName;
   const dispatch = useDispatch();
@@ -55,31 +57,43 @@ const SingleChat = ({
   };
 
   useEffect(() => {
+    if (sm.isSuccess) {
+      toast.success("Message sent", {
+        position: "top-right",
+        // theme: "DARK",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    }
+  }, [sm]);
+  useEffect(() => {
     if (msg.isSuccess) {
       setAllMessages(msg.messagesArray);
       // setLoading(false);
     }
   }, [msg]);
 
-  // console.log(userData, "user data");
   useEffect(() => {
-    // setLoading(sm.isLoading);
-  }, [sm]);
+    if (msg.isSuccess) {
+      setLoading(false);
+    }
+  });
 
   const sendMessage = (e) => {
     if (e.key === "Enter" && messageToSend) {
-      // localStorage.setItem("messageInfo", JSON.stringify(userData));
-
       dispatch(sendMessageThunk(userData))
         .then((res) => {
-          // console.log(res);
+          console.log(res);
           return res;
         })
         .catch((err) => {
-          // console.log(err);
-          // alert("failed to send the message");
+          console.log(err);
           return err.response;
         });
+      // alert("senttt");
     }
   };
 
@@ -103,7 +117,7 @@ const SingleChat = ({
 
   useEffect(() => {
     setAllMessages(msg.messagesArray);
-    setLoading(false);
+    // setLoading(false);
   }, [sm]);
   useEffect(() => {
     // socket = io(END_POINT);
@@ -179,6 +193,7 @@ const SingleChat = ({
             borderRadius="lg"
             overflow="hidden"
           >
+            {console.log(loading)}
             {loading ? (
               "loading.."
             ) : (
@@ -194,8 +209,14 @@ const SingleChat = ({
               margin="normal"
               label="Enter a messsage"
               variant="outlined"
-            >
-              {/* {istyping ? (
+              value={messageToSend}
+              onChange={handleMessageSend}
+              InputProps={{
+                sx: { bgcolor: "#E0E0E0" },
+                // placeholder: "Enter a message...",
+              }}
+            />
+            {/* {istyping ? (
               <div>
                 <Lottie
                   options={defaultOptions}
@@ -206,20 +227,10 @@ const SingleChat = ({
               </div>
             ) : (
               <></>
-            )} */}{" "}
-              <TextField
-                variant="filled"
-                fullWidth
-                sx={{ bgcolor: "#E0E0E0" }}
-                placeholder="Enter a message.."
-                value={messageToSend}
-                onChange={handleMessageSend}
-              />
-            </TextField>
-
-            <Button onClick={sendMessage}>
+            // )} */}
+            {/* <Button onClick={sendMessage}>
               <img src={sendImg} alt="" className="send-btn" />
-            </Button>
+            </Button> */}
           </Box>
         </>
       ) : (

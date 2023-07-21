@@ -3,13 +3,27 @@ import "./logout.css";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import logoutImg from "../../assets/logout.svg";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Logout = () => {
   const navigate = useNavigate();
 
   const handleLogout = (e) => {
     localStorage.clear();
-    return navigate("/");
+    toast.success("Logout successful", {
+      position: "top-right",
+      // theme: "DARK",
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
+
+    setTimeout(() => {
+      navigate("/");
+    }, 4000);
   };
 
   const cancelLogout = () => {
@@ -31,6 +45,7 @@ const Logout = () => {
           </Button>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };

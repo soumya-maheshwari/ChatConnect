@@ -7,7 +7,6 @@ import {
   isSameSenderMargin,
   isSameUser,
 } from "../config/Helper";
-import { deepOrange, deepPurple } from "@mui/material/colors";
 
 function stringToColor(string) {
   let hash = 0;
@@ -38,9 +37,9 @@ function stringAvatar(name) {
 }
 
 const ScrollableChatFeed = ({ allMessages }) => {
-  console.log(allMessages);
+  console.log(allMessages, "scrollable");
   const user = JSON.parse(localStorage.getItem("userInfo"));
-
+  console.log(user);
   return (
     <div>
       <ScrollableFeed>
@@ -48,8 +47,8 @@ const ScrollableChatFeed = ({ allMessages }) => {
           allMessages.map((m, i) => {
             return (
               <div key={m._id} style={{ display: "flex" }}>
-                {(isSameSender(allMessages, m, i, user._id) ||
-                  isLastMessage(allMessages, i, user._id)) && (
+                {(isSameSender(allMessages, m, i, user.id) ||
+                  isLastMessage(allMessages, i, user.id)) && (
                   <Tooltip title={m.sender.name} placement="bottom-start">
                     <Avatar
                       sx={{
@@ -61,9 +60,7 @@ const ScrollableChatFeed = ({ allMessages }) => {
                       }}
                       alt={m.sender.name}
                       // sx={{ bgcolor: deepOrange[500] }}
-                    >
-                      {/* {m.sender.name} */}
-                    </Avatar>
+                    ></Avatar>
                   </Tooltip>
                 )}
                 <span
@@ -74,11 +71,11 @@ const ScrollableChatFeed = ({ allMessages }) => {
                     display: "flex",
                     flexDirection: "column",
                     backgroundColor: `${
-                      m.sender._id === user._id ? "#BEE3F8" : "#B9F5D0"
+                      m.sender._id === user.id ? "#BEE3F8" : "#B9F5D0"
                     }`,
 
-                    marginLeft: isSameSenderMargin(allMessages, m, i, user._id),
-                    marginTop: isSameUser(allMessages, m, i, user._id) ? 3 : 10,
+                    marginLeft: isSameSenderMargin(allMessages, m, i, user.id),
+                    marginTop: isSameUser(allMessages, m, i, user.id) ? 3 : 10,
                   }}
                 >
                   {m.content}
