@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, FormControl, Input, TextField } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import arrow from "../../../../assets/backArrow.svg";
 import { Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +13,7 @@ import { getFullSenderDetails, getSenderUser } from "../../../../config/Helper";
 // import io from "socket.io-client";
 import UpdatedGroupChatModal from "../../UpdatedGroupChatModal/UpdatedGroupChatModal";
 import OthersProfile from "../../../OthersProfile";
+import sendImg from "../../../../assets/send.svg";
 
 // const END_POINT = "http://localhost:5000";
 
@@ -127,112 +128,113 @@ const SingleChat = ({
     // socket.emit("join a chat", chatid);
   }, [dispatch]);
   return (
-    <div>
-      {/* {chatss ? (
-        <div className="chat-name-head">{`${chatss.chatName}`}</div>
-      ) : (
-        <div className="user-text">Click on a user to start a text</div>
-      )} */}
+    <>
       {chatss ? (
-        <Box
-          alignItems={"center"}
-          flexDirection={"column"}
-          display={"flex"}
-          p={3}
-          color={"red"}
-          // bgcolor={"green"}
-          height={"100vh"}
-        >
-          {allMessages && !chatss.isGroupChat ? (
-            <>
-              <div className="chat-name-head">
+        <>
+          <p
+            style={{
+              fontSize: "28px", // On base (0 to 600px)
+              fontSize: "30px", // On medium (960px to 1280px)
+              paddingBottom: "3px",
+              paddingLeft: "2px",
+              paddingRight: "2px",
+              width: "100%",
+              fontFamily: "Work sans",
+              display: "flex",
+              justifyContent: "space-between", // On base (0 to 600px)
+              alignItems: "center",
+            }}
+          >
+            {" "}
+            {allMessages && !chatss.isGroupChat ? (
+              <>
                 {getSenderUser(user, chatss.users)}
+                <OthersProfile
+                  user={getFullSenderDetails(user, chatss.users)}
+                />
+              </>
+            ) : (
+              <>
+                <div className="chat-name-head">
+                  {`${chatss.chatName}`}
+                  <UpdatedGroupChatModal
+                    // fetcMessages={fetchMessages}
+                    fetchAgain={fetchAgain}
+                    setFetchAgain={setFetchAgain}
+                  />
+                </div>
+              </>
+            )}
+          </p>
+
+          <Box
+            display="flex"
+            flexDirection="column"
+            justifyContent="flex-end"
+            // padding={3}
+            padding={2}
+            bgcolor="#E8E8E8"
+            width="100%"
+            height="100%"
+            borderRadius="lg"
+            overflow="hidden"
+          >
+            {loading ? (
+              "loading.."
+            ) : (
+              <div className="messages">
+                <ScrollableChatFeed allMessages={allMessages} />
               </div>
-              <OthersProfile user={getFullSenderDetails(user, chatss.users)} />
-            </>
-          ) : (
-            <>
-              <div className="chat-name-head">
-                {`${chatss.chatName}`}
-                <UpdatedGroupChatModal
-                  // fetcMessages={fetchMessages}
-                  fetchAgain={fetchAgain}
-                  setFetchAgain={setFetchAgain}
+            )}
+            <TextField
+              onKeyDown={sendMessage}
+              id="first-name"
+              required
+              fullWidth
+              margin="normal"
+              label="Enter a messsage"
+              variant="outlined"
+            >
+              {/* {istyping ? (
+              <div>
+                <Lottie
+                  options={defaultOptions}
+                  // height={50}
+                  width={70}
+                  style={{ marginBottom: 15, marginLeft: 0 }}
                 />
               </div>
-            </>
-          )}
-          {/* {loading ? (
-            "loading...."
-          ) : (
-            <div className="messages">
-              <ScrollableChatFeed allMessages={allMessages} />
-            </div>
-          )} */}
-        </Box>
-      ) : null}
-      <Box
-        alignItems={"center"}
-        flexDirection={"column"}
-        display={"flex"}
-        p={3}
-        color={"red"}
-        // bgcolor={"green"}
-        height={"100vh"}
-      >
-        {loading ? (
-          <Spinner /> || "loading.."
-        ) : (
-          <div className="messages">
-            <ScrollableChatFeed allMessages={allMessages} />
-          </div>
-        )}
-      </Box>
-      <FormControl onKeyDown={sendMessage}>
-        <Input
-          isRequired
-          fullWidth
-          type="text"
-          placeholder="enter message"
-          // onKeyDown={sendMessage}
-          value={messageToSend}
-          style={{
-            backgroundColor: "#E0E0E0",
-          }}
-          onChange={handleMessageSend}
-        />
-        {/* {istyping ? (
-          <Lottie
-            width={70}
-            height={50}
-            style={{
-              marginBottom: 15,
-              marginLeft: 0,
-            }}
-            animationData={typingAnimation}
-            loop={true}
-          />
-        ) : (
-          ""
+            ) : (
+              <></>
+            )} */}{" "}
+              <TextField
+                variant="filled"
+                fullWidth
+                sx={{ bgcolor: "#E0E0E0" }}
+                placeholder="Enter a message.."
+                value={messageToSend}
+                onChange={handleMessageSend}
+              />
+            </TextField>
 
-          // <Lottie
-          //   width={70}
-          //   height={50}
-          //   style={{
-          //     marginBottom: 15,
-          //     marginLeft: 0,
-          //   }}
-          //   animationData={typingAnimation}
-          //   loop={true}
-          // /> */}
-        {/* )} */}
-      </FormControl>
-      <Box d="flex" alignItems="center" justifyContent="center" h="100%">
-        {/* <text fontSize="3xl" pb={3} fontFamily="Work sans"> */}
-        Click on a user to start chatting
-        {/* </text> */}
-      </Box>
-    </div>
+            <Button onClick={sendMessage}>
+              <img src={sendImg} alt="" className="send-btn" />
+            </Button>
+          </Box>
+        </>
+      ) : (
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          height="100%"
+        >
+          <Typography variant="h6" paragraph fontFamily="Work sans">
+            Click on a user to start chatting
+          </Typography>
+        </Box>
+      )}
+    </>
   );
 };
 

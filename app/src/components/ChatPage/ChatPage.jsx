@@ -3,6 +3,7 @@ import Sidebar from "./Sidebar/Sidebar";
 import Mychats from "./MyChats/Mychats";
 import "./chatPage.css";
 import ChatBox from "./Chatbox/ChatBox";
+import { Box, Grid } from "@mui/material";
 
 const ChatPage = () => {
   const [fetchAgain, setFetchAgain] = useState(false);
@@ -12,12 +13,12 @@ const ChatPage = () => {
     <>
       <div className="chat-page">
         {user && <Sidebar />}
-        <div className="chat-container">
+        <Box className="chat-container" sx={{ margin: 0 }}>
           {user && <Mychats fetchAgain={fetchAgain} />}
           {user && (
             <ChatBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
           )}
-        </div>
+        </Box>
       </div>
     </>
   );

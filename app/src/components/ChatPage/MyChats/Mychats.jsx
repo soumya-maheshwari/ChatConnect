@@ -20,6 +20,8 @@ const Mychats = ({ fetchAgain }) => {
   const sm = useSelector((state) => state.chat);
   const [logggedUser, setLogggedUser] = useState();
   const user = JSON.parse(localStorage.getItem("userInfo"));
+  const chatss = JSON.parse(localStorage.getItem("chatInfo"));
+
   // console.log(user);
   // console.log(logggedUser);
   useEffect(() => {
@@ -62,72 +64,74 @@ const Mychats = ({ fetchAgain }) => {
   // console.log(logggedUser, "logged user");
   return (
     <>
-      <div className="my-chats">
+      {/* <div className="my-chats"> */}
+      <Box
+        flexDirection={"column"}
+        alignItems={"center"}
+        padding={3}
+        bgcolor={"gold"}
+        borderRadius={"10px"}
+        // width={"100%"}
+        // display={"flex"}
+        display={{ xs: selectedChat ? "none" : "flex", md: "flex" }}
+        width={{ xs: "100%", md: "31%" }}
+      >
         <Box
-          flexDirection={"column"}
-          alignItems={"center"}
-          p={3}
-          bgcolor={"gold"}
-          borderRadius={"2px"}
-          width={"100%"}
+          pb={3}
+          px={3}
           display={"flex"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
+          fontFamily={"sans-serif"}
+          fontSize={"30px"}
+          width={"100%"}
         >
-          <Box
-            pb={3}
-            px={3}
-            display={"flex"}
-            justifyContent={"space-between"}
-            alignItems={"center"}
-            fontFamily={"sans-serif"}
-            fontSize={"30px"}
-            width={"100%"}
-          >
-            <h1 className="mychat-head"> MY CHATS</h1>
-            <GroupChatModal>
-              <Button display={"flex"}>+</Button>
-            </GroupChatModal>
-          </Box>
-          <Box
-            display={"flex"}
-            flexDirection={"column"}
-            width={"100%"}
-            height={"100%"}
-            // overflowY={"hidden"}
-            bgcolor={"#F8F8F8"}
-            padding={3}
-            overflow={"hidden"}
-          >
-            {chats ? (
-              <Stack overflowY="scroll">
-                {chats.map((chat) => {
-                  return (
-                    <div className="box">
-                      <Box
-                        px={3}
-                        py={2}
-                        key={chat._id}
-                        onClick={() => setSelectedChat(chat)}
-                        cursor={"pointer"}
-                        bgcolor={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
-                        color={selectedChat === chat ? "white" : "black"}
-                      >
-                        <p>
-                          {/* {console.log(chat.users)} */}
-                          {!chat.isGroupChat
-                            ? getSenderUser(logggedUser, chat.users)
-                            : "chat.chatName"}
-                        </p>
-                      </Box>
-                    </div>
-                  );
-                })}
-              </Stack>
-            ) : (
-              <ChatLoading />
-            )}
-          </Box>
+          <h1 className="mychat-head"> MY CHATS</h1>
+          <GroupChatModal>
+            <Button display={"flex"}>NEW GROUP CHAT</Button>
+          </GroupChatModal>
         </Box>
-      </div>
+        <Box
+          display={"flex"}
+          flexDirection={"column"}
+          width={"100%"}
+          height={"100%"}
+          overflowY={"hidden"}
+          bgcolor={"#F8F8F8"}
+          padding={3}
+          overflowy={"hidden"}
+        >
+          {chats ? (
+            <Stack overflowY="scroll">
+              {chats.map((chat) => {
+                return (
+                  <div className="box">
+                    <Box
+                      px={3}
+                      py={2}
+                      key={chat._id}
+                      onClick={() => setSelectedChat(chat)}
+                      cursor={"pointer"}
+                      bgcolor={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
+                      color={selectedChat === chat ? "white" : "black"}
+                    >
+                      <p>
+                        {/* {console.log(chat.users)} */}
+                        {!chat.isGroupChat
+                          ? getSenderUser(logggedUser, chat.users)
+                          : "chat.chatName"}
+                      </p>
+                    </Box>
+                  </div>
+                );
+              })}
+            </Stack>
+          ) : (
+            <ChatLoading />
+          )}
+        </Box>
+      </Box>
+      {/* </div> */}
     </>
   );
 };

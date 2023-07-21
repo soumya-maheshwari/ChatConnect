@@ -48,17 +48,21 @@ const ScrollableChatFeed = ({ allMessages }) => {
           allMessages.map((m, i) => {
             return (
               <div key={m._id} style={{ display: "flex" }}>
-                {/* <div>{m.sender.name}</div> */}
                 {(isSameSender(allMessages, m, i, user._id) ||
                   isLastMessage(allMessages, i, user._id)) && (
                   <Tooltip title={m.sender.name} placement="bottom-start">
                     <Avatar
-                      sx={{ bgcolor: deepOrange[500] }}
-                      style={{
-                        marginRight: "1px",
+                      sx={{
+                        mt: "7px",
+                        mr: 1,
+                        width: 32,
+                        height: 32,
+                        cursor: "pointer",
                       }}
+                      alt={m.sender.name}
+                      // sx={{ bgcolor: deepOrange[500] }}
                     >
-                      {m.sender.name}
+                      {/* {m.sender.name} */}
                     </Avatar>
                   </Tooltip>
                 )}
