@@ -180,7 +180,6 @@ const SingleChat = ({
         // bgcolor={"green"}
         height={"100vh"}
       >
-        {chatss ? `${chatss.chatName}` : null}
         {loading ? (
           <Spinner /> || "loading.."
         ) : (
