@@ -10,7 +10,7 @@ import { verifyOTPThunk } from "../../Redux/authSlice";
 
 const Otp = () => {
   const emailInfo = JSON.parse(localStorage.getItem("forgotEmail"));
-  console.log(emailInfo);
+  // console.log(emailInfo);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const Otp = () => {
 
   const rightOtp = /^[0-9]*$/;
   const sm = useSelector((state) => state.auth);
-  console.log(sm);
+  // console.log(sm);
 
   const handleOtp = (e) => {
     setotp(e.target.value);
@@ -34,11 +34,11 @@ const Otp = () => {
     e.preventDefault();
     dispatch(verifyOTPThunk(userData))
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         return res;
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         return err.response;
       });
   };

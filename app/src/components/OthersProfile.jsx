@@ -11,7 +11,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: "#ccc3eb",
+  bgcolor: "white",
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
@@ -25,7 +25,18 @@ const OthersProfile = ({ user }) => {
   return (
     <>
       <div>
-        <Button onClick={handleOpen}>PROFILE</Button>
+        <Button onClick={handleOpen}>
+          <Avatar
+            style={{
+              backgroundColor: "black",
+              textAlign: "center",
+              width: "30px",
+              height: "30px",
+              margin: "auto",
+              // marginBottom: "14px",
+            }}
+          />
+        </Button>
         <Modal
           open={open}
           onClose={handleClose}
@@ -55,12 +66,12 @@ const OthersProfile = ({ user }) => {
             <Typography
               id="modal-modal-description"
               sx={{ mt: 2 }}
-              padding={"10px"}
+              padding={"5px"}
               color={"black"}
               textAlign={"center"}
               fontStyle={"italic"}
             >
-              UserName :{user.username}
+              {user.username}
             </Typography>
             <Typography
               id="modal-modal-description"
@@ -70,7 +81,7 @@ const OthersProfile = ({ user }) => {
               color={"black"}
               textAlign={"center"}
             >
-              Email :{user.email}
+              {user.email}
             </Typography>
           </Box>
         </Modal>

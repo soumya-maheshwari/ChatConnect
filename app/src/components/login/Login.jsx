@@ -115,12 +115,12 @@ const Login = () => {
 
   return (
     <>
-      <div className="container">
+      <div className="container-login">
         <div className="left">
           <img src={loginImg} alt="login" className="login-img" />
         </div>
-        <div className="forms">
-          <h1 className="heading">LOGIN</h1>
+        <div className="forms-login">
+          <h1 className="heading-login">LOGIN</h1>
           <form onSubmit={handleSubmit} className="form-class">
             <div className="form-group">
               <label htmlFor="email" className="form-label">

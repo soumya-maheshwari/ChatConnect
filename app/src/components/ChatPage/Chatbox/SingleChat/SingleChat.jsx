@@ -11,7 +11,7 @@ import "./singleChat.css";
 import typingAnimation from "../../../../Animations/typing.json";
 import { getFullSenderDetails, getSenderUser } from "../../../../config/Helper";
 // import io from "socket.io-client";
-import UpdatedGroupChatModal from "../../UpdatedGroupChatModal/UpdatedGroupChatModal";
+import UpdatedGroupChatModal from "../../../UpdatedGroupChatModal";
 import OthersProfile from "../../../OthersProfile";
 import sendImg from "../../../../assets/send.svg";
 import { ToastContainer, toast } from "react-toastify";
@@ -149,7 +149,7 @@ const SingleChat = ({
             style={{
               fontSize: "28px", // On base (0 to 600px)
               fontSize: "30px", // On medium (960px to 1280px)
-              paddingBottom: "3px",
+              // paddingBottom: "3px",
               paddingLeft: "2px",
               paddingRight: "2px",
               width: "100%",
@@ -170,7 +170,7 @@ const SingleChat = ({
             ) : (
               <>
                 <div className="chat-name-head">
-                  {`${chatss.chatName}`}
+                  {`${chatss.chatName.toUpperCase()}`}
                   <UpdatedGroupChatModal
                     // fetcMessages={fetchMessages}
                     fetchAgain={fetchAgain}

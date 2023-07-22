@@ -24,7 +24,7 @@ const Sidebar = () => {
   const sm = useSelector((state) => state.search);
   // console.log(sm);
 
-  const [isDrawerOpen, setIsDrawerOpen] = useState(true);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [search, setSearch] = useState("");
   const [searchResultArray, setSearchResultArray] = useState([]);
@@ -131,7 +131,7 @@ const Sidebar = () => {
             <p className="searchText"> Search user</p>
           </Button>
         </Tooltip>
-        <div className="title">Chat App</div>
+        <div className="title-app">CHAT CONNECT</div>
         <div className="menu">
           <img src={bell} className="bell" alt="" />
           <Button
@@ -182,11 +182,15 @@ const Sidebar = () => {
           <Input
             placeholder="search a name"
             maxRows={2}
-            className="input-field"
+            className="inputt-field"
             value={search}
             onChange={handleSearch}
           ></Input>
-          <Button variant="outlined" onClick={handleUserSearch}>
+          <Button
+            variant="contained"
+            onClick={handleUserSearch}
+            className="go-btn"
+          >
             GO
           </Button>
         </Box>

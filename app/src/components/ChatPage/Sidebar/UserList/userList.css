@@ -13,5 +13,10 @@
   background-color: #b7d0e2;
 }
 .boxs {
+  width: 100%;
+  padding: 7px;
   cursor: pointer;
+}
+.boxs:hover {
+  background-color: rgb(182, 206, 215);
 }

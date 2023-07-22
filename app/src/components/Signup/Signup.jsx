@@ -28,7 +28,7 @@ const Signup = () => {
   const [validMail, setValidMail] = useState(false);
 
   const sm = useSelector((state) => state.auth);
-  console.log(sm);
+  // console.log(sm);
 
   // useEffect(() => {
   //   if (!sm.isLoading) {
@@ -135,12 +135,12 @@ const Signup = () => {
 
   return (
     <>
-      <div className="container">
+      <div className="container-signup">
         <div className="left">
           <img src={signUp} alt="login" className="login-img" />
         </div>
         <div className="forms2">
-          <h1 className="heading2">SIGNUP</h1>
+          <h1 className="heading-signup">SIGNUP</h1>
 
           <form onSubmit={handleSubmit} className="form-class2">
             <div
@@ -268,7 +268,7 @@ const Signup = () => {
             <button type="submit" className="login-btn">
               SignUp
             </button>
-            <p className="textt">
+            <p className="texttt">
               Already have an account?
               <span className="link">
                 <Link to="/">Login</Link>

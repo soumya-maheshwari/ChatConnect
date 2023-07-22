@@ -19,21 +19,24 @@
 .logout-img {
   width: 30vw;
   height: 50vh;
-  margin: 100px 20px 20px 20px;
+  margin: 20vh 0vw 23vw 3vh;
 }
 .forms {
   width: 50%;
-  padding-left: 100px;
+  padding-left: 40px;
 }
 .logout-head {
-  font-size: 30px;
+  font-size: 47px;
+  padding-right: 40px;
   margin-top: 200px;
-  margin-left: -10px;
+  font-family: sans-serif;
+  /* margin-left: -10px; */
 }
 
 .yes {
   margin-right: 25px;
   color: black;
+  padding: 10px;
   background-color: rgb(169, 180, 240);
 }
 .yes:hover {
@@ -42,7 +45,7 @@
 
 .no {
   color: black;
-
+  margin-left: 100px;
   background-color: rgb(230, 224, 224);
 }
 
@@ -53,16 +56,16 @@
 @media (max-width: 970px) {
   .container {
     max-width: 880px;
-    margin-top: 8%;
-    height: 90vh;
+    /* margin-top: 8%;
+    height: 90vh; */
   }
 }
 
 @media (max-width: 900px) {
   .container {
     max-width: 700px;
-    margin-top: 8%;
-    height: 90vh;
+    /* margin-top: 8%;
+    height: 90vh; */
   }
 }
 

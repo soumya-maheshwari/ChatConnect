@@ -23,12 +23,12 @@ export const registerUser = createAsyncThunk("auth/signup", async (data) => {
   return await axios
     .post(`${backend}signup`, data, config)
     .then((res) => {
-      console.log(res);
+      // console.log(res);
 
       return res;
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       return err.response;
     });
 });
@@ -58,11 +58,11 @@ export const forgotPasswordThunk = createAsyncThunk(
     return await axios
       .post(`${backend}forgot`, data)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         return res;
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         return err.response;
       });
   }
@@ -74,11 +74,11 @@ export const verifyOTPThunk = createAsyncThunk(
     return await axios
       .post(`${backend}forgot/verify`, data)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         return res;
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         return err.response;
       });
   }
@@ -99,9 +99,9 @@ export const authSlice = createSlice({
       .addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.response = action.payload.data.msg;
-        state.message = "drkkjtio";
+        // state.message = "drkkjtio";
 
-        console.log(action.payload);
+        // console.log(action.payload);
         if (action.payload.data.success) {
           state.isSuccess = true;
           state.showToast = true;
@@ -147,7 +147,7 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.response = action.payload.data.msg;
 
-        console.log(action.payload);
+        // console.log(action.payload);
         if (action.payload.data.success) {
           state.isSuccess = true;
         } else {
@@ -168,7 +168,7 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.response = action.payload.data.msg;
 
-        console.log(action.payload);
+        // console.log(action.payload);
         if (action.payload.data.success) {
           state.isSuccess = true;
         } else {

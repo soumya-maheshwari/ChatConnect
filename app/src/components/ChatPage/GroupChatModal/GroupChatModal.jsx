@@ -5,10 +5,9 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { FormControl, Input } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { ModalFooter } from "react-bootstrap";
 import { createGroupChat } from "../../../Redux/chatSlice";
 import { searchUser } from "../../../Redux/searchSlice";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserList from "../Sidebar/UserList/UserList";
 import UserListItem from "./UserListItem";
@@ -20,7 +19,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: "#ebe3ce",
+  bgcolor: "white",
   border: "2px solid #000",
   boxShadow: 24,
   p: 6,
@@ -164,7 +163,19 @@ const GroupChatModal = ({ children }) => {
   return (
     <>
       <div className="grp-chat-modal">
-        <Button onClick={handleOpen}>CREATE GROUP CHAT</Button>
+        <Button
+          onClick={handleOpen}
+          style={{
+            color: "black",
+            fontSize: "11px",
+            fontFamily: "Work sans",
+            d: "flex",
+            justifyContent: "center",
+          }}
+          variant="outlined"
+        >
+          CREATE GROUP CHAT
+        </Button>
         <Modal
           open={open}
           onClose={handleClose}
@@ -172,7 +183,17 @@ const GroupChatModal = ({ children }) => {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
+            <Typography
+              id="modal-modal-title"
+              variant="h6"
+              component="h2"
+              style={{
+                fontSize: "35px",
+                fontFamily: "Work sans",
+                d: "flex",
+                justifyContent: "center",
+              }}
+            >
               CREATE GROUP CHAT
             </Typography>
 
@@ -182,18 +203,37 @@ const GroupChatModal = ({ children }) => {
                   placeholder="Chat Name"
                   onChange={handleChatName}
                   value={groupChatName}
+                  style={{
+                    marginBottom: "3px",
+                  }}
                 />
               </FormControl>
             </div>
             <FormControl>
               <Input
-                placeholder="Add Users"
+                style={{
+                  marginBottom: "2px",
+                }}
+                placeholder="Add Users eg:soumya"
                 onChange={(e) => {
                   handleSearchUser(e.target.value);
                 }}
               />
             </FormControl>
-            {selectedUsers.map((a) => {
+            <Box width={"100%"} display={"flex"} flexWrap={"wrap"}>
+              {selectedUsers.map((a) => {
+                console.log(a);
+                return (
+                  <UserBadge
+                    key={a._id}
+                    user={a}
+                    name={a.name}
+                    handleFunction={() => handleDelete(a)}
+                  />
+                );
+              })}
+            </Box>
+            {/* {selectedUsers.map((a) => {
               console.log(a);
               return (
                 <UserBadge
@@ -203,7 +243,7 @@ const GroupChatModal = ({ children }) => {
                   handleFunction={() => handleDelete(a)}
                 />
               );
-            })}
+            })} */}
             {/* CHATS */}
             {loading
               ? null
@@ -222,7 +262,11 @@ const GroupChatModal = ({ children }) => {
             <Button
               variant="contained"
               onClick={handleSubmit}
-              style={{ padding: "10px", marginTop: "10px" }}
+              style={{
+                padding: "10px",
+                marginTop: "10px",
+                backgroundColor: "#547ce3",
+              }}
             >
               CREATE
             </Button>

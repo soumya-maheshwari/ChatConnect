@@ -15,7 +15,7 @@ const ForgotPassword = () => {
   const [validMail, setValidMail] = useState(false);
 
   const sm = useSelector((state) => state.auth);
-  console.log(sm);
+  // console.log(sm);
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -25,11 +25,11 @@ const ForgotPassword = () => {
     e.preventDefault();
     dispatch(forgotPasswordThunk({ email }))
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         return res;
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         return err.response;
       });
   };
@@ -56,10 +56,10 @@ const ForgotPassword = () => {
 
   useEffect(() => {
     if (regexEmail.test(email)) {
-      document.getElementById("wrong-email").style.display = "none";
+      document.getElementById("wrong-email-forgot").style.display = "none";
       setValidMail(true);
     } else if (email) {
-      document.getElementById("wrong-email").style.display = "block";
+      document.getElementById("wrong-email-forgot").style.display = "block";
       setValidMail(false);
     }
   }, [email]);
@@ -89,7 +89,7 @@ const ForgotPassword = () => {
                 onChange={handleEmail}
               />
 
-              <p id="wrong-email">Invalid Email Address</p>
+              <p id="wrong-email-forgot">Invalid Email Address</p>
             </div>
             <button
               type="submit"

@@ -7,13 +7,10 @@ import { FormControl, Input } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addUserToGroupThunk,
-  renameGroupThunk,
-} from "../../../Redux/chatSlice";
-import { searchUser } from "../../../Redux/searchSlice";
-import UserBadge from "../GroupChatModal/UserBadge";
-import UserListItem from "../GroupChatModal/UserListItem";
+import { addUserToGroupThunk, renameGroupThunk } from "../Redux/chatSlice";
+import { searchUser } from "../Redux/searchSlice";
+import UserBadge from "./ChatPage/GroupChatModal/UserBadge";
+import UserListItem from "./ChatPage/GroupChatModal/UserListItem";
 const style = {
   position: "absolute",
   top: "50%",

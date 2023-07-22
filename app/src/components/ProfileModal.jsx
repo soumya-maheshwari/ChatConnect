@@ -11,7 +11,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: "#ccc3eb",
+  bgcolor: "white",
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
@@ -45,6 +45,7 @@ export default function BasicModal() {
                 margin: "auto",
                 marginBottom: "14px",
               }}
+              alt={user.user.name}
             />
             <Typography
               id="modal-modal-title"
@@ -63,7 +64,7 @@ export default function BasicModal() {
               textAlign={"center"}
               fontStyle={"italic"}
             >
-              UserName :{user.user.username}
+              {user.user.username}
             </Typography>
             <Typography
               id="modal-modal-description"
@@ -73,7 +74,7 @@ export default function BasicModal() {
               color={"black"}
               textAlign={"center"}
             >
-              Email :{user.user.email}
+              {user.user.email}
             </Typography>
           </Box>
         </Modal>

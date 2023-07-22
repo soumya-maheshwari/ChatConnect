@@ -6,11 +6,11 @@
 }
 .btun {
   margin-top: 4px;
-  left: 4px;
+  left: 8px;
   background-color: rgb(218, 225, 232);
-  color: black;
+  color: rgb(115, 68, 68);
   /* font-weight: bold; */
-  font-size: 19px;
+  font-size: 14px;
 }
 
 .btun:hover {
@@ -21,17 +21,18 @@
   padding: 10px;
 }
 .search {
-  width: 25px;
+  width: 24px;
   text-align: center;
   align-items: center;
   justify-content: center;
-  margin-top: 10px;
+  margin-top: 5px;
   display: flex;
 }
 
 .searchText {
   display: flex;
   font-size: 14px;
+  color: black;
 }
 .text {
   position: absolute;
@@ -39,8 +40,9 @@
   top: 10px;
 }
 
-.title {
-  font-size: 20px;
+.title-app {
+  font-size: 30px;
+  margin-top: 15px;
   font-family: sans-serif;
 }
 
@@ -62,25 +64,40 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px;
+  /* padding: 8px; */
   background-color: #e0e0e0;
 }
 .drawer-search input {
-  flex: 1;
-  margin-right: 10px;
+  /* flex: 1; */
+  /* margin-right: 10px; */
 }
 
 .drawer-search button {
   flex-shrink: 0;
 }
-/* .input-field {
-  background-color: rgb(247, 244, 249);
+.inputt-field {
+  background-color: rgb(233, 239, 237);
+  /* background-color: rgb(247, 244, 249); */
   font-size: 19px;
   align-items: center;
   text-align: center;
   display: flex;
-} */
-
+  padding: 10px;
+}
+.go-btn {
+  color: black;
+  font-weight: bolder;
+  font-size: 20px;
+  padding: 3px;
+  background-color: rgb(203, 210, 217);
+}
+.go-btn:hover {
+  color: black;
+  font-weight: bolder;
+  font-size: 20px;
+  padding: 1px;
+  background-color: rgb(187, 208, 228);
+}
 .avatar-class {
   width: 24px;
   height: 27px;

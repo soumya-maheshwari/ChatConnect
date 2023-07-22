@@ -7,7 +7,6 @@ import { accesAllTheChatsThunk } from "../../../Redux/chatSlice";
 import { getSenderUser } from "../../../config/Helper";
 import SingleChat from "../Chatbox/SingleChat/SingleChat";
 import ChatLoading from "./ChatLoading/ChatLoading";
-import UpdatedGroupChatModal from "../UpdatedGroupChatModal/UpdatedGroupChatModal";
 import "./myChats.css";
 
 const Mychats = ({ fetchAgain }) => {
@@ -69,7 +68,7 @@ const Mychats = ({ fetchAgain }) => {
         flexDirection={"column"}
         alignItems={"center"}
         padding={3}
-        bgcolor={"gold"}
+        bgcolor={"whitesmoke"}
         borderRadius={"10px"}
         // width={"100%"}
         // display={"flex"}
@@ -85,10 +84,11 @@ const Mychats = ({ fetchAgain }) => {
           fontFamily={"sans-serif"}
           fontSize={"30px"}
           width={"100%"}
+          bgcolor={"#ebf7f7"}
         >
           <h1 className="mychat-head"> MY CHATS</h1>
           <GroupChatModal>
-            <Button display={"flex"}>NEW GROUP CHAT</Button>
+            <Button>NEW GROUP CHAT</Button>
           </GroupChatModal>
         </Box>
         <Box
@@ -96,7 +96,7 @@ const Mychats = ({ fetchAgain }) => {
           flexDirection={"column"}
           width={"100%"}
           height={"100%"}
-          overflowY={"hidden"}
+          // overflowY={"hidden"}
           bgcolor={"#F8F8F8"}
           padding={3}
           overflowy={"hidden"}
@@ -112,7 +112,8 @@ const Mychats = ({ fetchAgain }) => {
                       key={chat._id}
                       onClick={() => setSelectedChat(chat)}
                       cursor={"pointer"}
-                      bgcolor={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
+                      bgcolor={selectedChat === chat ? "#494fde" : "#fafcfc"}
+                      // bgcolor={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
                       color={selectedChat === chat ? "white" : "black"}
                     >
                       <p>

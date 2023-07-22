@@ -37,7 +37,14 @@ const Logout = () => {
         </div>
         <div className="forms">
           <h1 className="logout-head">Are you sure you want to Logout?</h1>
-          <Button className="yes" onClick={handleLogout}>
+          <Button
+            className="yes"
+            variant="contained"
+            style={{
+              backgroundColor: "blue",
+            }}
+            onClick={handleLogout}
+          >
             YES
           </Button>
           <Button variant="outlined" className="no" onClick={cancelLogout}>
