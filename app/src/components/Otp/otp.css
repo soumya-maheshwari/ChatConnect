@@ -25,19 +25,24 @@
   width: 50%;
   padding-left: 100px;
 }
-.forgot-head {
+/* .forgot-head {
   font-size: 30px;
   margin-top: 200px;
   margin-left: -10px;
-}
+} */
 
+.otp-head {
+  font-size: 44px;
+  margin-top: 100px;
+  margin-left: -10px;
+}
 .otp-btn {
   margin-top: 80px;
 }
 #otp-error {
   color: #d14444;
   position: absolute;
-  top: 340px;
+  top: 330px;
   display: none;
 }
 @media (max-width: 970px) {

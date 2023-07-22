@@ -52,12 +52,45 @@ export const loginUser = createAsyncThunk("auth/login", async (data) => {
     });
 });
 
+export const forgotPasswordThunk = createAsyncThunk(
+  "auth/forgotPassword",
+  async (data) => {
+    return await axios
+      .post(`${backend}forgot`, data)
+      .then((res) => {
+        console.log(res);
+        return res;
+      })
+      .catch((err) => {
+        console.log(err);
+        return err.response;
+      });
+  }
+);
+
+export const verifyOTPThunk = createAsyncThunk(
+  "auth/forgotPassword/verify",
+  async (data) => {
+    return await axios
+      .post(`${backend}forgot/verify`, data)
+      .then((res) => {
+        console.log(res);
+        return res;
+      })
+      .catch((err) => {
+        console.log(err);
+        return err.response;
+      });
+  }
+);
+
 export const authSlice = createSlice({
   name: "auth",
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
+
       //  REGISTER USER
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true;
@@ -88,7 +121,6 @@ export const authSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-        // localStorage.setItem("access token", action.payload.data.accessToken);
         state.profile = action.payload.data;
         state.isLoading = false;
         state.response = action.payload.data.msg;
@@ -103,6 +135,48 @@ export const authSlice = createSlice({
         }
       })
       .addCase(loginUser.rejected, (state) => {
+        state.isLoading = true;
+        state.isError = true;
+      })
+
+      // FORGOT PASSWORD
+      .addCase(forgotPasswordThunk.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(forgotPasswordThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.response = action.payload.data.msg;
+
+        console.log(action.payload);
+        if (action.payload.data.success) {
+          state.isSuccess = true;
+        } else {
+          state.isSuccess = false;
+          state.isError = true;
+        }
+      })
+      .addCase(forgotPasswordThunk.rejected, (state) => {
+        state.isLoading = true;
+        state.isError = true;
+      })
+
+      // FORGOT PASSWORD VERIFICATION
+      .addCase(verifyOTPThunk.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(verifyOTPThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.response = action.payload.data.msg;
+
+        console.log(action.payload);
+        if (action.payload.data.success) {
+          state.isSuccess = true;
+        } else {
+          state.isSuccess = false;
+          state.isError = true;
+        }
+      })
+      .addCase(verifyOTPThunk.rejected, (state) => {
         state.isLoading = true;
         state.isError = true;
       });

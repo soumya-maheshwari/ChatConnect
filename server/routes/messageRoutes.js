@@ -6,7 +6,7 @@ const { authVerifyToken } = require("../middleware/authVerifyToken");
 
 router.get(
   "/:chatId",
-  //  authVerifyToken,
+  // , authVerifyToken,
   messageController.fetchAllMessages
 );
 

@@ -1,10 +1,9 @@
-import { useEffect } from "react";
 import "./App.css";
 import ChatPage from "./components/ChatPage/ChatPage";
 import ErrorPage from "./components/ErrorPage/ErrorPage";
 import Signup from "./components/Signup/Signup";
 import Login from "./components/login/Login";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Logout from "./components/Logout/Logout";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import Otp from "./components/Otp/Otp";

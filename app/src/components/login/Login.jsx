@@ -178,6 +178,12 @@ const Login = () => {
                 <Link to="/signup">SIGNUP</Link>
               </span>
             </p>
+            <p className="textt">
+              Forgot Password?
+              <span className="linkk">
+                <Link to="/forgotPassword">Follow these steps.</Link>
+              </span>
+            </p>
           </form>
         </div>
       </div>
