@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
-import axios from "axios";
-const backend = "http://localhost:5000/api/message/";
+import Api from "./API.js";
 
 const initialState = {
   isError: false,
@@ -26,8 +24,7 @@ export const sendMessageThunk = createAsyncThunk(
       },
     };
 
-    return await axios
-      .post(`${backend}`, data, config)
+    return await Api.post(``, data, config)
       .then((res) => {
         // console.log(res);
         return res;

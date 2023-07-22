@@ -271,7 +271,7 @@ const Signup = () => {
             <p className="texttt">
               Already have an account?
               <span className="link">
-                <Link to="/">Login</Link>
+                <Link to="/ChatConnect">Login</Link>
               </span>
             </p>
           </form>

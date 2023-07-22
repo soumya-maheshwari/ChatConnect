@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-const backend = "http://localhost:5000/api/";
+import Api from "./API.js";
 
 const initialState = {
   isError: false,
@@ -19,8 +18,7 @@ export const searchUser = createAsyncThunk("user/search", async (data) => {
     },
   };
 
-  return await axios
-    .get(`${backend}all_users?search=${data}`, config)
+  return await Api.get(`all_users?search=${data}`, config)
     .then((res) => {
       // console.log(data);
       // console.log(res);

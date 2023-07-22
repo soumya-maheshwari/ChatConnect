@@ -27,7 +27,7 @@ const Login = () => {
   const [loading, setLoading] = useState(true);
 
   const sm = useSelector((state) => state.auth);
-  // console.log(sm);
+  console.log(sm);
 
   useEffect(() => {
     if (sm.message == "") {
@@ -93,9 +93,9 @@ const Login = () => {
         pauseOnHover: true,
         draggable: true,
       });
-      setTimeout(() => {
-        navigate("/chat_page");
-      }, 6000);
+      // setTimeout(() => {
+      //   navigate("/chat_page");
+      // }, 6000);
 
       localStorage.setItem("userInfo", JSON.stringify(sm.profile));
     } else {

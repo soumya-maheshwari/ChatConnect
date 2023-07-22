@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-const backend = "http://localhost:5000/api/chat/";
+import Api from "./API.js";
 
 const initialState = {
   isError: false,
@@ -25,8 +24,7 @@ export const accessChatThunk = createAsyncThunk(
       },
     };
 
-    return await axios
-      .post(`${backend}create_chat`, data, config)
+    return await Api.post(`create_chat`, data, config)
 
       .then((res) => {
         console.log(res);
@@ -55,8 +53,7 @@ export const accesAllTheChatsThunk = createAsyncThunk(
       },
     };
 
-    return await axios
-      .get(`${backend}fetch_chat`, config)
+    return await Api.get(`fetch_chat`, config)
       .then((res) => {
         // console.log(res);
 
@@ -80,9 +77,7 @@ export const createGroupChat = createAsyncThunk(
       },
     };
 
-    return await axios
-
-      .post(`${backend}create_GroupChat`, data, config)
+    return await Api.post(`create_GroupChat`, data, config)
       .then((res) => {
         console.log(res);
         return res;
@@ -105,9 +100,7 @@ export const renameGroupThunk = createAsyncThunk(
         Authorization: `Bearer ${user.accessToken}`,
       },
     };
-    return await axios
-
-      .patch(`${backend}rename_group`, data, config)
+    return await Api.patch(`rename_group`, data, config)
       .then((res) => {
         console.log(res);
         return res;
@@ -130,9 +123,7 @@ export const addUserToGroupThunk = createAsyncThunk(
         Authorization: `Bearer ${user.accessToken}`,
       },
     };
-    return await axios
-
-      .patch(`${backend}add_user`, data, config)
+    return await Api.patch(`add_user`, data, config)
       .then((res) => {
         console.log(res);
         return res;

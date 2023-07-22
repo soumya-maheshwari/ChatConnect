@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
-import axios from "axios";
-const backend = "http://localhost:5000/api/message/";
+import Api from "./API.js";
 
 const initialState = {
   isError: false,
@@ -26,16 +24,14 @@ export const fetchAllMessagesForAChatThunk = createAsyncThunk(
       },
     };
 
-    return await axios
-      .get(`${backend}${data}`, data)
+    return await Api.get(`${data}`, data)
       .then((res) => {
-        console.log(`${backend}${data}`);
-        console.log(data);
-        console.log(res);
+        // console.log(data);
+        // console.log(res);
         return res;
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         return err.response;
       });
   }

@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-const backend = "http://localhost:5000/api/";
+import Api from "./API.js";
 
 const initialState = {
   isError: false,
@@ -20,8 +19,8 @@ export const registerUser = createAsyncThunk("auth/signup", async (data) => {
     },
   };
 
-  return await axios
-    .post(`${backend}signup`, data, config)
+  // return await axios
+  return await Api.post(`signup`, data, config)
     .then((res) => {
       // console.log(res);
 
@@ -40,14 +39,14 @@ export const loginUser = createAsyncThunk("auth/login", async (data) => {
     },
   };
 
-  return await axios
-    .post(`${backend}login`, data, config)
+  // return await axios
+  return await Api.post(`login`, data, config)
     .then((res) => {
-      // console.log(res);
+      console.log(res);
       return res;
     })
     .catch((err) => {
-      // console.log(err);
+      console.log(err);
       return err.response;
     });
 });
@@ -55,8 +54,8 @@ export const loginUser = createAsyncThunk("auth/login", async (data) => {
 export const forgotPasswordThunk = createAsyncThunk(
   "auth/forgotPassword",
   async (data) => {
-    return await axios
-      .post(`${backend}forgot`, data)
+    // return await axios
+    return await Api.post(`forgot`, data)
       .then((res) => {
         // console.log(res);
         return res;
@@ -71,8 +70,8 @@ export const forgotPasswordThunk = createAsyncThunk(
 export const verifyOTPThunk = createAsyncThunk(
   "auth/forgotPassword/verify",
   async (data) => {
-    return await axios
-      .post(`${backend}forgot/verify`, data)
+    // return await axios
+    return await Api.post(`forgot/verify`, data)
       .then((res) => {
         // console.log(res);
         return res;
