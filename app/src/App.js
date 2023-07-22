@@ -14,7 +14,9 @@ function App() {
       <div className="App">
         <BrowserRouter>
           <Routes>
-            <Route path="/" exact element={<Login />} />
+            <Route path="/ChatConnect" exact element={<Login />} />
+            <Route path="/login" exact element={<Login />} />
+
             <Route path="/signup" exact element={<Signup />} />
             <Route path="/chat_page" exact element={<ChatPage />} />
             <Route path="/logout" exact element={<Logout />} />
