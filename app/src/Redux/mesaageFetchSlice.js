@@ -24,7 +24,7 @@ export const fetchAllMessagesForAChatThunk = createAsyncThunk(
       },
     };
 
-    return await Api.get(`${data}`, data)
+    return await Api.get(`message/${data}`, data)
       .then((res) => {
         // console.log(data);
         // console.log(res);

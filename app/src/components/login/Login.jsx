@@ -13,12 +13,9 @@ import loginImg from "../../assets/login.svg";
 import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
-  // const [isLoggedIn, setIsLoggedIn] = useState(initialLoggedInState === "true");
-
-  // const initialLoggedInState = localStorage.getItem("isLoggedIn") ?? false;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [showToast, setShowToast] = useState(false);
+  const [showToast, setShowToast] = useState(true);
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,8 +27,9 @@ const Login = () => {
   console.log(sm);
 
   useEffect(() => {
-    if (sm.message == "") {
+    if (sm.response == "") {
       setBool(true);
+      setShowToast(false);
     }
   }, [sm]);
 
@@ -56,30 +54,18 @@ const Login = () => {
   const regexEmail =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-  useEffect(() => {
-    if (regexEmail.test(email)) {
-      document.getElementById("wrong-email").style.display = "none";
-      setValidMail(true);
-    } else if (email) {
-      document.getElementById("wrong-email").style.display = "block";
-      setValidMail(false);
-    }
-  }, [email]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     // setShowToast(true);
-    if (validMail) {
-      dispatch(loginUser(userData))
-        .then((res) => {
-          // console.log(res);
-          return res;
-        })
-        .catch((err) => {
-          // console.log(err);
-          return err.response;
-        });
-    }
+    dispatch(loginUser(userData))
+      .then((res) => {
+        console.log(res);
+        return res;
+      })
+      .catch((err) => {
+        console.log(err);
+        return err.response;
+      });
   };
 
   useEffect(() => {
@@ -93,13 +79,14 @@ const Login = () => {
         pauseOnHover: true,
         draggable: true,
       });
-      // setTimeout(() => {
-      //   navigate("/chat_page");
-      // }, 6000);
+      setTimeout(() => {
+        navigate("/chat_page");
+      }, 6000);
 
       localStorage.setItem("userInfo", JSON.stringify(sm.profile));
     } else {
-      if (showToast) {
+      // if (showToast) {
+      if (sm.response !== "") {
         toast.error(`${sm.response}`, {
           position: "top-right",
           // theme: "DARK",
@@ -109,6 +96,7 @@ const Login = () => {
           pauseOnHover: true,
           draggable: true,
         });
+        // }
       }
     }
   }, [sm]);
@@ -136,8 +124,6 @@ const Login = () => {
                 required
                 onChange={handleEmail}
               />
-
-              <p id="wrong-email">Invalid Email Address</p>
             </div>
             <div className="form-group">
               <label htmlFor="password" className="form-label">

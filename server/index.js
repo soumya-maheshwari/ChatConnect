@@ -58,13 +58,26 @@ app.get("/protect", authVerifyToken, (req, res) => {
 //   // setup
 //   socket.on("setup", (userData) => {
 //     socket.join(userData.id);
-//     console.log(userData.id);
+//     // console.log(userData.id);
 //     socket.emit("connected");
 //   });
 
 //   // joins a chat
 //   socket.on("join a chat", (room) => {
 //     socket.join(room);
-//     console.log("user joined room " + room);
+//     // console.log("user joined room " + room);
+//   });
+
+//   socket.on("new message", (newMessageReceived) => {
+//     var chat = newMessageReceived.chat;
+//     if (!chat.users) {
+//       return console.log("chat.users is undefined");
+//     }
+//     chat.users.forEach((user) => {
+//       if (user._id == newMessageReceived.sender._id) {
+//         return;
+//       }
+//       socket.in(user._id).emit("message received");
+//     });
 //   });
 // });

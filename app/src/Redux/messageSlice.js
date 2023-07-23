@@ -24,7 +24,7 @@ export const sendMessageThunk = createAsyncThunk(
       },
     };
 
-    return await Api.post(``, data, config)
+    return await Api.post(`message`, data, config)
       .then((res) => {
         // console.log(res);
         return res;

@@ -1,6 +1,6 @@
 import React from "react";
 import ScrollableFeed from "react-scrollable-feed";
-import { Avatar, Stack, Tooltip } from "@mui/material";
+import { Avatar, Tooltip } from "@mui/material";
 import {
   isLastMessage,
   isSameSender,
@@ -8,38 +8,38 @@ import {
   isSameUser,
 } from "../config/Helper";
 
-function stringToColor(string) {
-  let hash = 0;
-  let i;
+// function stringToColor(string) {
+//   let hash = 0;
+//   let i;
 
-  /* eslint-disable no-bitwise */
-  for (i = 0; i < string.length; i += 1) {
-    hash = string.charCodeAt(i) + ((hash << 5) - hash);
-  }
+//   /* eslint-disable no-bitwise */
+//   for (i = 0; i < string.length; i += 1) {
+//     hash = string.charCodeAt(i) + ((hash << 5) - hash);
+//   }
 
-  let color = "#";
+//   let color = "#";
 
-  for (i = 0; i < 3; i += 1) {
-    const value = (hash >> (i * 8)) & 0xff;
-    color += `00${value.toString(16)}`.slice(-2);
-  }
-  /* eslint-enable no-bitwise */
+//   for (i = 0; i < 3; i += 1) {
+//     const value = (hash >> (i * 8)) & 0xff;
+//     color += `00${value.toString(16)}`.slice(-2);
+//   }
+//   /* eslint-enable no-bitwise */
 
-  return color;
-}
-function stringAvatar(name) {
-  return {
-    sx: {
-      bgcolor: stringToColor(name),
-    },
-    children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
-  };
-}
+//   return color;
+// }
+// function stringAvatar(name) {
+//   return {
+//     sx: {
+//       bgcolor: stringToColor(name),
+//     },
+//     children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
+//   };
+// }
 
 const ScrollableChatFeed = ({ allMessages }) => {
-  console.log(allMessages, "scrollable");
+  // console.log(allMessages, "scrollable");
   const user = JSON.parse(localStorage.getItem("userInfo"));
-  console.log(user);
+  // console.log(user);
   return (
     <div>
       <ScrollableFeed>
@@ -71,7 +71,7 @@ const ScrollableChatFeed = ({ allMessages }) => {
                     display: "flex",
                     flexDirection: "column",
                     backgroundColor: `${
-                      m.sender._id === user.id ? "#BEE3F8" : "#B9F5D0"
+                      m.sender._id === user.id ? "#e1a0eb" : "#B9F5D0"
                     }`,
 
                     marginLeft: isSameSenderMargin(allMessages, m, i, user.id),

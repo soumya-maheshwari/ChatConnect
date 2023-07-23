@@ -19,7 +19,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 // const END_POINT = "http://localhost:5000";
 
-var socket, selectedChatCompare;
+// var socket, selectedChatCompare;
 
 const SingleChat = ({
   fetchAgain,
@@ -40,7 +40,7 @@ const SingleChat = ({
 
   const sm = useSelector((state) => state.message);
   const msg = useSelector((state) => state.messageFetch);
-  console.log(msg);
+  // console.log(msg);
   // console.log(msg.messagesArray);
   const [loading, setLoading] = useState(true);
 
@@ -48,7 +48,7 @@ const SingleChat = ({
   const [allMessages, setAllMessages] = useState([]);
   const [typing, setTyping] = useState(true);
   const [istyping, setIsTyping] = useState(false);
-  const [socketConnection, setSocketConnection] = useState(false);
+  // const [socketConnection, setSocketConnection] = useState(false);
   // console.log(sm);
 
   const userData = {
@@ -69,9 +69,13 @@ const SingleChat = ({
       });
     }
   }, [sm]);
+
   useEffect(() => {
     if (msg.isSuccess) {
       setAllMessages(msg.messagesArray);
+      // setMessageToSend("");
+      // socket.emit("join a chat", chatid);
+
       // setLoading(false);
     }
   }, [msg]);
@@ -119,28 +123,47 @@ const SingleChat = ({
     setAllMessages(msg.messagesArray);
     // setLoading(false);
   }, [sm]);
-  useEffect(() => {
-    // socket = io(END_POINT);
-    // socket.emit("setup", user);
-    // console.log(user);
-    // socket.on("connection", () => setSocketConnection(true));
-  }, []);
+  // useEffect(() => {
+  //   socket = io(END_POINT);
+  //   socket.emit("setup", user);
+  //   // console.log(user);
+  //   socket.on("connection", () => setSocketConnection(true));
+  // }, []);
 
-  // useEffect(() => {});
-  console.log(allMessages, "all messages");
-  useEffect(() => {
+  useEffect(() => {});
+
+  // console.log(allMessages, "all messages");
+
+  const func = () => {
     dispatch(fetchAllMessagesForAChatThunk(chatid))
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         return res;
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         return err.response;
       });
+  };
+  // useEffect(() => {
+  //   dispatch(fetchAllMessagesForAChatThunk(chatid))
+  //     .then((res) => {
+  //       // console.log(res);
+  //       return res;
+  //     })
+  //     .catch((err) => {
+  //       // console.log(err);
+  //       return err.response;
+  //     });
+  //   // / / socket.emit("join a chat", chatid);
+  // }, [dispatch]);
 
+  useEffect(() => {
+    func();
+    // console.log(chatid, "chatid");
     // socket.emit("join a chat", chatid);
-  }, [dispatch]);
+  });
+
   return (
     <>
       {chatss ? (

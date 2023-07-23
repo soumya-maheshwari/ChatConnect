@@ -14,6 +14,7 @@ const Otp = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [showToast, setShowToast] = useState(false);
 
   const [otp, setotp] = useState("");
   const [validOtp, setValidOtp] = useState(false);
@@ -32,6 +33,8 @@ const Otp = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    setShowToast(true);
+
     dispatch(verifyOTPThunk(userData))
       .then((res) => {
         // console.log(res);
@@ -42,15 +45,6 @@ const Otp = () => {
         return err.response;
       });
   };
-  useEffect(() => {
-    if (rightOtp.test(otp)) {
-      document.getElementById("otp-error").style.display = "none";
-      setValidOtp(true);
-    } else if (otp) {
-      document.getElementById("otp-error").style.display = "block";
-      setValidOtp(false);
-    }
-  }, [otp]);
 
   useEffect(() => {
     if (sm.isSuccess) {
@@ -66,6 +60,18 @@ const Otp = () => {
       // setTimeout(() => {
       //   navigate("/");
       // }, 4000);
+    } else {
+      if (showToast) {
+        toast.error(`Wrong OTP entered`, {
+          position: "top-right",
+          // theme: "DARK",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+      }
     }
   }, [sm]);
   return (
@@ -76,7 +82,7 @@ const Otp = () => {
         </div>
         <div className="forms">
           <h1 className="otp-head">OTP Verification</h1>
-          <p>An OTP has been sent to your email</p>
+          <p>Please enter the OTP sent to your email</p>
           <form onSubmit={handleSubmit} className="form-class">
             <div className="form-group">
               <label htmlFor="email" className="form-label">
@@ -92,8 +98,6 @@ const Otp = () => {
                 required
                 onChange={handleOtp}
               />
-
-              <p id="otp-error">Enter numbers only.</p>
             </div>
             <button type="submit" className="otp-btn">
               VERIFY{" "}

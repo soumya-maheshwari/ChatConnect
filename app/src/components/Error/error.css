@@ -1,0 +1,19 @@
+.error-img {
+  width: 30vw;
+  height: 80vh;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  margin: -100px 35vw;
+}
+.firstText {
+  text-align: center;
+  font-size: 40px;
+  font-family: sans-serif;
+}
+.secondText {
+  text-align: center;
+  font-size: 30px;
+  font-family: sans-serif;
+}

@@ -133,7 +133,7 @@ const Sidebar = () => {
         </Tooltip>
         <div className="title-app">CHAT CONNECT</div>
         <div className="menu">
-          <img src={bell} className="bell" alt="" />
+          {/* <img src={bell} className="bell" alt="" /> */}
           <Button
             id="demo-positioned-button"
             aria-controls={open ? "demo-positioned-menu" : undefined}

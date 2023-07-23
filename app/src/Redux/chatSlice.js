@@ -24,7 +24,7 @@ export const accessChatThunk = createAsyncThunk(
       },
     };
 
-    return await Api.post(`create_chat`, data, config)
+    return await Api.post(`chat/create_chat`, data, config)
 
       .then((res) => {
         console.log(res);
@@ -53,7 +53,7 @@ export const accesAllTheChatsThunk = createAsyncThunk(
       },
     };
 
-    return await Api.get(`fetch_chat`, config)
+    return await Api.get(`chat/fetch_chat`, config)
       .then((res) => {
         // console.log(res);
 
@@ -77,7 +77,7 @@ export const createGroupChat = createAsyncThunk(
       },
     };
 
-    return await Api.post(`create_GroupChat`, data, config)
+    return await Api.post(`chat/create_GroupChat`, data, config)
       .then((res) => {
         console.log(res);
         return res;
@@ -100,7 +100,7 @@ export const renameGroupThunk = createAsyncThunk(
         Authorization: `Bearer ${user.accessToken}`,
       },
     };
-    return await Api.patch(`rename_group`, data, config)
+    return await Api.patch(`chat/rename_group`, data, config)
       .then((res) => {
         console.log(res);
         return res;
@@ -123,7 +123,7 @@ export const addUserToGroupThunk = createAsyncThunk(
         Authorization: `Bearer ${user.accessToken}`,
       },
     };
-    return await Api.patch(`add_user`, data, config)
+    return await Api.patch(`chat/add_user`, data, config)
       .then((res) => {
         console.log(res);
         return res;

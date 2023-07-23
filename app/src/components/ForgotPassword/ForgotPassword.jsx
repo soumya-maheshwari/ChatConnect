@@ -54,16 +54,6 @@ const ForgotPassword = () => {
   const regexEmail =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-  useEffect(() => {
-    if (regexEmail.test(email)) {
-      document.getElementById("wrong-email-forgot").style.display = "none";
-      setValidMail(true);
-    } else if (email) {
-      document.getElementById("wrong-email-forgot").style.display = "block";
-      setValidMail(false);
-    }
-  }, [email]);
-
   return (
     <>
       <div className="container">
@@ -73,7 +63,10 @@ const ForgotPassword = () => {
         <div className="forms">
           <form onSubmit={handleSubmit} className="form-class">
             <h1 className="forgot-head">Forgot your password?</h1>
-            <h2 className="body-text">Don't worry.</h2>
+            <p className="body-text">Don't worry.</p>
+            <p className="body-textt">
+              We will sent an OTP to your Email address
+            </p>
             <div className="form-groupp">
               <label htmlFor="email" className="form-label">
                 Email Address
@@ -88,8 +81,6 @@ const ForgotPassword = () => {
                 required
                 onChange={handleEmail}
               />
-
-              <p id="wrong-email-forgot">Invalid Email Address</p>
             </div>
             <button
               type="submit"

@@ -28,7 +28,7 @@ const Signup = () => {
   const [validMail, setValidMail] = useState(false);
 
   const sm = useSelector((state) => state.auth);
-  // console.log(sm);
+  console.log(sm);
 
   // useEffect(() => {
   //   if (!sm.isLoading) {
@@ -75,31 +75,31 @@ const Signup = () => {
   const regexEmail =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-  useEffect(() => {
-    if (regexEmail.test(email)) {
-      document.getElementById("wrong-email2").style.display = "none";
-      setValidMail(true);
-    } else if (email) {
-      document.getElementById("wrong-email2").style.display = "block";
-      setValidMail(false);
-    }
-  }, [email]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setShowToast(true);
 
-    if (validMail) {
-      dispatch(registerUser(userData))
-        .then((res) => {
-          // console.log(res);
-          return res;
-        })
-        .catch((err) => {
-          // console.log(err);
-          return err.response;
-        });
+    if (password !== confirmPassword) {
+      toast.success(`Passwords did not matched`, {
+        position: "top-right",
+        // theme: "dark",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     }
+
+    dispatch(registerUser(userData))
+      .then((res) => {
+        // console.log(res);
+        return res;
+      })
+      .catch((err) => {
+        // console.log(err);
+        return err.response;
+      });
   };
 
   useEffect(() => {
@@ -153,7 +153,7 @@ const Signup = () => {
               <img src={namee} alt="name" className="mail" />
               <input
                 type="text"
-                className="input-field"
+                className="input-field2"
                 id="name"
                 name="name"
                 value={name}
@@ -171,7 +171,7 @@ const Signup = () => {
               <img src={mail} alt="mail" className="mail" />
               <input
                 type="text"
-                className="input-field"
+                className="input-field2"
                 id="email"
                 name="email"
                 value={email}
@@ -179,7 +179,6 @@ const Signup = () => {
                 onChange={handleEmail}
               />
             </div>
-            <p id="wrong-email2">Invalid Email Address</p>
 
             <div
               className="form-group2
@@ -191,7 +190,7 @@ const Signup = () => {
               <img src={user} alt="user" className="user" />
               <input
                 type="text"
-                className="input-field"
+                className="input-field2"
                 id="user"
                 name="username"
                 required
@@ -216,7 +215,7 @@ const Signup = () => {
                 required
                 value={password}
                 onChange={handlePassword}
-                className="input-field"
+                className="input-field2"
               />
               {show ? (
                 <FontAwesomeIcon
@@ -247,7 +246,7 @@ const Signup = () => {
                 id="password"
                 name="password"
                 required
-                className="input-field"
+                className="input-field2"
                 value={confirmPassword}
                 onChange={handleConfirmPassword}
               />

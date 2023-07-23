@@ -70,7 +70,7 @@ body {
 .input-field {
   width: 30vw;
   /* padding: 10px; */
-  height: 21px;
+  height: 41px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -148,12 +148,6 @@ button[type="submit"]:hover {
   color: #4152d5;
   padding-left: 10px;
 }
-#wrong-email {
-  color: #d14444;
-  position: absolute;
-  top: 286px;
-  display: none;
-}
 
 @media (max-width: 970px) {
   .container-login {
@@ -162,9 +156,6 @@ button[type="submit"]:hover {
   }
   .eyeimg {
     margin-left: 30vw;
-  }
-  #wrong-email {
-    top: 262px;
   }
 }
 
@@ -177,9 +168,6 @@ button[type="submit"]:hover {
   /* .eyeimg {
     margin-left: 29vw;
   } */
-  #wrong-email {
-    top: 262px;
-  }
 }
 
 @media (max-width: 760px) {
@@ -191,9 +179,7 @@ button[type="submit"]:hover {
   .eyeimg {
     margin-left: 30vw;
   }
-  #wrong-email {
-    top: 245px;
-  }
+
   .heading-login {
     font-size: 48px;
   }
@@ -244,10 +230,7 @@ button[type="submit"]:hover {
   }
   .login-btn {
     width: 70vw;
-    margin-top: -10spx;
-  }
-  #wrong-email {
-    top: 247px;
+    margin-top: -10px;
   }
 }
 
@@ -260,9 +243,6 @@ button[type="submit"]:hover {
   .heading-login {
     margin-left: 14vw;
   }
-  #wrong-email {
-    top: 244px;
-  }
 }
 
 @media (max-width: 530px) {
@@ -273,9 +253,6 @@ button[type="submit"]:hover {
   }
   .heading-login {
     margin-left: 14vw;
-  }
-  #wrong-email {
-    top: 273px;
   }
 }
 
@@ -316,9 +293,6 @@ button[type="submit"]:hover {
   .eyeimg {
     margin-left: 52vw;
   }
-  #wrong-email {
-    top: 259px;
-  }
 }
 
 @media (max-width: 363px) {
@@ -330,13 +304,10 @@ button[type="submit"]:hover {
   .eyeimg {
     margin-left: 52vw;
   }
-  #wrong-email {
-    top: 259px;
-  }
 }
 @media (max-width: 357px) {
   .container-login {
-    max-width: 300px;
+    max-width: 290px;
     margin-top: 7%;
     height: 90vh;
   }
@@ -347,7 +318,7 @@ button[type="submit"]:hover {
 
 @media (max-width: 302px) {
   .container-login {
-    max-width: 270px;
+    max-width: 250px;
     margin-top: 7%;
     height: 90vh;
   }
@@ -374,9 +345,7 @@ button[type="submit"]:hover {
   .form-class {
     margin-top: 25px;
   }
-  #wrong-email {
-    top: 280px;
-  }
+
   .container-login {
     max-width: 940px;
   }
