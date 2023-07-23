@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/ChatConnect/static/css/main.7e658fe2.css",
-    "main.js": "/ChatConnect/static/js/main.9af14fdd.js",
+    "main.css": "/ChatConnect/static/css/main.7f990e84.css",
+    "main.js": "/ChatConnect/static/js/main.ed5423a8.js",
     "static/js/787.c1112931.chunk.js": "/ChatConnect/static/js/787.c1112931.chunk.js",
     "static/media/logout.svg": "/ChatConnect/static/media/logout.b6d1d6d54886e7585f242853c4484a09.svg",
     "static/media/login.svg": "/ChatConnect/static/media/login.6393f244be4dffd3618ad7a32eb80c63.svg",
@@ -19,12 +19,12 @@
     "static/media/backArrow.svg": "/ChatConnect/static/media/backArrow.261fc5b9e874e6b41662b6f4cb9bbc60.svg",
     "static/media/lock.svg": "/ChatConnect/static/media/lock.458a297c54567e26784f7145cba0e06e.svg",
     "static/media/user.svg": "/ChatConnect/static/media/user.25c7a2c4478e96f8be7eddc9f7c01f5b.svg",
-    "main.7e658fe2.css.map": "/ChatConnect/static/css/main.7e658fe2.css.map",
-    "main.9af14fdd.js.map": "/ChatConnect/static/js/main.9af14fdd.js.map",
+    "main.7f990e84.css.map": "/ChatConnect/static/css/main.7f990e84.css.map",
+    "main.ed5423a8.js.map": "/ChatConnect/static/js/main.ed5423a8.js.map",
     "787.c1112931.chunk.js.map": "/ChatConnect/static/js/787.c1112931.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7e658fe2.css",
-    "static/js/main.9af14fdd.js"
+    "static/css/main.7f990e84.css",
+    "static/js/main.ed5423a8.js"
   ]
 }
