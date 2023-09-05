@@ -114,7 +114,7 @@ const Sidebar = () => {
     <>
       <div className="sidebar">
         <Tooltip
-          arrow={true}
+          arrow="true"
           title="search users to chat"
           placement="bottom-end"
 

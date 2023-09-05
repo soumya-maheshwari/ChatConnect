@@ -145,18 +145,18 @@ const SingleChat = ({
         return err.response;
       });
   };
-  // useEffect(() => {
-  //   dispatch(fetchAllMessagesForAChatThunk(chatid))
-  //     .then((res) => {
-  //       // console.log(res);
-  //       return res;
-  //     })
-  //     .catch((err) => {
-  //       // console.log(err);
-  //       return err.response;
-  //     });
-  //   // / / socket.emit("join a chat", chatid);
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchAllMessagesForAChatThunk(chatid))
+      .then((res) => {
+        // console.log(res);
+        return res;
+      })
+      .catch((err) => {
+        // console.log(err);
+        return err.response;
+      });
+    // / / socket.emit("join a chat", chatid);
+  }, [dispatch, chatid]);
 
   useEffect(() => {
     func();
@@ -216,7 +216,7 @@ const SingleChat = ({
             borderRadius="lg"
             overflow="hidden"
           >
-            {console.log(loading)}
+            {/* {console.log(loading)} */}
             {loading ? (
               "loading.."
             ) : (

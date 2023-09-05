@@ -7,6 +7,7 @@ const initialState = {
   isLoading: false,
   showToast: false,
   message: "",
+  isOTPverified: false,
   response: "",
   profile: "",
   user: {},
@@ -170,6 +171,7 @@ export const authSlice = createSlice({
         // console.log(action.payload);
         if (action.payload.data.success) {
           state.isSuccess = true;
+          state.isOTPverified = true;
         } else {
           state.isSuccess = false;
           state.isError = true;

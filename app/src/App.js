@@ -1,4 +1,5 @@
 import "./App.css";
+import { useEffect } from "react";
 import ChatPage from "./components/ChatPage/ChatPage";
 import Signup from "./components/Signup/Signup";
 import Login from "./components/login/Login";
@@ -11,6 +12,21 @@ import ResetPassword from "./components/resetPassword/ResetPassword";
 import EditProfile from "./components/EditProfile/EditProfile";
 
 function App() {
+  // // Function to clear the local storage item when the page is refreshed
+  // const clearLocalStorageOnRefresh = () => {
+  //   localStorage.removeItem("chatInfo");
+  // };
+
+  // // Set up the event listener when the component mounts
+  // useEffect(() => {
+  //   window.addEventListener("beforeunload", clearLocalStorageOnRefresh);
+
+  //   // Clean up the event listener when the component unmounts
+  //   return () => {
+  //     window.removeEventListener("beforeunload", clearLocalStorageOnRefresh);
+  //   };
+  // }, []);
+
   const user = false;
   return (
     <>

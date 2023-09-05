@@ -47,7 +47,7 @@ const Otp = () => {
   };
 
   useEffect(() => {
-    if (sm.isSuccess) {
+    if (sm.isOTPverified) {
       toast.success(`OTP verified`, {
         position: "top-right",
         // theme: "DARK",

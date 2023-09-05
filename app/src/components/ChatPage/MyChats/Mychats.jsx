@@ -12,7 +12,7 @@ import "./myChats.css";
 const Mychats = ({ fetchAgain }) => {
   const dispatch = useDispatch();
   const [chats, setChats] = useState();
-  const [selectedChat, setSelectedChat] = useState(null);
+  const [selectedChat, setSelectedChat] = useState();
   const [bool, setBool] = useState(false);
   const [name, setName] = useState("");
   const [text, setText] = useState("click on a user to start chatting");
@@ -35,7 +35,7 @@ const Mychats = ({ fetchAgain }) => {
         return err.reponse;
       });
     // setBool(true);
-  }, [fetchAgain]);
+  }, []);
   useEffect(() => {
     console.log(selectedChat);
   }, [selectedChat]);
@@ -117,7 +117,10 @@ const Mychats = ({ fetchAgain }) => {
                       color={selectedChat === chat ? "white" : "black"}
                     >
                       <p>
-                        {/* {console.log(chat.users)} */}
+                        {/* {!chat.isGroupChat
+                          ? getSenderUser(logggedUser, chat.users)
+                          : "chat.chatName"} */}
+                        {console.log(chat.users)}
                         {!chat.isGroupChat
                           ? getSenderUser(logggedUser, chat.users)
                           : "chat.chatName"}
@@ -128,7 +131,8 @@ const Mychats = ({ fetchAgain }) => {
               })}
             </Stack>
           ) : (
-            <ChatLoading />
+            // <ChatLoading />
+            "loading......"
           )}
         </Box>
       </Box>

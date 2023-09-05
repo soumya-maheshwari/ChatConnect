@@ -52,7 +52,7 @@ export const messageFetchSlice = createSlice({
       .addCase(fetchAllMessagesForAChatThunk.fulfilled, (state, action) => {
         // state.isLoading = false;
         console.log(action.payload);
-        console.log(action.payload.data.messages);
+        // console.log(action.payload.data.messages);
         if (action.payload.data.success) {
           state.isSuccess = true;
           state.isLoading = false;

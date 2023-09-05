@@ -1,4 +1,14 @@
 export const getSenderUser = (loggedUser, users) => {
+  // console.log(users[0].name, users[1].name);
+  if (!Array.isArray(users) || users.length < 2) {
+    return "Unknown User";
+  }
+
+  const [user1, user2] = users;
+
+  if (!user1 || !user2 || !user1.name || !user2.name) {
+    return "Unknown User";
+  }
   return users[0]?._id === loggedUser.id ? users[1].name : users[0].name;
 };
 
@@ -45,5 +55,15 @@ export const isSameSender = (messages, m, i, userId) => {
 };
 
 export const getFullSenderDetails = (loggedUser, users) => {
+  if (!Array.isArray(users) || users.length < 2) {
+    return "Unknown User";
+  }
+
+  const [user1, user2] = users;
+
+  if (!user1 || !user2 || !user1.name || !user2.name) {
+    return "Unknown User";
+  }
+
   return users[0]._id === loggedUser.id ? users[1] : users[0];
 };
